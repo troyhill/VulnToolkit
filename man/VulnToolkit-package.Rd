@@ -1,33 +1,27 @@
-\name{VTK-package}
-\alias{VTK-package}
-\alias{VTK}
+\name{VulnToolkit-package}
+\alias{VulnToolkit-package}
+\alias{VulnToolkit}
 \docType{package}
-\title{
-What the package does (short line)
-~~ package title ~~
+\title{A set of web scrapers and analytical tools to aid analysis of coastal wetlands and their vulnerability to sea-level rise.
 }
-\description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+\description{VulnToolkit includes analytical tools to download data from NOAA-COOPS stations, including tide data, harmonic constituents, and station datums. VulnToolkit also includes tools for measuring hydroperiod and assessing vulnerability to hydrologic stress.
 }
 \details{
 \tabular{ll}{
-Package: \tab VTK\cr
+Package: \tab VulnToolkit\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2014-04-09\cr
-License: \tab What license is it under?\cr
+License: \tab MIT\cr
 }
 ~~ An overview of how to use the package, including the most important functions ~~
 }
-\author{
-Who wrote it
+\author{Troy D. Hill <Hill.Troy@gmail.com>, Shimon C. Anisfeld
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+Maintainer: Troy D. Hill <Hill.Troy@gmail.com>
+
 }
-\references{
-~~ Literature or other references for background information ~~
+\references{ in preparation
 }
 ~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
 \keyword{ package }
