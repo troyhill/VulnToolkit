@@ -1,0 +1,13 @@
+HL                      Extract high and low tides from a 
+                        dataset of water levels
+HL.plot                 Plot high/low tides
+fld.dur                 Calculates flooding duration
+fld.frq                 Calculates flooding frequency
+harcon                  Downloads harmonic constituents for 
+                        NOAA CO-OPS tide stations
+noaa                    Downloads tide data for NOAA CO-OPS 
+                        tide stations
+noaa_datums             Downloads tidal datums for NOAA 
+                        CO-OPS tide stations
+number.tides            Numbers tidal cycles
+vuln.kit                Vulnerability assessment tools

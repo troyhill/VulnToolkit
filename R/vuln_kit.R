@@ -38,6 +38,9 @@
 ###
 ### Have a problem, find a bug, or want to be notified of updates? Email Hill.Troy@gmail.com
 
+# Also, can you update the other code to calculate the 4 final flooding parameters (including elevation-flooding curves) 
+# and the 2 vulnerability parameters?  I would take out the calculation of MHW (since other than calculating that, you 
+# don't need the hi/lo data, and the best use of this code anyway would be to enter a known platform elevation).  Attached is one site you can use to check.
 
 
 # Before function can be used, 
@@ -201,6 +204,8 @@ frq.ecdf <- ecdf(HL.data$level.mhw[HL.data$tide == "H"])
 dur.ecdf <- ecdf(mhw.level)
 durs <- 1 - dur.ecdf(elevs)
 frqs <- 1 - frq.ecdf(elevs)
+
+
 frq.dur.df <- data.frame(elevs, frqs, durs)
 
 par(mfrow = c(1,2))

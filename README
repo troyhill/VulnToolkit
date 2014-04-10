@@ -1,6 +1,6 @@
 VulnToolkit provides a set of web scrapers and analytical tools to aid analysis of coastal wetlands and their vulnerability to sea-level rise. 
 
-Currently in development.
+This package is currently in development. Email questions and comments to Hill.Troy@gmail.com.
 
 To install and load VulnToolkit, run the following commands in R:
 
