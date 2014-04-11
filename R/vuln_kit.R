@@ -93,7 +93,7 @@ vuln.kit <- function(level, datetime, MHW, platform = MHW, units = "meters", frq
   rownames(df) <- NULL
   
   par(mfrow = c(2,2))
-  par(mar = c(4,4.5,0.2,0.2))
+  par(mar = c(4,4.5,0.2,0.2), oma = c(1,0.2,0.2,0.2))
   
   plot(frq.dur.df$frequency ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
        xlim = c(-1, 0.6), yaxt = "n", ylim = c(0, max(frq.dur.df$frequency)),
@@ -117,6 +117,8 @@ vuln.kit <- function(level, datetime, MHW, platform = MHW, units = "meters", frq
        ylab ="A (m)", xlab = "", bty="n", xaxs = "i", yaxs = "i") 
   axis(2, las=1)
 
+  mtext("Elevation (m)", side = 1, outer = TRUE, cex = 1, line = 0)
+  
   dev.off()
   
 value <- list(dataset = frq.dur.df,
