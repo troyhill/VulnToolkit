@@ -65,28 +65,28 @@ vuln.kit <- function(level, datetime, MHW, platform = MHW, units = "meters", frq
   
   frq.dur.df <- data.frame(elevation)
   
+
   wl <- data.frame(datetime, level)
   wl <- wl[wl$datetime <= wl$datetime[nrow(wl)] & wl$datetime >= (wl$datetime[nrow(wl)] - 60*60*24*365), ]
   wl$zeroed <- wl[,2] - MHW - (platform - MHW)
   
   for(i in 1:length(elevation)) {
     
-    wl.sub <- wl[wl$zeroed > elevation[i] & !is.na(wl$zeroed),]   # periods when flooded
-    wl.sub$t2 <- c(wl.sub[-1,1], NA)
-    wl.sub$dt <- wl.sub$t2 - wl.sub[,1] - t.int 
+    wl$ind <- ifelse(wl$zeroed > elevation[i] & !is.na(wl$zeroed), 1, 0)
+    wl.rle <- rle(wl$ind)
     
-    wl.sub2 <- wl[wl$zeroed <= elevation[i] & !is.na(wl$zeroed),]   # periods when dry
-    wl.sub2$t2 <- c(wl.sub2[-1,1], NA)
-    wl.sub2$dt <- wl.sub2$t2 - wl.sub2[,1] - t.int 
+    nos <- c(0,cumsum(wl$ind[-1L] != wl$ind[-length(wl$ind)]))   # numbers flooding events
+    if(wl$ind[1] == 1) {   # if sequence starts out flooded, no. of flooding events is max of even numbers % 2
+      frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 == 0]) / 2), 0)           # F (yr-1)
+    } else if(wl$ind[1] == 0) {
+      frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 != 0]) / 2), 0)
+    }
     
-    frq.dur.df$duration[i] <- nrow(wl.sub) * t.int  / 60  # hours per year
-    
-    frq.dur.df$frequency[i] <- length(wl.sub$dt[wl.sub$dt > 1 & !is.na(wl.sub$dt)])   # times flooded per year
-    frq.dur.df$D90[i]  <- quantile(as.numeric(wl.sub2$dt[wl.sub2$dt > 0 & !is.na(wl.sub2$dt)]), 0.90) / 60  # hr
-    frq.dur.df$A[i]    <- mean(wl.sub$zeroed, na.rm = T) - elevation[i]    
+    frq.dur.df$duration[i] <- max(cumsum(wl$ind) ) * t.int / 60 # D (hr/yr)
+    frq.dur.df$D90[i]  <- as.numeric(quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60  # hr
+    frq.dur.df$A[i]    <- mean(wl$zeroed[wl$ind == 1], na.rm = T) - elevation[i]    # m
   }
   
-  as.numeric(quantile(wl.sub2$dt[wl.sub2$dt > 0], 0.90, na.rm = T)) / 60
   df <- frq.dur.df[frq.dur.df$elevation == 0, 2:5]
   df$DV   <- ( frq.dur.df$duration[frq.dur.df$elevation == paste("-", TV.inc, sep="")] - frq.dur.df$duration[frq.dur.df$elevation == 0] ) / (TV.inc*100 * frq.dur.df$duration[frq.dur.df$elevation == 0]) * 100   # units: % / cm
   df$D90V <- ( frq.dur.df$D90[frq.dur.df$elevation == paste("-", TV.inc, sep="")] - frq.dur.df$D90[frq.dur.df$elevation == 0] ) / (TV.inc*100 * frq.dur.df$D90[frq.dur.df$elevation == 0]) * 100                  # units: % / cm
