@@ -117,6 +117,8 @@ vuln.kit <- function(level, datetime, MHW, platform = MHW, units = "meters", frq
        ylab ="A (m)", xlab = "", bty="n", xaxs = "i", yaxs = "i") 
   axis(2, las=1)
 
+  dev.off()
+  
 value <- list(dataset = frq.dur.df,
                 metrics = df)
 }
