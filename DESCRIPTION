@@ -8,4 +8,4 @@ Maintainer: Troy D. Hill <Hill.Troy@gmail.com>
 Description: A set of web scrapers and analytical tools to aid analysis of coastal wetlands and their vulnerability to sea-level rise. 
 License: MIT
 URL: https://github.com/troyhill/VulnToolkit
-Depends: RCurl, XML
+Depends: RCurl, XML, R(>= 2.10.0)
