@@ -15,7 +15,7 @@
 ###      frq.dur.inc: Elevation interval used to calculate flooding frequency, duration, D90, and Ax.
 ###         Defaults to 0.005 m. Units must correspond to 'units' argument.
 ###
-###      TV.inc: Elevation interval used to calculate vulnerability metrics (DPV, D90V). 
+###      TV.inc: Elevation interval used to calculate vulnerability metrics (DV, D90V). 
 ###         Defaults to 0.1 m. Units must correspond to 'units' argument.
 
 
