@@ -10,11 +10,11 @@
 \tabular{ll}{
 Package: \tab VulnToolkit\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 1.0.0\cr
 Date: \tab 2014-04-09\cr
 License: \tab MIT\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
+
 }
 \author{Troy D. Hill <Hill.Troy@gmail.com>, Shimon C. Anisfeld
 
