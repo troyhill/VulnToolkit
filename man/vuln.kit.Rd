@@ -30,3 +30,6 @@ vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005,
 \item{metrics}{a dataframe containing the flooding frequency, flooding duration, D90, mean flooding depth, duration vulnerability, and D90 vulnerability, calculated at the vertical elevation set by \code{platform} argument}
 
 }
+\examples{NL2013 <- vuln.kit(level = NL_6min_2013[,2], datetime = NL_6min_2013[,1],
+                  platform = 0.911771631)
+                  NL2013$metrics}
