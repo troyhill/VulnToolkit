@@ -1,0 +1,13 @@
+\name{NL_6min_2013}
+\docType{data}
+\alias{NL_6min_2013}
+\title{New London water levels, 2013}
+\description{
+   Water levels from NOAA-COOPS station #8461490 in New London, CT. Data recorded at 6-minute intervals, in meters relative to MHW, and in the GMT time zone.
+}
+\usage{NL_6min_2013}
+\format{Contains water levels, time stamps, and a station ID column as created by \code{VulnToolkit::noaa()}.}
+\source{downloaded from http://co-ops.nos.noaa.gov/inventory.html?id=8461490 using \code{VulnToolkit::noaa()} }
+\references{
+   Center for Operational Oceanographic Products and Services 
+}

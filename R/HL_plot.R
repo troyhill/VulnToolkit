@@ -1,5 +1,5 @@
 ### function to visually examine high and low tides found by function HL()
-HL.plot <- function(level, time, period = 12, phantom = TRUE, tides = "all") {
+HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all") {
   hl <- HL(level, time, period, phantom, tides)
   wll.2 <- data.frame(1:length(level), level, time)
   

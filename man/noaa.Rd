@@ -2,25 +2,26 @@
 \alias{noaa}
 \title{Scrapes water level data from NOAA-COOPS website}
 \description{
-  This is the description string for noaa().
+  Scrapes water level data from NOAA-COOPS website. Requires internet connection.
 }
 \usage{
-  
+  noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
+                  units = "meters", datum = "MHW", interval = "HL", time = "GMT")
 }
 \arguments{
-  \item{level}{a numeric vector of water levels}
+  \item{begindate, enddate}{set desired date range and must be in YYYYMMDD format. If one or both dates are left unspecified, the first and/or last complete day of available data will be used.}
   
-  \item{datetime}{a POSIX* vector of time stamps that correspond to the measurements in 'level'}
+  \item{station}{station name or ID number, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels). Default is Bridgeport, CT station.}
   
-  \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}.}
+  \item{units}{can be 'feet' or 'meters'. Default is 'meters'}
   
-  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally and output in meters.}
+  \item{datum}{vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)}
   
-  \item{frq.dur.inc}{elevation interval used to calculate flooding frequency, duration, D90, and Ax. Defaults to 0.005 m. Units must correspond to \code{units} argument}
+  \item{interval}{sets measurement interval; can be 'HL' (default), '6 minute', or 'hourly'}
   
-  \item{TV.inc}{Elevation interval used to calculate vulnerability metrics (DV, D90V). Defaults to 0.1 m. Units must correspond to \code{units} argument.}
+  \item{time}{can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. GMT appears to have wider availability than LST, so it is the default.}
   
 }
 \value{
-  \item{dataset}{a dataset of elevations (relative to elevation set in \code{platform} argument), flooding frequencies, flooding durations (hr yr-1), duration of 90th percentile flooding event (D90; hr), and mean flooding depth (m)}
+  \item{dataset}{a dataframe of water levels, associated time stamps, a station ID column, and tide type (if interval is set to 'HL')}
 }
