@@ -12,7 +12,7 @@
 ###      units: 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally 
 ###         and output in meters.
 ###
-###      frq.dur.inc: Elevation interval used to calculate flooding frequencies, durations, and wet/dry periods.
+###      frq.dur.inc: Elevation interval used to calculate flooding frequency, durations, D90, and Ax.
 ###         Defaults to 0.005 m. Units must correspond to 'units' argument.
 ###
 ###      TV.inc: Elevation interval used to calculate vulnerability metrics (DPV, D90V). 

@@ -7,6 +7,16 @@ importFrom(XML,
 
            htmlParse, getNodeSet, xmlSApply)
 
+export(noaa, 
+       HL,
+       HL.plot,
+       fld.dur,
+       fld.frq,
+       harcon,
+       number.tides,
+       noaa_datums,
+       vuln.kit)
+
 ### Local variables:
 ### mode: R
 ### End:
