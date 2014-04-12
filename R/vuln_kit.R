@@ -117,8 +117,7 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   axis(2, las=1)
 
   mtext("Elevation (m)", side = 1, outer = TRUE, cex = 1, line = 0)
-  
-  dev.off()
+
   
 value <- list(dataset = frq.dur.df,
                 metrics = df)
