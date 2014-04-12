@@ -13,12 +13,11 @@ vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005,
 
   \item{datetime}{a POSIX* vector of time stamps that correspond to the measurements in 'level'}
 
-  \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}}
+  \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}.}
 
-  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally and output in meters}
+  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally and output in meters.}
 
-  \item{frq.dur.inc}{Elevation interval used to calculate flooding frequencies, durations, and wet/dry periods.
-###         Defaults to 0.005 m. Units must correspond to 'units' argument}
+  \item{frq.dur.inc}{elevation interval used to calculate flooding frequency, duration, D90, and Ax. Defaults to 0.005 m. Units must correspond to \code{units} argument}
 
   \item{eps}{is a small positive value.  The program currently does not
 handle exact observed death times t, but replaces these by interval
