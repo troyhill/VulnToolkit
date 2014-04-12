@@ -5,7 +5,7 @@
   Scrapes elevation datums from NOAA-COOPS website. Requires internet connection.
 }
 \usage{
-  noaa(station)
+  noaa_datums(station)
 }
 \arguments{
   \item{station}{station name or ID number, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels). Default is Bridgeport, CT station.}

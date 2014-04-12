@@ -9,8 +9,8 @@
 
 harcon <- function(station) {
   
-  require(RCurl)
-  require(XML)
+#  require(RCurl)
+#  require(XML)
   
   page <- htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/harcon.html?unit=0&timezone=0&id=", station, sep = "")),
                     useInternalNodes = TRUE)

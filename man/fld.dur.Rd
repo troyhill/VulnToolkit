@@ -10,7 +10,7 @@
 \arguments{
   \item{x}{elevation of interest}
   
-  \item{vex}{a numeric vector of water levels}
+  \item{vec}{a numeric vector of water levels}
 }
 \value{
   \item{value}{the percent of measurements in 'vec' that fall above 'x'}

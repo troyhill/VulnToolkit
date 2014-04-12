@@ -9,8 +9,8 @@
 
 noaa_datums <- function(station) {
   
-  require(RCurl)
-  require(XML)
+#  require(RCurl)
+#  require(XML)
   
   page <- htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/datums.html?units=1&epoch=0&id=", station, sep = "")),
                     useInternalNodes = TRUE)
