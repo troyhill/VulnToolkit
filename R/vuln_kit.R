@@ -15,7 +15,7 @@
 ###      frq.dur.inc: Elevation interval used to calculate flooding frequencies, durations, and wet/dry periods.
 ###         Defaults to 0.005 m. Units must correspond to 'units' argument.
 ###
-###      TV.inc: Elevation interval used to calculate vulnerability metrics (TFV, TDV, WPV, DPV). 
+###      TV.inc: Elevation interval used to calculate vulnerability metrics (DPV, D90V). 
 ###         Defaults to 0.1 m. Units must correspond to 'units' argument.
 
 
@@ -56,8 +56,6 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   }
   
   t.int <- (as.numeric( datetime[2] ) - as.numeric( datetime[1] ) )  / 60
-  total.time <- t.int * length(level) / 60
-  fr.year <- total.time / 24 / 365.242    
   elevation <- seq(from = -1, to = 0.5, by = frq.dur.inc)
   
   frq.dur.df <- data.frame(elevation)
