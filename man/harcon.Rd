@@ -13,3 +13,8 @@
 \value{
   \item{dataset}{a dataframe of harmonic constituents and their associated phases, amplitudes, and speeds.}
 }
+\examples{
+# Example is commented out because it requires an internet connection
+# bport.cons <- harcon(8467150) # Bridgeport, CT
+# bport.cons
+}

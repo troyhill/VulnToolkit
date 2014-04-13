@@ -25,3 +25,8 @@
 \value{
   \item{dataset}{a dataframe of water levels, associated time stamps, a station ID column, and tide type (if interval is set to 'HL')}
 }
+\examples{
+# Example is commented out because it requires an internet connection
+# bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
+#     station = "Bridgeport, CT", interval = "6 minute")
+}
