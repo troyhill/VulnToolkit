@@ -16,6 +16,7 @@
   \item{value}{the decimal fraction of measurements in 'vec' that fall above 'x'}
 }
 \examples{
+data(NL_6min_2013)
 a <- fld.dur(0.9117, NL_6min_2013[,2]); a # flooding duration at MHW
 a * length(NL_6min_2013[,2]) / 10 # convert to hours per year
 

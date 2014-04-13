@@ -23,6 +23,7 @@
   \item{dataset}{a dataframe of tide levels, associated time stamps, and tide type ('H' or 'L').}
 }
 \examples{
+data(NL_6min_2013)
 HL.NL <- HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 head(HL.NL)
 }

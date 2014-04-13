@@ -17,6 +17,7 @@
 }
 \examples{
 # get a dataset of high/low tides
+data(NL_6min_2013)
 HT.NL <- HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1], tides = "H")
 a <- fld.frq(0.9117, HT.NL[,1]); a # flooding frequency at MHW
 a * length(HT.NL[,1]) # convert to tides per year
