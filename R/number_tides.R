@@ -8,8 +8,8 @@
 
 number.tides <- function(data, datetime, hl) {
   
-  data$ht.ind <- ifelse(data$datetime %in% hl$time[hl$tide == "H"], 1, 0)
-  data$lt.ind <- ifelse(data$datetime %in% hl$time[hl$tide == "L"], 1, 0)
+  data$ht.ind <- ifelse(datetime %in% hl$time[hl$tide == "H"], 1, 0)
+  data$lt.ind <- ifelse(datetime %in% hl$time[hl$tide == "L"], 1, 0)
   
   data$tide.no <- cumsum(data$lt.ind)  # number tidal cycles
   

@@ -202,20 +202,20 @@ t.label <- paste("time (", time, ")", sep = "")
 
 # clean up the data
 if(interval == "HL" ) {
-  data.csv$datetime <- as.POSIXlt(data.csv[,1], format = "%Y-%m-%d %H:%M")
+  data.csv$datetime <- as.POSIXct(data.csv[,1], format = "%Y-%m-%d %H:%M")
   data.csv <- data.csv[, c(7,2,3,6)]  
   names(data.csv) <- c(t.label, label, "tide", "station")
   levels(data.csv$tide) <- c("H", "HH", "L", "LL")
   }
                       
 if(interval == "6 minute" ) {
-  data.csv$datetime <- as.POSIXlt(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
+  data.csv$datetime <- as.POSIXct(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
   data.csv <- data.csv[, c(10,2,9)] 
   names(data.csv) <- c(t.label, label, "station") 
   }
 
 if(interval == "hourly" ) {
-  data.csv$datetime <- as.POSIXlt(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
+  data.csv$datetime <- as.POSIXct(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
   data.csv <- data.csv[, c(7,2,6)]
   names(data.csv) <- c(t.label, label, "station") 
   }
