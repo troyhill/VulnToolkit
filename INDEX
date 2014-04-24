@@ -11,6 +11,7 @@ noaa_datums             Downloads tidal datums for NOAA
                         CO-OPS tide stations
 number.tides            Numbers tidal cycles
 vuln.kit                Vulnerability assessment tools
+form.no                 Calculates tidal form number
 NL_6min_2013            Tide data (6 minute intervals)
                         from NOAA station 8461490 in New 
                         London, CT
