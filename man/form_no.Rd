@@ -2,7 +2,7 @@
 \alias{form.no}
 \title{Calculate tidal form number}
 \description{
-  Uses harmonic constituent data from NOAA CO-OPS website to calculate tidal form numbers. Requires internet connection.
+  Uses harmonic constituent data from the NOAA CO-OPS website to calculate tidal form numbers as the ratio of the sum of K1 and O1 diurnal harmonic constituent amplitudes to the sum of the M2 and S2 semidiurnal amplitudes. Requires internet connection.
 }
 \usage{
   form.no(station)
