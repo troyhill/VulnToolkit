@@ -7,7 +7,7 @@
 ### Have a problem? Find a bug? Email Hill.Troy@gmail.com
 
 
-noaa_datums <- function(station) {
+noaa.datums <- function(station = 8467150) {
   
 #  require(RCurl)
 #  require(XML)

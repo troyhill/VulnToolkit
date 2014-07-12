@@ -5,7 +5,7 @@ importFrom(RCurl,
 
 importFrom(XML,
 
-           htmlParse, getNodeSet, xmlSApply)
+           htmlParse, readHTMLTable, getNodeSet, xmlSApply)
 
 export(noaa, 
        HL,
@@ -15,7 +15,9 @@ export(noaa,
        harcon,
        number.tides,
        noaa,
-       noaa_datums,
+       noaa.datums,
+       psmsl.list,
+       psmsl,
        vuln.kit)
 
 ### Local variables:

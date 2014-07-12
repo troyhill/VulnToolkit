@@ -7,8 +7,14 @@ harcon                  Downloads harmonic constituents for
                         NOAA CO-OPS tide stations
 noaa                    Downloads tide data for NOAA CO-OPS
                         tide stations
-noaa_datums             Downloads tidal datums for NOAA
+noaa.datums             Downloads tidal datums for NOAA
                         CO-OPS tide stations
+psmsl.list              Imports list of historic and active
+                        stations monitored by the Permanent
+                        Service for Mean Sea Level (www.psmsl.org)
+psmsl                   Imports tide data from historic and active
+                        Permanent Service for Mean Sea Level
+                        stations (www.psmsl.org)
 number.tides            Numbers tidal cycles
 vuln.kit                Vulnerability assessment tools
 form.no                 Calculates tidal form number

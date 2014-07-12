@@ -13,6 +13,12 @@
 \value{
   \item{dataset}{a dataframe of station number(s) and corresponding tidal form number(s).}
 }
+\references{
+http://wetlandsandr.wordpress.com/
+}
+\author{
+Troy D. Hill; Hill.Troy@Gmail.com
+}
 \examples{
 # Example is commented out because it requires an internet connection
 # a <- form.no()
