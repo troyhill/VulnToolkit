@@ -4,19 +4,19 @@ importFrom(RCurl,
            getURL)
 
 importFrom(XML,
-
            htmlParse, readHTMLTable, getNodeSet, xmlSApply)
 
-export(noaa, 
+export(fld.dur,
+       fld.frq,
+       form.no,
+       harcon,
        HL,
        HL.plot,
-       fld.dur,
-       fld.frq,
-       harcon,
-       number.tides,
-       noaa,
+       noaa, 
        noaa.datums,
-       psmsl.list,
+       noaa.stations,
+       number.tides,
+       psmsl.stations,
        psmsl,
        vuln.kit)
 

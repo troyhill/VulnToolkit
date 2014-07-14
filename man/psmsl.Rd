@@ -11,7 +11,7 @@ psmsl(station = 12, type = "RLR", interval = "annual")
 }
 \arguments{
   \item{station}{
-station name or number, or a vector of station names/numbers. Elements can be a character string (must match actual station name identically), or numeric station ID (no quotes: i.e., 12 rather than "12"). Use \code{\link{psmsl.list}} to find stations, or check www.psmsl.org. If multiple stations are included, their data is combined using rbind, making a long (rather than wide) dataset. Default station is the Battery, in New York City.
+station name or number, or a vector of station names/numbers. Elements can be a character string (must match actual station name identically), or numeric station ID (no quotes: i.e., 12 rather than "12"). Use \code{\link{psmsl.stations}} to find stations, or check www.psmsl.org. If multiple stations are included, their data is combined using rbind, making a long (rather than wide) dataset. Default station is the Battery, in New York City.
 }
   \item{type}{
 data quality class; can be 'metric' or 'RLR'. See www.psmsl.org for documentation.
@@ -25,11 +25,8 @@ A data frame \code{\link{data.frame}} containing the requested Permanent Service
 \references{
 http://wetlandsandr.wordpress.com/
 }
-\author{
-Troy D. Hill; Hill.Troy@Gmail.com
-}
 \seealso{
-\code{\link{psmsl.list}}
+\code{\link{psmsl.stations}}
 }
 \examples{
 # examples require internet connection

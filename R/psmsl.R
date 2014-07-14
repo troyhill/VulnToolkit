@@ -18,7 +18,7 @@ psmsl <- function(station = 12, type = "RLR", interval = "annual"){
     stop("'interval' argument must be either 'monthly' or 'annual'")
   }
   
-  stn.list <- psmsl.list() 
+  stn.list <- psmsl.stations() 
   
   for(i in 1:length(station)) {
     if(suppressWarnings(is.na(as.numeric(station[i]))) == FALSE) {

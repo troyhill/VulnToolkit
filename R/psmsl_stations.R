@@ -6,7 +6,7 @@
 # output: a dataframe listing all PSMSL stations meeting desired criteria and sorted according to 'sort.by'
 
 
-psmsl.list <- function(type = "RLR", country = "all", sort.by = "country") {
+psmsl.stations <- function(type = "RLR", country = "all", sort.by = "country") {
 #  require(XML)
   if(type == "RLR") {
     url <- "http://www.psmsl.org/data/obtaining/"

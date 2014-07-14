@@ -1,5 +1,5 @@
-\name{psmsl.list}
-\alias{psmsl.list}
+\name{psmsl.stations}
+\alias{psmsl.stations}
 \title{
 Generates a list of active and historic tide stations hosted by the Permanent Service for Mean Sea Level (www.psmsl.org)
 }
@@ -7,7 +7,7 @@ Generates a list of active and historic tide stations hosted by the Permanent Se
 This function scrapes data listings from www.psmsl.org.
 }
 \usage{
-psmsl.list(type = "RLR", country = "all", sort.by = "country")
+psmsl.stations(type = "RLR", country = "all", sort.by = "country")
 }
 \arguments{
   \item{type}{
@@ -26,16 +26,13 @@ A data frame \code{\link{data.frame}} containing all Permanent Service for Mean 
 \references{
 http://wetlandsandr.wordpress.com/
 }
-\author{
-Troy D. Hill; Hill.Troy@Gmail.com
-}
 \seealso{
 \code{\link{psmsl}}
 }
 \examples{
 # examples require internet connection
-# stn.list <- psmsl.list()
-# stn.list2 <- psmsl.list(country = "USA", sort.by = "date")
+# stn.df <- psmsl.stations()
+# stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")
 
 }
 \keyword{ ~IO }

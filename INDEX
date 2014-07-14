@@ -1,23 +1,26 @@
+fld.dur                 Calculates flooding duration
+fld.frq                 Calculates flooding frequency
+form.no                 Calculates tidal form number
+harcon                  Downloads harmonic constituents for
+                        NOAA CO-OPS tide stations
 HL                      Extract high and low tides from a
                         dataset of water levels
 HL.plot                 Plot high/low tides
-fld.dur                 Calculates flooding duration
-fld.frq                 Calculates flooding frequency
-harcon                  Downloads harmonic constituents for
-                        NOAA CO-OPS tide stations
 noaa                    Downloads tide data for NOAA CO-OPS
                         tide stations
 noaa.datums             Downloads tidal datums for NOAA
                         CO-OPS tide stations
-psmsl.list              Imports list of historic and active
+noaa.stations           Imports list of active NOAA
+                        CO-OPS tide stations
+                        Service for Mean Sea Level (www.psmsl.org)
+number.tides            Numbers tidal cycles
+psmsl.stations          Imports list of historic and active
                         stations monitored by the Permanent
                         Service for Mean Sea Level (www.psmsl.org)
 psmsl                   Imports tide data from historic and active
                         Permanent Service for Mean Sea Level
                         stations (www.psmsl.org)
-number.tides            Numbers tidal cycles
 vuln.kit                Vulnerability assessment tools
-form.no                 Calculates tidal form number
 NL_6min_2013            Tide data (6 minute intervals)
                         from NOAA station 8461490 in New 
                         London, CT
