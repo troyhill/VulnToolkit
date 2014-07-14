@@ -21,12 +21,12 @@ psmsl <- function(station = 12, type = "RLR", interval = "annual"){
   stn.list <- psmsl.list() 
   
   for(i in 1:length(station)) {
-    if(is.numeric(station[i]) == TRUE) {
+    if(is.na(as.numeric(station[i])) == FALSE) {
       stn.no <- station[i]
     } else {
-      if(station[i] %in% stn.list$name == TRUE) {
-        stn.no <- stn.list$ID[stn.list$name == station[i]]
-      } else if(station[i] %in% stn.list$name == FALSE) stop("identical match of station name not found - run psmsl.list() or check www.psmsl.org")
+      if(toupper(station[i]) %in% stn.list$name == TRUE) {
+        stn.no <- stn.list$ID[stn.list$name == toupper(station[i])]
+      } else if(toupper(station[i]) %in% stn.list$name == FALSE) stop("station name not found - to verify the name or find the station number, run psmsl.list() or check www.psmsl.org")
     }
     
     url <- paste0("http://www.psmsl.org/data/obtaining/", type, ".", interval, ".data/", stn.no, ".", type, "data")
