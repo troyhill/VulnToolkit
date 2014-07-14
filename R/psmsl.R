@@ -21,7 +21,7 @@ psmsl <- function(station = 12, type = "RLR", interval = "annual"){
   stn.list <- psmsl.list() 
   
   for(i in 1:length(station)) {
-    if(is.na(as.numeric(station[i])) == FALSE) {
+    if(suppressWarnings(is.na(as.numeric(station[i]))) == FALSE) {
       stn.no <- station[i]
     } else {
       if(toupper(station[i]) %in% stn.list$name == TRUE) {
