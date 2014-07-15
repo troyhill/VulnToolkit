@@ -7,7 +7,8 @@
 #' This code returns a dataframe showing all active stations in the NOAA CO-OPS network.
 #' This can be used to identify stations for use in \code{noaa()}. The argument
 #' \code{state} offers an easy way of subsetting the data frame to the state(s) of interest.
-#' 
+#'
+#' @usage \code{noaa.stations(state = "all")} 
 #' @param state limits printed records to a state or states of interest. Default is to
 #' show 'all' stations.
 #' @return A dataframe with station names, states/territories, and station numbers. If a 'state'

@@ -1,10 +1,10 @@
 \name{psmsl.stations}
 \alias{psmsl.stations}
 \title{
-Generates a list of active and historic tide stations hosted by the Permanent Service for Mean Sea Level (www.psmsl.org)
+Display PSMSL tide stations
 }
 \description{
-This function scrapes data listings from www.psmsl.org.
+Generates a list of active and historic tide stations hosted by the Permanent Service for Mean Sea Level (www.psmsl.org)
 }
 \usage{
 psmsl.stations(type = "RLR", country = "all", sort.by = "country")
