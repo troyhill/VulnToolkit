@@ -21,7 +21,7 @@ the criterion for sorting the final dataframe.  By default, output is sorted alp
 }
 }
 \value{
-A data frame \code{\link{data.frame}} containing all Permanent Service for Mean Sea Level stations meeting country code criterion. Data frame is sorted by the column specified in argument 'sort.by'
+A \code{data.frame} containing all Permanent Service for Mean Sea Level stations meeting country code criterion. Data frame is sorted by the column specified in argument 'sort.by'
 }
 \references{
 http://wetlandsandr.wordpress.com/

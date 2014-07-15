@@ -11,7 +11,7 @@
 #' @usage \code{noaa.stations(state = "all")} 
 #' @param state limits printed records to a state or states of interest. Default is to
 #' show 'all' stations.
-#' @return A dataframe with station names, states/territories, and station numbers. If a 'state'
+#' @return A \code{data.frame} with station names, states/territories, and station numbers. If a 'state'
 #' argument is provided that is not found on the NOAA site, an error message is displayed. If a
 #' vector of states is provided, some of which are invalid, a dataframe will be produced for the
 #' valid criteria and invalid criteria will be noted.
