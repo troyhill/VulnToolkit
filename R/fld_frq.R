@@ -1,14 +1,14 @@
-#' @title Calculates the frequency of tidal flooding
+#' @title Flooding frequency
 #'
 #' @description
 #' Calculates the frequency of high tides flooding an elevation of interest.
 #'
 #' @details
-#' @usage /code{fld.frq(x, ht, units = "tides")}
-#' @param x elevation of interest
+#' @usage /code{fld.frq(z, ht, units = "tides")}
+#' @param z elevation of interest
 #' ht a numeric vector of high tide levels
 #' units units for output. Default is /code{tides}; the number of flooding tides in the dataset. Alternatively, /code{percent} will return the proportion of tides flooding elevation /code{x}
-#' }
+#' @return value the number or percent of high tides in /code{vec} that fall above /code{z}
 #' @seealso 
 #' @references none
 #' @aliases 
@@ -33,16 +33,16 @@
 #' }
 
 
-fld.frq <- function(x, ht, units = "tides") {  
-  if(is.numeric(x) == FALSE) stop("'x' must be a numeric value")
-  if(is.numeric(ht) == FALSE) stop("high tide dataset ('ht') must be a numeric value")
+fld.frq <- function(z, ht, units = "tides") {  
+  if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")
+  if(is.numeric(ht) == FALSE) stop("high tide dataset ('ht') must be numeric")
   if(!units %in% c("tides", "percent"))  stop("'units' argument must be 'tides' or 'percent'")
   
   if(units == "tides"){
-    length(ht[ht >= x])
+    length(ht[ht >= z])
   } else {
     a <- ecdf(ht)
-    1 - a(x)
+    1 - a(z)
   }
 
 }

@@ -1,21 +1,21 @@
 \name{fld.frq}
 \alias{fld.frq}
-\title{Calculates the frequency of tidal flooding}
+\title{Flooding frequency}
 \description{
   Calculates the frequency of high tides flooding an elevation of interest.
 }
 \usage{
-  fld.frq(x, ht,  units = "tides") 
+  fld.frq(z, ht,  units = "tides") 
 }
 \arguments{
-  \item{x}{elevation of interest}
+  \item{z}{elevation of interest}
   
   \item{ht}{a numeric vector of high tide levels}
   
-  \item{units}{units for output. Default is /code{tides}; the number of flooding tides in the dataset. Alternatively, /code{percent} will return the proportion of tides flooding elevation /code{x}}
+  \item{units}{units for output. Default is /code{tides}; the number of flooding tides in the dataset. Alternatively, /code{percent} will return the proportion of tides flooding elevation /code{z}}
 }
 \value{
-  \item{value}{the number or percent of high tides in /code{vec} that fall above /code{x}}
+  \item{value}{the number or percent of high tides in /code{vec} that fall above /code{z}}
 }
 \examples{
 # get a dataset of high/low tides

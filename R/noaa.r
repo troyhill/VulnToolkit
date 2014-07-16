@@ -1,29 +1,40 @@
-### Function downloads and compiles tide data from NOAA CO-OPS website
-### Requires RCurl and XML packages - install.packages("RCurl"); install.packages("XML")
-
-### This version does not include a monthly time interval option
-### Code updated 20131120
-
-### Argument notes: 
-### - "begindate" and "enddate" set desired date range and must be in YYYYMMDD format
-###     if one or both dates are left unspecified, the first and/or last *full* day of 
-###     available data will be used. This does not always work because of issues with the CO-OPS site.
-### - "station" input is the station name or ID number, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels)
-### - "units" can be feet or meters
-### - "datum" can be station, NAVD, MLLW, MLW, MSL, MTL, MHW, MHHW, or IGLD (all datums are not available at all sites)
-### - "interval" sets measurement interval; can be HL, 6 minute, or hourly
-### - "time" can be LST, GMT, or LST/LDT. Not all time zones are available for 
-###    all data. GMT appears to have wider availability than LST, so it is now default
-###
-### Have a problem? Find a bug? Email Hill.Troy@gmail.com
+#' @title Downloads NOAA CO-OPS tide data
+#'
+#' @description
+#' Scrapes water level data from NOAA CO-OPS website. Requires internet connection.
+#'
+#' @details
+#' @usage /code{noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
+#' units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE")}
+#' @param begindate first day of data to download. Format must be YYYYMMDD. If left unspecified, the first complete day of data will be used.
+#' enddate final day of data to download. Format must be YYYYMMDD. If left unspecified, the last complete day of data will be used.
+#' station station name or ID number, available on CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.
+#' units can be 'feet' or 'meters'. Default is 'meters'
+#' datum vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)
+#' interval sets measurement interval; can be 'HL' (default), '6 minute', or 'hourly'. For data on monthly and annual time scales, see \code{\link{psmsl}}
+#' time can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. GMT appears to have wider availability than LST, so it is the default.
+#' continuous determines whether a continuous time series is produced, with lengthy gaps in data filled in with NAs. By default, this is \code{FALSE}. This option only applies to data at evenly spaced intervals (i.e., \code{6 minute} or \code{hourly})
+#' @return dataset a dataframe with water levels, associated time stamps, a station ID column, and tide type (if interval is set to \code{HL})
+#' @seealso \code{\link{noaa.stations}}
+#' @references none
+#' @aliases 
+#' @keywords 
+#' @export
+#' @examples
+#'# Example requires an internet connection
+#'# bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
+#'#     station = "Bridgeport, CT", interval = "6 minute")
+#'
+#'# test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
+#'# test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
+#'# nrow(test2.1) # includes data on NOAA site (incomplete record)
+#'# nrow(test2.2) # fills gaps with NAs
 
 
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
-                  units = "meters", datum = "MHW", interval = "HL", time = "GMT") {
+                  units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE") {
 
-#require(RCurl)
-#require(XML)
-
+if(!continuous %in% c("FALSE", "TRUE", "T", "F")) stop("'continuous' must be set to 'TRUE' or 'FALSE'")
 # set units                                                       
 if(units ==  "meters")       {
       u.csv <- u <- "metric"
@@ -156,17 +167,17 @@ if(enddate ==  "enddate")            {
 dates <- sdate
 if(interval == "HL") { if(sdate < first.rec | edate > last.rec) {
     stop("invalid time interval")
-    } else if( as.numeric(edate - sdate) > 365) {
+    } else if( as.numeric(edate - sdate) > 364) {
       dates <- seq(sdate,edate, 365)
     } else(dates <- c(sdate,edate))}
 if(interval == "hourly") { if(sdate < first.rec | edate > last.rec) {
     stop("invalid time interval")
-    } else if( as.numeric(edate - sdate) > 365) {
+    } else if( as.numeric(edate - sdate) > 364) {
       dates <- seq(sdate,edate, 365)
     } else(dates <- c(sdate,edate))}
 if(interval == "6 minute") { if(sdate < first.rec | edate > last.rec) {
     stop("invalid time interval")
-    } else if( as.numeric(edate - sdate) > 31)  {
+    } else if( as.numeric(edate - sdate) > 30)  {
       dates <- seq(sdate,edate, 31)
     } else(dates <- c(sdate,edate))}
 
@@ -177,10 +188,10 @@ dates2 <- format(as.Date(dates), "%Y%m%d")     # re-format dates for the url
 
 # create list of csv files
 for(i in 1:(length(dates2) - 1)) {
-  url.temp <- c(paste("http://co-ops.nos.noaa.gov/api/datagetter?product=", ti.csv, 
-  "&application=NOS.COOPS.TAC.WL&station=", station,  "&begin_date=", dates2[i], 
-  "&end_date=", dates2[i+1], "&datum=", datum, "&units=", u.csv, "&time_zone=", tz, 
-  "&format=csv", sep=""))
+  url.temp <- c(paste0("http://co-ops.nos.noaa.gov/api/datagetter?", "begin_date=", dates2[i], 
+                       "&end_date=", dates2[i+1], "&station=", station, "&product=", ti.csv, 
+                       "&units=", u.csv, "&time_zone=", tz, "&datum=", datum, 
+                       "&application=Tides_and_Currents","&format=csv"))
   if (!exists("url.list")){
       url.list <- url.temp
       }
@@ -192,7 +203,7 @@ for(i in 1:(length(dates2) - 1)) {
   }
 
 
-lapply.csv <- lapply(url.list, function(x)read.csv(x))
+lapply.csv <- lapply(url.list, function(x) read.csv(x))
 data.csv <- do.call(rbind, lapply.csv)
 data.csv$station <- rep(site.name, times = nrow(data.csv))
 
@@ -203,25 +214,41 @@ t.label <- paste("time (", time, ")", sep = "")
 # clean up the data
 if(interval == "HL" ) {
   data.csv$datetime <- as.POSIXct(data.csv[,1], format = "%Y-%m-%d %H:%M")
-  data.csv <- data.csv[, c(7,2,3,6)]  
+  data.csv <- data.csv[, c(7, 2, 3, 6)]
   names(data.csv) <- c(t.label, label, "tide", "station")
   levels(data.csv$tide) <- c("H", "HH", "L", "LL")
-  }
-                      
+}
+
 if(interval == "6 minute" ) {
   data.csv$datetime <- as.POSIXct(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
-  data.csv <- data.csv[, c(10,2,9)] 
-  names(data.csv) <- c(t.label, label, "station") 
-  }
+  data.csv <- data.csv[, c(10, 2, 9)]
+  names(data.csv) <- c(t.label, label, "station")
+}
 
 if(interval == "hourly" ) {
   data.csv$datetime <- as.POSIXct(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
-  data.csv <- data.csv[, c(7,2,6)]
+  data.csv <- data.csv[, c(7, 2, 6)]
   names(data.csv) <- c(t.label, label, "station") 
   }
 
-           
 
-invisible(data.csv[!duplicated(data.csv[,1]),])
+if(continuous == "TRUE" | continuous == "T" & interval == "hourly") {
+  data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
+  time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*60))
+  names(time.df)[1] <- t.label
+  data.csv <- join_all(list(time.df, data.csv))
+
+} else if(continuous == "TRUE" | continuous == "T" & interval == "6 minute") {
+  data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
+  time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*6))
+  names(time.df)[1] <- t.label
+  data.csv <- join_all(list(time.df, data.csv))
+
+} else if(continuous == "TRUE" | continuous == "T" & interval == "HL") {
+  print("'continuous' argument not used for high/low data")
+  data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
+} else data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
+
+invisible(data.csv)
 
 }

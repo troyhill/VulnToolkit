@@ -1,19 +1,19 @@
 \name{fld.dur}
 \alias{fld.dur}
-\title{Calculates the percent of time an elevation is submerged}
+\title{Flooding duration}
 \description{
   Calculates the percent of time an elevation is submerged
 }
 \usage{
-  fld.dur(x, vec = x) 
+  fld.dur(z, levels) 
 }
 \arguments{
-  \item{x}{elevation of interest}
+  \item{z}{elevation of interest}
   
-  \item{vec}{a numeric vector of water levels}
+  \item{levels}{a numeric vector of water levels. Time interval between measurements must be uniform.}
 }
 \value{
-  \item{value}{the decimal fraction of measurements in 'vec' that fall above 'x'}
+  \item{value}{the decimal fraction of measurements in /code{vec} that fall above /code{z}}
 }
 \examples{
 data(NL_6min_2013)

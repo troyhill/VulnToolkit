@@ -1,10 +1,13 @@
 #exportPattern("^[[:alpha:]]+")
 
+importFrom(XML,
+           htmlParse, readHTMLTable, getNodeSet, xmlSApply)
+
 importFrom(RCurl,
            getURL)
 
-importFrom(XML,
-           htmlParse, readHTMLTable, getNodeSet, xmlSApply)
+importFrom(plyr,
+           join_all)
 
 export(fld.dur,
        fld.frq,
