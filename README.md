@@ -10,8 +10,11 @@ VulnToolkit is an R package for users working with coastal datasets. Its primary
 To install and load VulnToolkit, run the following commands in R:
 
 `install.packages("devtools")` # if devtools isn't already installed
+
 `library(devtools)`
+
 `install_github("troyhill/VulnToolkit")`
+
 `library(VulnToolkit)`
 
 
