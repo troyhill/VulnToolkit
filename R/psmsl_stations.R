@@ -48,5 +48,6 @@ psmsl.stations <- function(type = "RLR", country = "all", sort.by = "country") {
  # sort by stated criterion
   s <- paste0("test[, '", sort.by, "']")  
   test <- test[order(eval(parse(text=s))), ]
+  rownames(test) <- 1:nrow(test)
   return(test)
 }
