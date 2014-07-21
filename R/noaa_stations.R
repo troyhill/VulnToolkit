@@ -58,6 +58,6 @@ noaa.stations <- function(state = "all") {
       print(not.found)
     }
   }
-  
+  rownames(output) <- 1:nrow(output)
   return(output)
 }
