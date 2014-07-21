@@ -27,7 +27,7 @@
 #' plot(elev.dur$dur ~ elev.dur$elev, pch = 19, ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
 
 
-fld.dur <- function(z, levels) {  
+fld.dur <- function(z, levels = z) {  
   if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")
   if(is.numeric(levels) == FALSE) stop("water level dataset ('levels') must be numeric")
 

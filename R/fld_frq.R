@@ -33,7 +33,7 @@
 #' }
 
 
-fld.frq <- function(z, ht, units = "percent") {  
+fld.frq <- function(z, ht = z, units = "percent") {  
   if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")
   if(is.numeric(ht) == FALSE) stop("high tide dataset ('ht') must be numeric")
   if(!units %in% c("tides", "percent"))  stop("'units' argument must be 'tides' or 'percent'")
