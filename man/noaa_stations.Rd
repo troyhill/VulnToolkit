@@ -8,20 +8,17 @@ Prints active NOAA stations
 }
 \details{
 This code returns a dataframe showing all active stations in the NOAA CO-OPS network.
-This can be used to identify stations for use in \code{noaa()} (see example below). The argument
-\code{state} offers an easy way of subsetting the data frame to the state(s) of interest.
+This can be used to identify stations for use in \code{noaa()} (see example below).
 }
 \usage{
 noaa.stations(state = "all")
 }
 \arguments{
-  \item{state}{
-state limits printed records to a state or states of interest. Default is to show 'all' stations.
+  \item{state}{limits printed records to a state or states of interest. Default is to show 'all' stations.
 }
 }
 \value{
-A dataframe with station names, states/territories, and station numbers. If a 'state'
-argument is provided that is not found on the NOAA site, an error message is displayed. If a
+A dataframe with station names, states/territories, and station numbers. If a
 vector of states is provided, some of which are invalid, a dataframe will be produced for the
 valid criteria and invalid criteria will be noted.
 }

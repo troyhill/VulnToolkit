@@ -8,7 +8,7 @@
   harcon(station)
 }
 \arguments{
-  \item{station}{station ID number, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels).}
+  \item{station}{station ID number, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels) or from \code{\link{noaa.stations}}.}
 }
 \value{
   \item{dataset}{a dataframe of harmonic constituents and their associated phases, amplitudes, and speeds.}

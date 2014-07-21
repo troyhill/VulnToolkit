@@ -8,16 +8,13 @@
   form.no(station)
 }
 \arguments{
-  \item{station}{station ID number(s), available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels). A list}
+  \item{station}{station ID number or vector of IDs, available on CO-OPS site (http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels) or from \code{\link{noaa.stations}}.}
 }
 \value{
   \item{dataset}{a dataframe of station number(s) and corresponding tidal form number(s).}
 }
 \references{
 http://wetlandsandr.wordpress.com/
-}
-\author{
-Troy D. Hill; Hill.Troy@Gmail.com
 }
 \examples{
 # Example is commented out because it requires an internet connection

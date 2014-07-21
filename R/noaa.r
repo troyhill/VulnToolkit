@@ -8,7 +8,7 @@
 #' units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE")}
 #' @param begindate first day of data to download. Format must be YYYYMMDD. If left unspecified, the first complete day of data will be used.
 #' enddate final day of data to download. Format must be YYYYMMDD. If left unspecified, the last complete day of data will be used.
-#' station station name or ID number, available on CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.
+#' station station name or ID number, available on the CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.
 #' units can be 'feet' or 'meters'. Default is 'meters'
 #' datum vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)
 #' interval sets measurement interval; can be 'HL' (default), '6 minute', or 'hourly'. For data on monthly and annual time scales, see \code{\link{psmsl}}

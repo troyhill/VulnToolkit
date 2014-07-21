@@ -1,8 +1,8 @@
 \name{noaa.datums}
 \alias{noaa.datums}
-\title{Scrapes elevation datums from NOAA-COOPS website}
+\title{Scrapes elevation datums from NOAA CO-OPS website}
 \description{
-  Scrapes elevation datums from NOAA-COOPS website. Requires internet connection.
+  Scrapes elevation datums from NOAA CO-OPS website. Requires internet connection.
 }
 \usage{
   noaa.datums(station = 8467150)
@@ -15,9 +15,6 @@
 }
 \references{
 http://wetlandsandr.wordpress.com/
-}
-\author{
-Troy D. Hill; Hill.Troy@Gmail.com
 }
 \examples{
 # Example is commented out because it requires an internet connection
