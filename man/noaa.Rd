@@ -14,7 +14,7 @@
   \item{station}{station name or ID number, available on the CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.}
   \item{units}{can be 'feet' or 'meters'. Default is 'meters'}
   \item{datum}{vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)}
-  \item{interval}{sets measurement interval; can be 'HL' (default), '6 minute', or 'hourly'. For data on monthly and annual time scales, see \code{\link{psmsl}}}
+  \item{interval}{interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. For data on monthly and annual time scales from Permanent Service for Mean Sea Level, see \code{\link{psmsl}}}
   \item{time}{can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. GMT appears to have wider availability than LST, so it is the default.}
   \item{continuous}{determines whether a continuous time series is produced, with lengthy gaps in data filled in with NAs. By default, this is \code{FALSE}. This option only applies to data at evenly spaced intervals (i.e., \code{6 minute} or \code{hourly})}
 }
