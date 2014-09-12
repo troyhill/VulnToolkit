@@ -1,26 +1,5 @@
-### Code to transform tidal data to a set of resources to evaluate vulnerability to sea level rise
-### 
-### Required arguments: 
-###      level: A numeric vector of water levels.
-###
-###      datetime: A POSIX* vector of time stamps that correspond to the measurements in 'level'.
-###
-###      platform: Elevation of the marsh platform (or another vertical position of interest). Should be
-###         in the units specified by 'units' argument and relative to the same vertical datum as 'level.'
-###
-### Optional arguments: 
-###      units: 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally 
-###         and output in meters.
-###
-###      frq.dur.inc: Elevation interval used to calculate flooding frequency, duration, D90, and Ax.
-###         Defaults to 0.005 m. Units must correspond to 'units' argument.
-###
-###      TV.inc: Elevation interval used to calculate vulnerability metrics (DV, D90V). 
-###         Defaults to 0.1 m. Units must correspond to 'units' argument.
-
-
 vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 0.005, 
-                     TV.inc = 0.1) {
+                     TV.inc = 0.1, period = 13) {
   
   if(is.numeric(level) == FALSE)
     stop("invalid entry: 'level' must be numeric")
@@ -62,35 +41,43 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   
 
   wl <- data.frame(datetime, level)
-  wl <- wl[wl$datetime <= wl$datetime[nrow(wl)] & wl$datetime > (wl$datetime[nrow(wl)] - 60*60*24*365), ]
-  wl$zeroed <- wl[,2] - platform
+  wl <- wl[wl$datetime <= wl$datetime[nrow(wl)] & wl$datetime > (wl$datetime[nrow(wl)] - 60 * 60 * 24 * 365), ]
+  wl$zeroed <- wl[, 2] - platform
+  high.low <- HL(level = level, time = datetime, period = period, tides = "H")
   
+#   a <- Sys.time()
   for(i in 1:length(elevation)) {
     
-    wl$ind <- ifelse(wl$zeroed > elevation[i] & !is.na(wl$zeroed), 1, 0)
-    wl.rle <- rle(wl$ind)
+    wl$ind <- ifelse(wl$zeroed > elevation[i] & !is.na(wl$zeroed), 1, 0) # is elevation flooded?
+    wl.rle <- rle(wl$ind) # calculate run lengths, used in D90 calculations
     
-    nos <- c(0,cumsum(wl$ind[-1L] != wl$ind[-length(wl$ind)])) 
+    ### This will change to freq. of flooding HTs 
+    nos <- c(0, cumsum(wl$ind[-1] != wl$ind[-length(wl$ind)])) 
     if(wl$ind[1] == 1) {  
-      frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 == 0]) / 2), 0)  
-    } else if(wl$ind[1] == 0) {
-      frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 != 0]) / 2), 0)
-    }
+      frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 == 0]) / 2), 0)  # if data starts out flooded, do this
+    } else frq.dur.df$frequency[i] <- round((max(nos[nos %% 2 != 0]) / 2), 0) # if starts out dry, do this
+    
+    ###
     
     frq.dur.df$duration[i] <- max(cumsum(wl$ind) ) * t.int / 60
-    frq.dur.df$D90[i]  <- as.numeric(quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60 
-    frq.dur.df$A[i]    <- mean(wl$zeroed[wl$ind == 1], na.rm = T) - elevation[i]
+    frq.dur.df$D90[i]      <- as.numeric(quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60 
+    frq.dur.df$A[i]        <- mean(wl$zeroed[wl$ind == 1], na.rm = T) - elevation[i]  # average of all flooded time points, not average of flooding high tide heights
+    frq.dur.df$A.ht[i]     <- mean(high.low$level[high.low$level >= elevation[i]], na.rm = T) - elevation[i]  # mean depth of flooding high tides
   }
+#   del <- Sys.time() - a
+#   del
   
   df <- frq.dur.df[frq.dur.df$elevation == 0, 2:5]
   df$DV   <- ( frq.dur.df$duration[frq.dur.df$elevation == paste("-", TV.inc, sep="")] - 
-                 frq.dur.df$duration[frq.dur.df$elevation == 0] ) / (TV.inc*100 * 
+                 frq.dur.df$duration[frq.dur.df$elevation == 0] ) / (TV.inc * 100 * 
                  frq.dur.df$duration[frq.dur.df$elevation == 0]) * 100 
   df$D90V <- ( frq.dur.df$D90[frq.dur.df$elevation == paste("-", TV.inc, sep="")] - 
-                 frq.dur.df$D90[frq.dur.df$elevation == 0] ) / (TV.inc*100 * 
+                 frq.dur.df$D90[frq.dur.df$elevation == 0] ) / (TV.inc * 100 * 
                  frq.dur.df$D90[frq.dur.df$elevation == 0]) * 100
   rownames(df) <- NULL
   
+  filename <- "VTK_output.png"
+  png(filename, height = 200, width = 200, units = "mm", res = 300)
   par(mfrow = c(2,2))
   par(mar = c(4,4.5,0.2,0.2), oma = c(1,0.2,0.2,0.2))
   
@@ -117,8 +104,9 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   axis(2, las=1)
 
   mtext("Elevation (m)", side = 1, outer = TRUE, cex = 1, line = 0)
+  dev.off()
 
-  
+print(paste0(filename, " saved to ", getwd()))
 value <- list(dataset = frq.dur.df,
                 metrics = df)
 }

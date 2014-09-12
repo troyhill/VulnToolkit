@@ -1,10 +1,10 @@
 \name{psmsl}
 \alias{psmsl}
 \title{
-Downloads tide data from www.psmsl.org
+Download MSL data from www.psmsl.org
 }
 \description{
-This function scrapes data stewarded by the Permanent Service for Mean Sea Level, according to user-defined criteria.
+\code{psmsl} imports data stewarded by the Permanent Service for Mean Sea Level.
 }
 \usage{
 psmsl(station = 12, type = "RLR", interval = "annual")
@@ -29,7 +29,7 @@ http://wetlandsandr.wordpress.com/
 \code{\link{psmsl.stations}}
 }
 \examples{
-# examples require internet connection
+# example requires internet connection
 # battery <- psmsl()
 # stations <- psmsl(station = c(1372, 12), interval = "monthly")
 }

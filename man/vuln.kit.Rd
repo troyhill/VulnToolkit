@@ -6,7 +6,7 @@
 }
 \usage{
 vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005, 
-                     TV.inc = 0.1)
+                     TV.inc = 0.1, period = 13)
 }
 \arguments{
   \item{level}{a numeric vector of water levels}
@@ -15,17 +15,19 @@ vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005,
 
   \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}.}
 
-  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are "feet," data is converted internally and output in meters.}
+  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are 'feet', data is converted internally and output in meters.}
 
   \item{frq.dur.inc}{elevation interval used to calculate flooding frequency, duration, D90, and Ax. Defaults to 0.005 m. Units must correspond to \code{units} argument}
 
-  \item{TV.inc}{Elevation interval used to calculate vulnerability metrics (DV, D90V). Defaults to 0.1 m. Units must correspond to \code{units} argument.}
+  \item{TV.inc}{elevation interval used to calculate vulnerability metrics (DV, D90V). Defaults to 0.1 m. Units must correspond to \code{units} argument.}
+
+\item{period}{estimated time between consecutive high tides. Default ('13') is set for semi-diurnal systems.}
 
 }
 \value{
 \item{output}{a list containing two items:}
 
-\item{dataset}{a dataframe of elevations (relative to elevation set in \code{platform} argument), flooding frequencies (flooding events per year), flooding durations (hr yr-1), duration of 90th percentile flooding event (D90; hr), and mean flooding depth (A; m)}
+\item{dataset}{a dataframe of elevations (relative to elevation set in \code{platform} argument), flooding frequencies (percent of tides flooding each elevation), flooding durations (percent of time flooded), duration of 90th percentile flooding event (D90; hr), and mean flooding depth (A; m)}
 
 \item{metrics}{a dataframe containing the flooding frequency, flooding duration, D90, mean flooding depth, duration vulnerability, and D90 vulnerability, calculated at the vertical elevation set by \code{platform} argument}
 
