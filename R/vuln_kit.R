@@ -45,7 +45,7 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   wl$zeroed <- wl[, 2] - platform
   high.low <- HL(level = level, time = datetime, period = period, tides = "H")
   
-#   a <- Sys.time()
+  #   a <- Sys.time()
   for(i in 1:length(elevation)) {
     
     wl$ind <- ifelse(wl$zeroed > elevation[i] & !is.na(wl$zeroed), 1, 0) # is elevation flooded?

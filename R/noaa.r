@@ -185,13 +185,25 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   dates2 <- format(as.Date(dates), "%Y%m%d")     # re-format dates for the url
   
+#   old version: 
+#   url.temp <- c(paste0("http://co-ops.nos.noaa.gov/api/datagetter?", "begin_date=", dates2[i], 
+#                        "&end_date=", dates2[i+1], "&station=", station, "&product=", ti.csv, 
+#                        "&units=", u.csv, "&time_zone=", tz, "&datum=", datum, 
+#                        "&application=Tides_and_Currents","&format=csv"))
+#   
   
   # create list of csv files
   for(i in 1:(length(dates2) - 1)) {
-    url.temp <- c(paste0("http://co-ops.nos.noaa.gov/api/datagetter?", "begin_date=", dates2[i], 
-                         "&end_date=", dates2[i+1], "&station=", station, "&product=", ti.csv, 
-                         "&units=", u.csv, "&time_zone=", tz, "&datum=", datum, 
-                         "&application=Tides_and_Currents","&format=csv"))
+    url.temp <- c(paste0("http://tidesandcurrents.noaa.gov/api/datagetter?", 
+                         "product=", ti.csv, 
+                         "&application=NOS.COOPS.TAC.WL",
+                         "&begin_date=", dates2[i], 
+                         "&end_date=", dates2[i+1], 
+                         "&datum=", datum, 
+                         "&station=", station,
+                         "&time_zone=", tz, 
+                         "&units=", u.csv, 
+                         "&format=csv"))
     if (!exists("url.list")){
       url.list <- url.temp
     }
@@ -213,20 +225,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   # clean up the data
   if(interval == "HL" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv[,1], format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
     data.csv <- data.csv[, c(7, 2, 3, 6)]
     names(data.csv) <- c(t.label, label, "tide", "station")
     levels(data.csv$tide) <- c("H", "HH", "L", "LL")
   }
   
   if(interval == "6 minute" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
     data.csv <- data.csv[, c(10, 2, 9)]
     names(data.csv) <- c(t.label, label, "station")
   }
   
   if(interval == "hourly" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv$Date.Time, format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
     data.csv <- data.csv[, c(7, 2, 6)]
     names(data.csv) <- c(t.label, label, "station") 
   }
@@ -260,8 +272,6 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     data.csv$Year[is.na(data.csv$station)] <- as.numeric(substr(data.csv$datetime[is.na(data.csv$station)], 1, 4))
     data.csv$Month[is.na(data.csv$station)] <- round((data.csv$datetime[is.na(data.csv$station)] - data.csv$Year[is.na(data.csv$station)]) * 12)
     data.csv$station[is.na(data.csv$station)] <- site.name
-  } else if(continuous == "FALSE" | continuous == "F" & interval == "monthly") {
-    data.csv <- data.csv[!duplicated(data.csv$datetime), ]
   } else data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
   
   invisible(data.csv)
