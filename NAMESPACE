@@ -9,7 +9,8 @@ importFrom(RCurl,
 importFrom(plyr,
            join_all)
 
-export(fld.dur,
+export(dur.bias,
+       fld.dur,
        fld.frq,
        form.no,
        harcon,
