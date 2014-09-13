@@ -267,12 +267,14 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   } else if(continuous == "TRUE" | continuous == "T" & interval == "monthly") {
     time.df <- data.frame(seq(from = data.csv$datetime[1], to = data.csv$datetime[nrow(data.csv)], by = 1 / 12))
     names(time.df) <- "datetime"
+    time.df$datetime <- round(time.df$datetime, 2)
+    data.csv$datetime <- round(data.csv$datetime, 2)
     data.csv <- join_all(list(time.df, data.csv))
     data.csv$Year <- as.numeric(data.csv$Year)
     data.csv$Year[is.na(data.csv$station)] <- as.numeric(substr(data.csv$datetime[is.na(data.csv$station)], 1, 4))
     data.csv$Month[is.na(data.csv$station)] <- round((data.csv$datetime[is.na(data.csv$station)] - data.csv$Year[is.na(data.csv$station)]) * 12)
     data.csv$station[is.na(data.csv$station)] <- site.name
-  } else data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
+  } else data.csv <- data.csv[!duplicated(data.csv$datetime), ]
   
   invisible(data.csv)
   
