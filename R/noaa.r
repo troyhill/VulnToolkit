@@ -32,7 +32,7 @@
 
 
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
-                 units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE") {
+                 units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "TRUE") {
   
   if(!continuous %in% c("FALSE", "TRUE", "T", "F")) stop("'continuous' must be set to 'TRUE' or 'FALSE'")
   # set units                                                       
