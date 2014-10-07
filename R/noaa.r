@@ -248,19 +248,19 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  if(continuous == "TRUE" | continuous == "T" & interval == "hourly") {
+  if(interval == "hourly" & continuous == "TRUE" | continuous == "T") {
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*60))
     names(time.df)[1] <- t.label
     data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
-  } else if(continuous == "TRUE" | continuous == "T" & interval == "6 minute") {
+  } else if(interval == "6 minute" & continuous == "TRUE" | continuous == "T") {
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*6))
     names(time.df)[1] <- t.label
     data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
-  } else if(continuous == "TRUE" | continuous == "T" & interval == "HL") {
+  } else if(interval == "HL" & continuous == "TRUE" | continuous == "T") {
     print("'continuous' argument not used for high/low data")
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     
@@ -274,7 +274,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     data.csv$Year[is.na(data.csv$station)] <- as.numeric(substr(data.csv$datetime[is.na(data.csv$station)], 1, 4))
     data.csv$Month[is.na(data.csv$station)] <- round((data.csv$datetime[is.na(data.csv$station)] - data.csv$Year[is.na(data.csv$station)]) * 12)
     data.csv$station[is.na(data.csv$station)] <- site.name
-  } else data.csv <- data.csv[!duplicated(data.csv$datetime), ]
+  } else data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
   
   invisible(data.csv)
   
