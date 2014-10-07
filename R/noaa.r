@@ -260,10 +260,6 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     names(time.df)[1] <- t.label
     data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
-  } else if(interval == "HL" & continuous == "TRUE" | continuous == "T") {
-    print("'continuous' argument not used for high/low data")
-    data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
-    
   } else if(continuous == "TRUE" | continuous == "T" & interval == "monthly") {
     time.df <- data.frame(seq(from = data.csv$datetime[1], to = data.csv$datetime[nrow(data.csv)], by = 1 / 12))
     names(time.df) <- "datetime"
