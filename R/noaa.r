@@ -248,19 +248,19 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  if(interval == "hourly" & continuous == "TRUE" | continuous == "T") {
+  if(interval == "hourly" & (continuous == "TRUE" | continuous == "T")) {
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*60))
     names(time.df)[1] <- t.label
     data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
-  } else if(interval == "6 minute" & continuous == "TRUE" | continuous == "T") {
+  } else if(interval == "6 minute" & (continuous == "TRUE" | continuous == "T")) {
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*6))
     names(time.df)[1] <- t.label
     data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
-  } else if(continuous == "TRUE" | continuous == "T" & interval == "monthly") {
+  } else if(interval == "monthly" & (continuous == "TRUE" | continuous == "T" )) {
     time.df <- data.frame(seq(from = data.csv$datetime[1], to = data.csv$datetime[nrow(data.csv)], by = 1 / 12))
     names(time.df) <- "datetime"
     time.df$datetime <- round(time.df$datetime, 2)
