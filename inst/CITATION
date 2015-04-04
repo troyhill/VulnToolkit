@@ -8,7 +8,7 @@ bibentry("Manual",
          
          textVersion = 
          paste("Troy D. Hill and Shimon C. Anisfeld (2014). ", 
-               "VTK: R for coastal vulnerability analysis",
+               "VulnToolkit: R for coastal vulnerability analysis",
                "Yale School of Forestry and Environmental Studies, New Haven, CT",
                "URL https://github.com/troyhill/VulnToolkit.",
                sep=""),
