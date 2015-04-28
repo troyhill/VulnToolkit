@@ -32,4 +32,11 @@ http://wetlandsandr.wordpress.com/
 \examples{
 # examples require internet connection
 # stn.df <- psmsl.stations()
+<<<<<<< HEAD
 # stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")}
+=======
+# stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")
+
+}
+\keyword{ ~IO }
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302

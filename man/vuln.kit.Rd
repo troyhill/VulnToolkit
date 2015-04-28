@@ -6,13 +6,18 @@
 }
 \usage{
 vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005, 
+<<<<<<< HEAD
                      TV.inc = 0.1, period = 13, filename = "VTK_output.png")
+=======
+                     TV.inc = 0.1, period = 13)
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 }
 \arguments{
   \item{level}{a numeric vector of water levels}
 
   \item{datetime}{a POSIX* vector of time stamps that correspond to the measurements in 'level'}
 
+<<<<<<< HEAD
   \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}}
 
   \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are 'feet', data is converted internally and output in meters}
@@ -27,6 +32,21 @@ vuln.kit(level, datetime, platform, units = "meters", frq.dur.inc = 0.005,
 }
 \value{
 \item{output}{a figure is returned, showing how flooding parameters vary as a function of elevation. Output also includes a list that contains two items:}
+=======
+  \item{platform}{elevation of the marsh platform (or another vertical position of interest). Should be in the units specified by \code{units} and relative to the same vertical datum as \code{level}.}
+
+  \item{units}{length units used. 'meters' is default; 'feet' is alternative. If units are 'feet', data is converted internally and output in meters.}
+
+  \item{frq.dur.inc}{elevation interval used to calculate flooding frequency, duration, D90, and Ax. Defaults to 0.005 m. Units must correspond to \code{units} argument}
+
+  \item{TV.inc}{elevation interval used to calculate vulnerability metrics (DV, D90V). Defaults to 0.1 m. Units must correspond to \code{units} argument.}
+
+\item{period}{estimated time between consecutive high tides. Default ('13') is set for semi-diurnal systems.}
+
+}
+\value{
+\item{output}{a list containing two items:}
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 
 \item{dataset}{a dataframe of elevations (relative to elevation set in \code{platform} argument), flooding frequencies (percent of tides flooding each elevation), flooding durations (percent of time flooded), duration of 90th percentile flooding event (D90; hr), and mean flooding depth (A; m)}
 

@@ -1,12 +1,16 @@
 #exportPattern("^[[:alpha:]]+")
 
 importFrom(XML,
+<<<<<<< HEAD
            htmlParse, 
            readHTMLTable, 
            getNodeSet,
            getSibling,
            xmlSApply, 
            xmlValue)
+=======
+           htmlParse, readHTMLTable, getNodeSet, xmlSApply)
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 
 importFrom(RCurl,
            getURL)
@@ -15,7 +19,10 @@ importFrom(plyr,
            join_all)
 
 export(dur.bias,
+<<<<<<< HEAD
        fld.depth,
+=======
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
        fld.dur,
        fld.frq,
        form.no,

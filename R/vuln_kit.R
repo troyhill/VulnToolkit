@@ -1,5 +1,9 @@
 vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 0.005, 
+<<<<<<< HEAD
                      TV.inc = 0.1, period = 13, filename = "VTK_output.png") {
+=======
+                     TV.inc = 0.1, period = 13) {
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
   
   if(is.numeric(level) == FALSE)
     stop("invalid entry: 'level' must be numeric")
@@ -48,8 +52,12 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
   #   a <- Sys.time()
   for(i in 1:length(elevation)) {
     
+<<<<<<< HEAD
     # is elevation flooded? "flooded" includes target elevation
     wl$ind <- ifelse(wl$zeroed >= elevation[i] & !is.na(wl$zeroed), 1, 0) 
+=======
+    wl$ind <- ifelse(wl$zeroed > elevation[i] & !is.na(wl$zeroed), 1, 0) # is elevation flooded?
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
     wl.rle <- rle(wl$ind) # calculate run lengths, used in D90 calculations
     
     ### This will change to freq. of flooding HTs 
@@ -63,7 +71,11 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
     frq.dur.df$duration[i] <- max(cumsum(wl$ind) ) * t.int / 60
     frq.dur.df$D90[i]      <- as.numeric(quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60 
     frq.dur.df$A[i]        <- mean(wl$zeroed[wl$ind == 1], na.rm = T) - elevation[i]  # average of all flooded time points, not average of flooding high tide heights
+<<<<<<< HEAD
     frq.dur.df$A.ht[i]     <- mean(high.low$level[high.low$level >= elevation[i]], na.rm = T) - elevation[i]  # mean depth of flooding high tides. inclusive of target elevation
+=======
+    frq.dur.df$A.ht[i]     <- mean(high.low$level[high.low$level >= elevation[i]], na.rm = T) - elevation[i]  # mean depth of flooding high tides
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
   }
 #   del <- Sys.time() - a
 #   del
@@ -77,6 +89,10 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
                  frq.dur.df$D90[frq.dur.df$elevation == 0]) * 100
   rownames(df) <- NULL
   
+<<<<<<< HEAD
+=======
+  filename <- "VTK_output.png"
+>>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
   png(filename, height = 200, width = 200, units = "mm", res = 300)
   par(mfrow = c(2,2))
   par(mar = c(4,4.5,0.2,0.2), oma = c(1,0.2,0.2,0.2))
