@@ -1,0 +1,19 @@
+bibentry("Manual",
+         title = "VulnToolkit: R for coastal vulnerability analysis",
+         author = person("Troy D. Hill, Shimon C. Anisfeld"),
+         organization = "Yale School of Forestry and Environmental Studies",
+         address      = "New Haven, CT",
+         year         = "2014",
+         url          = "https://github.com/troyhill/VulnToolkit",
+         
+         textVersion = 
+         paste("Troy D. Hill and Shimon C. Anisfeld (2014). ", 
+               "VulnToolkit: R for coastal vulnerability analysis",
+               "Yale School of Forestry and Environmental Studies, New Haven, CT",
+               "URL https://github.com/troyhill/VulnToolkit.",
+               sep=""),
+         
+         mheader = "To cite VulnToolkit in publications use:",
+   
+	       mfooter = ""
+	)

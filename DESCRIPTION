@@ -1,0 +1,11 @@
+Package: VulnToolkit
+Type: Package
+Title: Tools for analysis of coastal wetlands
+Version: 1.0.3
+Date: 2014-04-10
+Author: Troy D. Hill <Hill.Troy@gmail.com>, Shimon C. Anisfeld <Shimon.Anisfeld@Yale.edu>
+Maintainer: Troy D. Hill <Hill.Troy@gmail.com>
+Description: A set of web scrapers and analytical tools to aid analysis of coastal wetlands and their vulnerability to sea level rise. 
+License: GPL-3
+URL: https://github.com/troyhill/VulnToolkit
+Depends: XML, RCurl, plyr, R (>= 3.0)

@@ -1,0 +1,35 @@
+#exportPattern("^[[:alpha:]]+")
+
+importFrom(XML,
+           htmlParse, 
+           readHTMLTable, 
+           getNodeSet,
+           getSibling,
+           xmlSApply, 
+           xmlValue)
+
+importFrom(RCurl,
+           getURL)
+
+importFrom(plyr,
+           join_all)
+
+export(dur.bias,
+       fld.depth,
+       fld.dur,
+       fld.frq,
+       form.no,
+       harcon,
+       HL,
+       HL.plot,
+       noaa, 
+       noaa.datums,
+       noaa.stations,
+       number.tides,
+       psmsl.stations,
+       psmsl,
+       vuln.kit)
+
+### Local variables:
+### mode: R
+### End:
