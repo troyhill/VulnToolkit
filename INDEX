@@ -1,8 +1,5 @@
 dur.bias                Calculates bias in flooding duration estimates
-<<<<<<< HEAD
 fld.depth               Calculates flooding depth
-=======
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 fld.dur                 Calculates flooding duration
 fld.frq                 Calculates flooding frequency
 form.no                 Calculates tidal form number
@@ -11,10 +8,6 @@ harcon                  Downloads harmonic constituents for
 HL                      Extract high and low tides from a
                         dataset of water levels
 HL.plot                 Plot high/low tides
-<<<<<<< HEAD
-=======
-ht.corr                 Correlates local high tide data with a nearby NOAA station
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 noaa                    Downloads tide data for NOAA CO-OPS
                         tide stations
 noaa.datums             Downloads tidal datums for NOAA

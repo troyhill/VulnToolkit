@@ -14,10 +14,5 @@ bibentry("Manual",
                sep=""),
          
          mheader = "To cite VulnToolkit in publications use:",
-   
-<<<<<<< HEAD
 	       mfooter = ""
-=======
-	      mfooter = ""
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
-	)
+)
