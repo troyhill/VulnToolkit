@@ -12,12 +12,8 @@ between flooding duration and elevation in datasets covering two time periods: (
 water level logger deployment, and (2) the reference time period (some number of years).
 }
 \usage{
-<<<<<<< HEAD
 dur.bias(data, station = 8518750, 
   ref.period = c("20120101", "20121231"), time = "GMT")
-=======
-dur.bias(data, station = 8518750, ref.period = c("20120101", "20121231"), time = "GMT")
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
 }
 \arguments{
   \item{data}{
@@ -57,9 +53,4 @@ http://wetlandsandr.wordpress.com/
 \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
 }
 \examples{
-<<<<<<< HEAD
-# example requires internet connection}
-=======
-# example requires internet connection
 }
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
