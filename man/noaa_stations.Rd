@@ -33,10 +33,5 @@ http://co-ops.nos.noaa.gov/stations.html
 # b <- noaa.stations(state = "MA") 
 # c <- noaa.stations(state = c("RI", "CT"))
 # d <- noaa.stations(state = c("OR", "RI", "MA", "Germany", "Pluto")) # two erroneous entries 
-<<<<<<< HEAD
-# highlow <- noaa(station = d[1,1], begindate = 20130101)}
-=======
 # highlow <- noaa(station = d[1,1], begindate = 20130101)
 }
-\keyword{ ~IO }
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
