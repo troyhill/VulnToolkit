@@ -31,10 +31,5 @@ http://wetlandsandr.wordpress.com/
 \examples{
 # example requires internet connection
 # battery <- psmsl()
-<<<<<<< HEAD
-# stations <- psmsl(station = c(1372, 12), interval = "monthly")}
-=======
 # stations <- psmsl(station = c(1372, 12), interval = "monthly")
 }
-\keyword{ ~IO }
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
