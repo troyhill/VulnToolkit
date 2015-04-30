@@ -26,10 +26,6 @@ b * length(NL_6min_2013[,2]) / 10 # hours per year
 elev.dur <- data.frame(elev = seq(from = -0.5, to = 1.25, by = 0.005))
 elev.dur$dur <- fld.dur(elev.dur$elev, NL_6min_2013[,2]) * length(NL_6min_2013[,2]) / 10 
 
-<<<<<<< HEAD
 plot(elev.dur$dur ~ elev.dur$elev, pch = 19, ylab = "flooding duration (hours per year)", 
-  xlab = "elevation (m; MLLW)")}
-=======
-plot(elev.dur$dur ~ elev.dur$elev, pch = 19, ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
+  xlab = "elevation (m; MLLW)")
 }
->>>>>>> d0e32ede8235fca8b8a3e150d38eeaada1b1f302
