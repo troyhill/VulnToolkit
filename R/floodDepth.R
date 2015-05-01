@@ -6,7 +6,7 @@ fld.depth <- function(level, elevation, percentile = 0.5) {
       flooded <- level[level >= elevation[i] & !is.na(level)]
       ifelse(percentile == 0.5, 
          # return depths relative to elevation of interest
-         percentileDepth <- median(flooded, percentile)   - elevation[i], # median() is faster than quantile
+         percentileDepth <- median(flooded) - elevation[i], # median() is faster than quantile
          percentileDepth <- quantile(flooded, percentile) - elevation[i]
       )
     A[i] <- percentileDepth
