@@ -12,10 +12,10 @@
   
   \item{ht}{a numeric vector of high tide levels}
   
-  \item{units}{units for output. Default is /code{percent}; the proportion of tides flooding elevation /code{x}. Alternatively, /code{tides} will return the number of flooding tides in the dataset.}
+  \item{units}{units for output. Default is \code{percent}; the proportion of tides flooding elevation \code{x}. Alternatively, \code{tides} will return the number of flooding tides in the dataset.}
 }
 \value{
-  \item{value}{the number or percent of high tides in /code{vec} that fall above /code{z}}
+  \item{value}{the number or percent of high tides in \code{ht} that fall above \code{z}}
 }
 \examples{
 # get a dataset of high/low tides

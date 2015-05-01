@@ -5,15 +5,15 @@
   Calculates the percent of time an elevation is submerged
 }
 \usage{
-  fld.dur(z, levels) 
+  fld.dur(z, level) 
 }
 \arguments{
   \item{z}{elevation of interest}
   
-  \item{levels}{a numeric vector of water levels. Time interval between measurements must be uniform.}
+  \item{level}{a numeric vector of water levels. Time interval between measurements must be uniform.}
 }
 \value{
-  \item{value}{the decimal fraction of measurements in /code{vec} that fall above /code{z}}
+  \item{value}{the decimal fraction of measurements in \code{level} that fall above \code{z}}
 }
 \examples{
 data(NL_6min_2013)

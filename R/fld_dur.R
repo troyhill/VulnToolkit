@@ -4,10 +4,10 @@
 #' Calculates the percent of time an elevation is submerged
 #'
 #' @details
-#' @usage /code{fld.frq(z, levels)}
+#' @usage /code{fld.frq(z, level)}
 #' @param z elevation of interest
 #' levels a numeric vector of water levels. Time interval between measurements must be uniform.
-#' @return value the decimal fraction of measurements in /code{vec} that fall above /code{z}
+#' @return value the decimal fraction of measurements in \code{level} that fall above \code{z}
 #' @seealso 
 #' @references none
 #' @aliases 
@@ -27,10 +27,10 @@
 #' plot(elev.dur$dur ~ elev.dur$elev, pch = 19, ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
 
 
-fld.dur <- function(z, levels = z) {  
+fld.dur <- function(z, level = z) {  
   if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")
-  if(is.numeric(levels) == FALSE) stop("water level dataset ('levels') must be numeric")
+  if(is.numeric(level) == FALSE) stop("water level dataset ('level') must be numeric")
 
-  a <- ecdf(levels)
+  a <- ecdf(level)
   1 - a(z)
 }
