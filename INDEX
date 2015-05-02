@@ -1,4 +1,5 @@
 dur.bias                Calculates bias in flooding duration estimates
+dur.events              Calculates duration of individual flood events
 fld.depth               Calculates flooding depth
 fld.dur                 Calculates flooding duration
 fld.frq                 Calculates flooding frequency

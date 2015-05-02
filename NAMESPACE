@@ -15,6 +15,7 @@ importFrom(plyr,
            join_all)
 
 export(dur.bias,
+       dur.events,
        fld.depth,
        fld.dur,
        fld.frq,
