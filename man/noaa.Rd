@@ -36,8 +36,8 @@ The NOAA CO-OPS website has many odd data availabilty problems. Some data are no
 # bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
 #     station = "Bridgeport, CT", interval = "6 minute")
 #
-# test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
-# test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
+# test2.1 <- noaa("20100101", "20120101", interval = "hourly", continuous = "FALSE") 
+# test2.2 <- noaa("20100101", "20120101", interval = "hourly") 
 # nrow(test2.1) # includes data on NOAA site (incomplete record)
 # nrow(test2.2) # fills gaps with NAs
 }
