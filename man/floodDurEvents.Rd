@@ -5,7 +5,8 @@
   The duration of individual flooding events is calculated from water level data. \code{dur.events()} differs from \code{fld.dur()} in that the former examines individual flooding events, rather than cumulative inundation times.
 }
 \usage{
-dur.events(level, elevation, percentile = 0.5, units = "1 observation")
+dur.events(level, elevation, percentile = 0.5, 
+  units = "1 observation")
 }
 \arguments{
   \item{level}{a numeric vector of water levels or tide data}

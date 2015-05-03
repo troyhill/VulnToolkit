@@ -24,6 +24,7 @@ psmsl                   Imports tide data from historic and active
                         Permanent Service for Mean Sea Level
                         stations (www.psmsl.org)
 vuln.kit                Vulnerability assessment tools
+wave.dur                Calculates time when water surface is near an elevation
 NL_6min_2013            Tide data (6 minute intervals)
                         from NOAA station 8461490 in New 
                         London, CT

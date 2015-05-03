@@ -29,7 +29,8 @@ export(dur.bias,
        number.tides,
        psmsl.stations,
        psmsl,
-       vuln.kit)
+       vuln.kit,
+       wave.dur)
 
 ### Local variables:
 ### mode: R
