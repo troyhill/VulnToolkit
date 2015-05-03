@@ -26,6 +26,6 @@ wave.dur(NL_6min_2013[, 2], MHW)
 
 # function accepts and returns vectors
 elevs           <- data.frame(elevs = c(-1000:1500) / 10^3)
-elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs, buffer = 0.100)
+elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
 plot(elevs)
 }
