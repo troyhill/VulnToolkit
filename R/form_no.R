@@ -8,9 +8,10 @@
 form.no <- function(station = 8467150){
 if(length(station) == 1){ 
   h <- harcon(station)
+  
   f <- (h[, 3][h$hc.name == "K1"] + h[, 3][h$hc.name == "O1"]) / 
        (h[, 3][h$hc.name == "M2"] + h[, 3][h$hc.name == "S2"])     
-  data.frame(station = station, form.number = f)
+  harcon.data <- data.frame(station = station, form.number = f)
 } else if(length(station) > 1){
   harcon_list <- lapply(station, function(x) harcon(x))
     
@@ -19,11 +20,13 @@ if(length(station) == 1){
     f <- (tmp[, 3][tmp$hc.name == "K1"] + tmp[, 3][tmp$hc.name == "O1"]) / 
       (tmp[, 3][tmp$hc.name == "M2"] + tmp[, 3][tmp$hc.name == "S2"])     
     harcon.data.tmp <- data.frame(station = station[i], form.number = f)
+    
     if (exists("harcon.data")){
       harcon.data <- rbind(harcon.data, harcon.data.tmp)  
     }else if (!exists("harcon.data")){
       harcon.data <- harcon.data.tmp 
-    }}
-  harcon.data
+    }
+  }
 }
+harcon.data
 }
