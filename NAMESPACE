@@ -6,7 +6,9 @@ importFrom(XML,
            getNodeSet,
            getSibling,
            xmlSApply, 
-           xmlValue)
+           xmlValue,
+           xpathSApply,
+           saveXML)
 
 importFrom(RCurl,
            getURL)

@@ -6,7 +6,7 @@
 }
 \usage{
   noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
-    units = "meters", datum = "MHW", interval = "HL", 
+    met = "FALSE", units = "meters", datum = "MHW", interval = "HL", 
     time = "GMT", continuous = "TRUE")
 }
 \arguments{
@@ -15,6 +15,7 @@
   \item{station}{station name or ID number, available on the CO-OPS website or by 
     using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
     corresponding to the station name. Default station is Bridgeport, CT.}
+    \item{met}{If "TRUE", meteorological data are also downloaded (if available). Meteorological data are not downloaded if the time interval used is \code{high/low} or \code{monthly}.}
   \item{units}{can be 'feet' or 'meters'. Default is 'meters'}
   \item{datum}{vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)}
   \item{interval}{interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. For data on monthly and annual time scales from Permanent Service for Mean Sea Level, see \code{\link{psmsl}}}

@@ -5,10 +5,11 @@
 #'
 #' @details
 #' @usage /code{noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
-#' units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE")}
+#' met = "FALSE", units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE")}
 #' @param begindate first day of data to download. Format must be YYYYMMDD. If left unspecified, the first complete day of data will be used.
 #' enddate final day of data to download. Format must be YYYYMMDD. If left unspecified, the last complete day of data will be used.
 #' station station name or ID number, available on the CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.
+#' met whether meteorological data should be returned. This value can be 'TRUE' or 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only works with 6-minute and hourly data
 #' units can be 'feet' or 'meters'. Default is 'meters'
 #' datum vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)
 #' interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. For data on monthly and annual time scales from Permanent Service for Mean Sea Level, see \code{\link{psmsl}}
@@ -32,52 +33,139 @@
 
 
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
-                 units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "TRUE") {
+                 met = "FALSE", units = "meters", datum = "MHW", interval = "HL", 
+                 time = "GMT", continuous = "TRUE") {
   
-  if(!continuous %in% c("FALSE", "TRUE", "T", "F")) stop("'continuous' must be set to 'TRUE' or 'FALSE'")
+  getDates <- function(startDate, endDate, dataType, 
+                       first.record = startDate, last.record = endDate) {
+    # function produces a vector of dates used to download data
+    startDate <- as.Date(gsub("-", "", startDate), tz = posix.tz, format = "%Y%m%d")
+    endDate   <- as.Date(gsub("-", "", endDate), tz = posix.tz, format = "%Y%m%d")
+    
+    dates <- startDate
+    if (dataType == "HL") { 
+      if (startDate < first.record | endDate > last.record)   {
+        stop ("invalid time interval")
+      } else if (as.numeric(endDate - startDate) > 364) {
+        dates <- seq(startDate, endDate, 365)
+      } else (dates <- c(startDate, endDate))
+    }
+    if (dataType == "6 minute") {
+      if (startDate < first.record | endDate > last.record)   {
+        stop ("invalid time interval")
+      } else if (as.numeric(endDate - startDate) > 30)  {
+        dates <- seq(startDate, endDate, 31)
+      } else (dates <- c(startDate, endDate))
+    }
+    if (dataType == "hourly") {
+      if (startDate < first.record | endDate > last.record)   {
+        stop ("invalid time interval")
+      } else if ( as.numeric(endDate - startDate) > 364) {
+        dates <- seq(startDate, endDate, 365)
+      } else (dates <- c(startDate, endDate))
+    }
+    
+    if (!endDate %in% dates[length(dates)]) {
+      dates <- c(dates, endDate)
+    }
+    
+    returnedDates <- gsub("-", "", as.character(dates))     # re-format dates for the url
+    returnedDates <- returnedDates[!is.na(returnedDates)]
+  }
+  
+  
+  
+  getParamVec <- function(stn = station) {
+    # this function returns a cleaned up version of the parameter list page for a site
+    # it's needed because the parameter on the first line is consistently missed during an XML conversion.
+    # I should call this once, and use the start and end dates for all data downloads
+    
+    allParams <- data.frame(params = as.character(NA), startDate = NA, endDate = NA)
+    tempDoc      <- htmlParse(getURL(paste0("http://co-ops.nos.noaa.gov/inventory.html?id=", stn)),
+                              useInternalNodes = TRUE)
+    TempNodes    <- getNodeSet(tempDoc, "//tr")
+    for (i in 2:length(TempNodes)) {
+      out2   <- xpathSApply(tempDoc, "//tr", saveXML)[i] # converts to char vector
+      # get parameter name
+      line   <- strsplit(out2, "/div>")[[1]][2]
+      
+      pName  <- strsplit(line, "</td>")[[1]][1]
+      pStart <- substr(strsplit(line, "bdate=")[[1]][2], 1, 8)
+      pEnd   <- substr(strsplit(line, "edate=")[[1]][2], 1, 8)
+      tempParams <- data.frame(params = pName, startDate = pStart, endDate = pEnd)
+      allParams <- rbind(allParams, tempParams)
+    }
+    invisible(allParams[!is.na(allParams$startDate), ])
+  }
+  
+  siteParameters <- getParamVec()
+  
+  # set acceptable true/flase values
+  T.vals  <- c("TRUE", "T", "True")
+  F.vals  <- c("FALSE", "F", "False")
+  TF.vals <- c(T.vals, F.vals)
+  
+  if (!continuous %in% TF.vals) 
+    stop ("'continuous' must be set to 'TRUE' or 'FALSE'")
+  if (!met %in% TF.vals) 
+    stop ("'met' must be set to 'TRUE' or 'FALSE'")
+  
+  if ((interval %in% c("HL", "monthly")) & met %in% T.vals) {
+    met <- "FALSE"
+    print("`met = TRUE` is not consistent with monthly or HL water levels. If meteorological data are desired, request 6 minute or hourly data.")
+  }
+  
   # set units                                                       
-  if(units ==  "meters")       {
+  if (units ==  "meters")       {
     u.csv <- u <- "metric"
-  } else if(units ==  "feet") {
-    u <- "standard"
+  } else if (units ==  "feet")  {
+    u     <- "standard"
     u.csv <- "english"
-  }  else stop("invalid units: must be 'feet' or 'meters' ")
-  
-  
+  } else stop ("invalid units: must be 'feet' or 'meters' ")
   
   # set datum
-  if(datum %in% c("STND", "MHHW", "MHW", "MTL", "MSL", "MLW", "MLLW", "NAVD", "IGLD")){
+  if (datum %in% c("STND", "MHHW", "MHW", "MTL", "MSL", "MLW", "MLLW", "NAVD", "IGLD")) {
     datum <- datum  
-  } else stop("invalid datum: must be 'STND', 'MHHW', 'MHW', 'MTL',
+  } else stop ("invalid datum: must be 'STND', 'MHHW', 'MHW', 'MTL',
     'MSL', 'MLW', 'MLLW', 'IGLD', or 'NAVD'")
   
   # set measurement time interval        
-  if(interval ==  "6 minute")                   {
-    ti.csv <- "water_level"
+  if (interval ==  "6 minute")                  {
+    ti.csv  <- "water_level"
     ti.name <- "Verified 6-Minute Water Level"
-  } else if(interval ==  "hourly")             {
-    ti.csv <- "hourly_height"
+    met.csv <- "6" # this variable is for calling meteorological data csv files
+  } else if (interval ==  "hourly")             {
+    ti.csv  <- "hourly_height"
     ti.name <- "Verified Hourly Height Water Level"
-  } else if(interval ==  "HL")                 {
-    ti.csv <- "high_low"
+    met.csv <- "h"
+  } else if (interval ==  "HL")                 {
+    ti.csv  <- "high_low"
     ti.name <- "Verified High/Low Water Level"
-  } else if(interval ==  "monthly")                 {
-    ti.csv <- "monthly_mean"
+  } else if (interval ==  "monthly")            {
+    ti.csv  <- "monthly_mean"
     ti.name <- "Verified Monthly Mean Water Level"
-  }  else stop("invalid time interval: must be '6 minute', 'hourly', or 'HL'")
+  }  else stop ("invalid time interval: must be '6 minute', 'hourly', or 'HL'")
   
   # set time zone
-  if(time %in%  c("LST/LDT", "GMT", "LST"))     {
+  if (time %in%  c("LST/LDT", "GMT", "LST"))    {
     tz <- time
-  } else stop("invalid time zone: must be 'LST/LDT', 'GMT', or 'LST' ")
+  } else stop ("invalid time zone: must be 'LST/LDT', 'GMT', or 'LST' ")
   
+  # set time zone in more detail (for labeling data in conversion to POSIX)
+  # LST/LDT is not ideal and, at present, probably produces mislabelled data
+  if (time %in%  c("GMT"))    {
+    posix.tz <- time
+  } else if (time %in%  c("LST/LDT", "LST"))    {
+    posix.tz <- ""  # if not specified, the local time zone used (relative to computer, 
+    # not the data!). I don't think this will alternate between LST and LDT.
+  } 
   
   # set site name/number indicator
-  if(regexpr("[0-9]{7}", station)[1] == 1)      {
-    site.ind <- c(1)
-  } else if(regexpr("[a-zA-Z]+", station)[1] == 1) {
+  if (regexpr("[0-9]{7}", station)[1] == 1)         {
+    site.ind  <- c(1)
+  } else if (regexpr("[a-zA-Z]+", station)[1] == 1) {
     site.name <- station
-    site.ind <- c(0)
+    site.ind  <- c(0)
   } else stop("Invalid station entry: must use station name or number. Check active stations 
    at: http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
   
@@ -85,77 +173,76 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   suppressWarnings(stns <- readLines("http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
   
-  if(site.ind == 1) {                                                             # Use station number to identify station
-    stn1 <- grep(paste(station, " " , sep = ""), stns)                              # station number is followed by a space, then the station name
-    if(length(stn1) == 0) {
-      stop("Station number appears to be invalid. No match found at
-           http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
-    } else if(length(stn1) > 1) {
-      stop("Station number appears to be duplicated. Try using site name:
-           http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
-    } else if(length(stn1) == 1) {
-      stn2 <- regexpr("[0-9] .*</a>$", stns[stn1])
-      stn3 <- regmatches(stns[stn1], stn2)                                        # extract matches
-      site.name <- gsub("[0-9] |</a>", "", stn3)                                  # clean up site name
+  if (site.ind == 1) {                                                            # Use station number to identify station
+    stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
+    if (length(stn1) == 0)        {
+      stop ("Station number appears to be invalid. No match found at
+            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+    } else if (length(stn1) > 1)  {
+      stop ("Station number appears to be duplicated. Try using site name:
+            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+    } else if (length(stn1) == 1) {
+      stn2      <- regexpr("[0-9] .*</a>$", stns[stn1])
+      stn3      <- regmatches(stns[stn1],   stn2)                                 # extract matches
+      site.name <- gsub("[0-9] |</a>", "",  stn3)                                 # clean up site name
     }
-  } else if(site.ind == 0) {                                                    # Use station name to identify site number
-    no1 <- grep(site.name, stns)                                                    
-    if(length(no1) == 1){ 
-      no2 <- regexpr("[0-9]{7} .*</a>$", stns[no1])
-      no3 <- regmatches(stns[no1], no2)                                       
+  } else if (site.ind == 0) {                                                     # Use station name to identify site number
+    no1     <- grep(site.name, stns)                                                    
+    if (length(no1) == 1) { 
+      no2     <- regexpr("[0-9]{7} .*</a>$", stns[no1])
+      no3     <- regmatches(stns[no1], no2)                                       
       station <- site.no <- gsub("[A-Za-z]| |,|</a>", "", no3)                           
-    } else if(length(no1) > 1){
-      stop("Site name found for multiple active NOAA stations. Look up site number at 
-           http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
-    } else if(length(no1) < 1){
-      stop("Site name not found on list of active NOAA stations. Look up sites at 
-           http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels. 
-           Be attentive to spelling or consider using the station number.")
+    } else if (length(no1) > 1) {
+      stop ("Site name found for multiple active NOAA stations. Look up site number at 
+            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+    } else if (length(no1) < 1) {
+      stop ("Site name not found on list of active NOAA stations. Look up sites at 
+            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels. 
+            Be attentive to spelling or consider using the station number.")
     }
     }
   
   
   
   
-  
-  doc <- htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
-                   useInternalNodes = TRUE)
-  nodes <- getNodeSet(doc, "//tr")
-  date.list <- sapply(nodes, function(x)  xmlValue(getSibling(x)))
-  data.line <- grep(ti.name, date.list)          
-  
+  ### use data from siteParameters
+  doc          <- htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
+                            useInternalNodes = TRUE)
+  nodes        <- getNodeSet(doc, "//tr")
+  date.list    <- sapply(nodes, function(x)  xmlValue(getSibling(x)))
+  data.line    <- grep(ti.name, date.list)          
   first.record <- regexpr("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}[:punct:][0-9]{2}", 
                           date.list[data.line])
-  first.rec <- regmatches(date.list[data.line], first.record )
-  first.rec <- as.Date(substr(first.rec, 1, 10), format = "%Y-%m-%d")
-  last.record <- regexpr("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}[:punct:][0-9]{2}$", 
-                         date.list[data.line])
-  last.rec <- regmatches(date.list[data.line], last.record )
-  last.rec <- as.Date(substr(last.rec, 1, 10), format = "%Y-%m-%d")
+  first.rec    <- regmatches(date.list[data.line], first.record )
+  first.rec    <- as.Date(substr(first.rec, 1, 10), format = "%Y-%m-%d")
+  last.record  <- regexpr("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}[:punct:][0-9]{2}$", 
+                          date.list[data.line])
+  last.rec     <- regmatches(date.list[data.line], last.record )
+  last.rec     <- as.Date(substr(last.rec, 1, 10), format = "%Y-%m-%d")
   
-  if(length(date.list[data.line]) > 1) {
-    first.rec <- first.rec[1]
-    last.rec <- last.rec[length(last.rec)]
+  if (length(date.list[data.line]) > 1) {
+    first.rec  <- first.rec[1]
+    last.rec   <- last.rec[length(last.rec)]
   }
-  
+  ###
   
   
   # set start/end dates to full period of record, if left as default
-  if(begindate ==  "begindate")        {
+  if (begindate ==  "begindate")        {
     sdate <- strptime(as.character(first.rec), "%Y-%m-%d")
     sdate <- gsub("-", "", sdate)
     sdate <- as.Date(as.character(sdate), "%Y%m%d")              
     sdate <- sdate + 1
-  } else if(begindate !=  "begindate")                         {
+  } else if (begindate !=  "begindate") {
     sdate <- as.Date(as.character(begindate), "%Y%m%d")
   }
   
-  if(enddate ==  "enddate")            {
+  if (enddate ==  "enddate")            {
     edate <- strptime(as.character(last.rec), "%Y-%m-%d")
     edate <- gsub("-", "", edate)             
     edate <- as.Date(as.character(edate), "%Y%m%d")              
     edate <- edate - 1
-  } else if(enddate !=  "enddate")                             {
+  } else if (enddate !=  "enddate")     {
     edate <- as.Date(as.character(enddate), "%Y%m%d")
   }
   
@@ -164,35 +251,15 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   # check if date range is within period of record, and check if time period
   # requires splitting into smaller units. Interval limit is 1 year for hourly
   # and HL data,  31 days for 6-min data, 10 years for monthly data.
-  dates <- sdate
-  if(interval == "HL") { if(sdate < first.rec | edate > last.rec) {
-    stop("invalid time interval")
-  } else if( as.numeric(edate - sdate) > 364) {
-    dates <- seq(sdate,edate, 365)
-  } else(dates <- c(sdate,edate))}
-  if(interval == "hourly") { if(sdate < first.rec | edate > last.rec) {
-    stop("invalid time interval")
-  } else if( as.numeric(edate - sdate) > 364) {
-    dates <- seq(sdate,edate, 365)
-  } else(dates <- c(sdate,edate))}
-  if(interval == "6 minute") { if(sdate < first.rec | edate > last.rec) {
-    stop("invalid time interval")
-  } else if( as.numeric(edate - sdate) > 30)  {
-    dates <- seq(sdate,edate, 31)
-  } else(dates <- c(sdate,edate))}
   
-  if(!edate %in% dates[length(dates)]) dates <- c(dates, edate)
   
-  dates2 <- format(as.Date(dates), "%Y%m%d")     # re-format dates for the url
+  dates2 <- getDates(startDate = sdate, endDate = edate, dataType = interval, 
+                     first.record = first.rec, last.record = last.rec)
   
-#   old version: 
-#   url.temp <- c(paste0("http://co-ops.nos.noaa.gov/api/datagetter?", "begin_date=", dates2[i], 
-#                        "&end_date=", dates2[i+1], "&station=", station, "&product=", ti.csv, 
-#                        "&units=", u.csv, "&time_zone=", tz, "&datum=", datum, 
-#                        "&application=Tides_and_Currents","&format=csv"))
-#   
-  
-  # create list of csv files
+  #####
+  ##### Get water level data
+  #####
+  # create list of csv files for water level data
   for(i in 1:(length(dates2) - 1)) {
     url.temp <- c(paste0("http://tidesandcurrents.noaa.gov/api/datagetter?", 
                          "product=", ti.csv, 
@@ -215,8 +282,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  lapply.csv <- lapply(url.list, function(x) read.csv(x))
-  data.csv <- do.call(rbind, lapply.csv)
+  # RCurl dependency
+  lapply.csv <- lapply(url.list, function(x) getURL(x, timeout = 20))
+  
+  for (i in 1:length(lapply.csv)) {
+    txtCSV <- textConnection(lapply.csv[[i]])
+    
+    if (!exists("data.csv")){
+      data.csv <- read.csv(txtCSV)
+    } else if (exists("data.csv")){
+      data.csv <- rbind(data.csv, read.csv(txtCSV))
+      rm(txtCSV)
+    }
+  }
+  
   data.csv$station <- rep(site.name, times = nrow(data.csv))
   
   label <- paste("verified water level at ", site.name, " (", units, " rel. to ", datum, ")", sep="")
@@ -225,20 +304,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   # clean up the data
   if(interval == "HL" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXct(data.csv[, 1], format = "%Y-%m-%d %H:%M", tz = posix.tz)
     data.csv <- data.csv[, c(7, 2, 3, 6)]
     names(data.csv) <- c(t.label, label, "tide", "station")
     levels(data.csv$tide) <- c("H", "HH", "L", "LL")
   }
   
   if(interval == "6 minute" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXct(data.csv[, 1], format = "%Y-%m-%d %H:%M", tz = posix.tz)
     data.csv <- data.csv[, c(10, 2, 9)]
     names(data.csv) <- c(t.label, label, "station")
   }
   
   if(interval == "hourly" ) {
-    data.csv$datetime <- as.POSIXlt(data.csv[, 1], format = "%Y-%m-%d %H:%M")
+    data.csv$datetime <- as.POSIXct(data.csv[, 1], format = "%Y-%m-%d %H:%M", tz = posix.tz)
     data.csv <- data.csv[, c(7, 2, 6)]
     names(data.csv) <- c(t.label, label, "station") 
   }
@@ -272,6 +351,129 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     data.csv$station[is.na(data.csv$station)] <- site.name
   } else data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
   
-  invisible(data.csv)
   
-    }
+  #####
+  ##### Get meteorological data (if desired)
+  #####
+  # create list of csv files for met data
+  # I may need to verify that data is available for requested range, 
+  # or ignore csv files that return blank data
+  
+  if (met %in% T.vals) {
+    
+    # get available products for the station, and corresponding dates
+    param_list   <- data.frame(names = c("Conductivity", "Wind", "Barometric Pressure", "Air Temperature",
+                                         "Water Temperature", "Relative Humidity", "Salinity"), 
+                               codes = c("conductivity", "wind", "air_pressure", "air_temperature", "water_temperature",
+                                         "humidity", "salinity")
+    )
+    
+    #   siteParameters
+    #   date.list    <- lapply(TempNodes, function(x)  xmlValue(getSibling(x))) # first entry is consistently skipped
+    #   availableParams    <- data.frame(param = NA, start = NA, end = NA)
+    availableParams    <- siteParameters[siteParameters$params %in% param_list$names, ]
+    
+    # add if clause: if availableParams has more than zero rows, run this
+    if (!nrow(availableParams) == 0) {
+      availableParams$actualEnd <- availableParams$actualStart <- as.numeric(NA) # start and end dates to use when calling data
+      
+      for (i in 1:nrow(availableParams)) {
+        #       # if a param is found, check if date range is relevant
+        if (availableParams$startDate[i] < enddate) { # if data starts before request ends, fill in data
+          # if the date range is relevant, record the details
+          # first check whether the date range is relevant, then if it is include the parameter 
+          # old version converted to times before comparing: if (as.integer(as.POSIXct(as.character(availableParams$startDate[i]), format = "%Y%m%d", origin = posix.tz)) <= as.integer(as.POSIXct(as.character(enddate), format = "%Y%m%d", origin = posix.tz))) {
+          if (availableParams$startDate[i] <= enddate) {
+            temp.Params <- data.frame(param = as.character(param_list$codes[i]), start = NA, end = NA)
+            
+            if (availableParams$startDate[i] <= begindate) {
+              availableParams$actualStart[i]    <- begindate
+            } else if (availableParams$startDate[i] > begindate) {
+              availableParams$actualStart[i]    <- as.numeric(availableParams$startDate[i])
+            }
+            
+            if (availableParams$endDate[i] >= enddate) {
+              availableParams$actualEnd[i]      <- enddate
+            } else if (availableParams$endDate[i] < enddate) {
+              availableParams$actualEnd[i]      <- as.numeric(availableParams$endDate[i])
+            }
+          }
+        }
+      }
+      
+      # availableParams has each available ancillary parameter, and their associated start and end dates
+      
+      
+      for (i in 1:nrow(availableParams)) {
+        dateRange <- getDates(startDate = availableParams$actualStart[i], endDate = availableParams$actualEnd[i], dataType = interval)
+        
+        for(j in 1:(length(dateRange) - 1)) {
+          met.url.temp <- c(paste0("http://tidesandcurrents.noaa.gov/api/datagetter?", 
+                                   "product=", param_list$codes[match(availableParams$param[i], param_list$names)],
+                                   "&application=NOS.COOPS.TAC.PHYSOCEAN",
+                                   "&begin_date=", dateRange[j], 
+                                   "&end_date=", dateRange[j+1], 
+                                   "&station=", station,
+                                   "&time_zone=", tz, 
+                                   "&units=", u.csv,
+                                   "&interval=", met.csv,
+                                   "&format=csv"))
+          
+          
+          if (!exists("met.url.list")) {
+            met.url.list    <- met.url.temp
+          }
+          # if the dataset exists, add to it
+          if (exists("met.url.list")) {
+            met.url.list[j] <- met.url.temp
+            rm(met.url.temp)
+          }
+        }
+        
+        # RCurl dependency
+        met.lapply.csv   <- lapply(met.url.list, function(x) getURL(x, timeout = 20))
+        
+        for (k in 1:length(met.lapply.csv)) {
+          if (!exists("met.data.csv")) {
+            met.data.csv <- read.csv(textConnection(met.lapply.csv[[k]]))
+          }
+          # if the dataset exists, add to it
+          if (exists("met.data.csv")) {
+            txtCSV       <- textConnection(met.lapply.csv[[k]])
+            met.data.csv <- rbind(met.data.csv, read.csv(txtCSV))
+            rm(txtCSV)
+          } 
+        } 
+        
+        # now, all data is compiled for availableParams$param[i] 
+        # so, merge it in.
+        
+        # but first, remove bloated columns
+        rem           <- match(c("X", "N", "R"), names(met.data.csv))
+        met.data.csv  <- met.data.csv[, -c(rem[!is.na(rem)])]
+        
+        # get datetime variable
+        # 1. convert to character
+        met.data.csv[, 1]    <- as.character(met.data.csv[, 1])
+        # 2. re-structure to remove backslashes
+        t.temp <- gsub("-", "", met.data.csv[, 1])
+        
+        # join using seconds since 1970
+        met.data.csv$datetime <- as.integer(as.POSIXct(t.temp, format = "%Y%m%d %H:%M", tz = posix.tz))
+        data.csv$datetime     <- as.integer(data.csv[, 1])
+        
+        data.csv              <- join_all(list(data.csv, met.data.csv[, -1]), by = "datetime")
+        
+        # now, remove datetime integer column
+        datetime.col          <- grep("datetime", names(data.csv))
+        data.csv              <- data.csv[, -c(datetime.col)] 
+        invisible(data.csv)
+        
+        rm(met.url.list)
+        rm(met.data.csv)
+      }
+    } # closes section contingent on availableParams haveing >0 rows
+    invisible(data.csv)
+  }
+  invisible(data.csv)
+}
