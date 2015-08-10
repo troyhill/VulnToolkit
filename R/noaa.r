@@ -82,7 +82,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   if (!continuous %in% TF.vals) 
     stop ("'continuous' must be set to 'TRUE' or 'FALSE'")
    
-  if ((interval %in% c("HL", "monthly")) & (!met %in% T.vals)) {
+  if ((interval %in% c("HL", "monthly")) & (!met %in% F.vals)) {
     met <- "FALSE"
     print("`met = TRUE` is not consistent with monthly or HL water levels. If meteorological data are desired, request 6 minute or hourly data.")
   }
