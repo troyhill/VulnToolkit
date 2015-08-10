@@ -81,10 +81,8 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   if (!continuous %in% TF.vals) 
     stop ("'continuous' must be set to 'TRUE' or 'FALSE'")
-  if (!met %in% TF.vals) 
-    stop ("'met' must be set to 'TRUE' or 'FALSE'")
-  
-  if ((interval %in% c("HL", "monthly")) & met %in% T.vals) {
+   
+  if ((interval %in% c("HL", "monthly")) & (!met %in% T.vals)) {
     met <- "FALSE"
     print("`met = TRUE` is not consistent with monthly or HL water levels. If meteorological data are desired, request 6 minute or hourly data.")
   }
@@ -335,7 +333,10 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   # I may need to verify that data is available for requested range, 
   # or ignore csv files that return blank data
   
-  if (met %in% T.vals) {
+  # 150809: If no met data are available during the time period specified, an error is thrown. 
+  # This shouldn't happen.
+  
+  if (!met %in% F.vals) {
     
     # get available products for the station, and corresponding dates
     param_list   <- data.frame(names = c("Conductivity", "Wind", "Barometric Pressure", "Air Temperature",
@@ -348,6 +349,14 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     #   date.list    <- lapply(TempNodes, function(x)  xmlValue(getSibling(x))) # first entry is consistently skipped
     #   availableParams    <- data.frame(param = NA, start = NA, end = NA)
     availableParams    <- siteParameters[siteParameters$params %in% param_list$names, ]
+    
+    # check that 'met' is valid.
+    # "TRUE" causes met to download all available data
+    if (sum(met %in% availableParams$params) > 0) {
+      availableParams <- availableParams[availableParams$params %in% met, ] # select only those sought params that are also available
+    } else if (sum(met %in% availableParams$params) == 0) {
+      message("`met` parameters were not recognized. All meteorological parameters will be downloaded.")
+    }
     
     # add if clause: if availableParams has more than zero rows, run this
     if (!nrow(availableParams) == 0) {
