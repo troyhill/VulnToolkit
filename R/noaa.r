@@ -74,31 +74,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  
-  getParamVec <- function(stn = station) {
-    # this function returns a cleaned up version of the parameter list page for a site
-    # it's needed because the parameter on the first line is consistently missed during an XML conversion.
-    # I should call this once, and use the start and end dates for all data downloads
-    
-    allParams <- data.frame(params = as.character(NA), startDate = NA, endDate = NA)
-    tempDoc      <- htmlParse(getURL(paste0("http://co-ops.nos.noaa.gov/inventory.html?id=", stn)),
-                              useInternalNodes = TRUE)
-    TempNodes    <- getNodeSet(tempDoc, "//tr")
-    for (i in 2:length(TempNodes)) {
-      out2   <- xpathSApply(tempDoc, "//tr", saveXML)[i] # converts to char vector
-      # get parameter name
-      line   <- strsplit(out2, "/div>")[[1]][2]
-      
-      pName  <- strsplit(line, "</td>")[[1]][1]
-      pStart <- substr(strsplit(line, "bdate=")[[1]][2], 1, 8)
-      pEnd   <- substr(strsplit(line, "edate=")[[1]][2], 1, 8)
-      tempParams <- data.frame(params = pName, startDate = pStart, endDate = pEnd)
-      allParams <- rbind(allParams, tempParams)
-    }
-    invisible(allParams[!is.na(allParams$startDate), ])
-  }
-  
-  siteParameters <- getParamVec()
+  siteParameters <- noaa.parameters(stn = station)
   
   # set acceptable true/flase values
   T.vals  <- c("TRUE", "T", "True")
