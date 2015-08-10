@@ -74,8 +74,6 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  siteParameters <- noaa.parameters(stn = station)
-  
   # set acceptable true/flase values
   T.vals  <- c("TRUE", "T", "True")
   F.vals  <- c("FALSE", "F", "False")
@@ -178,6 +176,8 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     }
     }
   
+  
+  siteParameters <- noaa.parameters(stn = station)
   
   
   
