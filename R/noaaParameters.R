@@ -3,7 +3,7 @@ noaa.parameters <- function(stn = 8518750) {
   # this function returns a cleaned up version of the parameter list page for a site
   # it's needed for the meteorological data in noaa() because the parameter on 
   # the first line is consistently missed during an XML conversion.
-  if (!regexpr("[0-9]{7}", station)[1] == 1) {
+  if (!regexpr("[0-9]{7}", stn)[1] == 1) {
      stop("Invalid station entry: must use station number. Check active stations 
    at: http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
   }
