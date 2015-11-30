@@ -1,10 +1,39 @@
-# function generates a list of psmsl stations
-# arguments:
-# 'type' = data quality class; 'metric' or 'RLR'
-# 'country' = optional filter; requires correct country code, which isn't always obvious. Can filter by 1- or 2- letter codes. Doesn't currently handle multiple country codes but this is simple - use unique() to remove duplicates.
-# 'sort.by' = column to sort table by ("name", "ID", "lat", "long", "GLOSS_ID", "country", "date", "coastline", or "number")
-# output: a dataframe listing all PSMSL stations meeting desired criteria and sorted according to 'sort.by'
-
+#' @title Generates a list of active and historic PSMSL stations 
+#' 
+#' @description Generates a list of active and historic tide stations 
+#' hosted by the Permanent Service for Mean Sea Level (\url{http://www.psmsl.org})
+#' 
+#' @details A \code{data.frame} containing all Permanent Service for Mean Sea Level 
+#' stations meeting country code criterion. Data frame is sorted by the column 
+#' specified in argument \code{sort.by}
+#' 
+#' @usage psmsl.stations(type = "RLR", country = "all", sort.by = "country")
+#' 
+#' @param type data quality class; can be 'metric' or 'RLR' - see \url{http://www.psmsl.org} 
+#' for documentation
+#' @param country if desired, the full list of stations can be filtered by up to three 
+#' alphabetical characters. Specific country codes can be entered ("USA"), or 
+#' abbreviated codes in case the user isn't sure of the country code ("U"; "US"). 
+#' Upper case and lower case codes are both acceptable. Default is 'all' stations.
+#' @param sort.by the criterion for sorting the final dataframe.  By default, 
+#' output is sorted alphabetically by country code. Any column name can be used 
+#' for sorting: 'name', 'ID', 'lat', 'long', 'GLOSS_ID', 'country', 'date', 
+#' 'coastline', or \code{number}
+#' 
+#' @return A \code{data.frame} containing all Permanent Service for Mean Sea Level 
+#' stations meeting country code criterion. Data frame is sorted by the column specified 
+#' in argument \code{sort.by}
+#' 
+#' @seealso \code{\link{psmsl}}
+#' 
+#' @import XML
+#' 
+#' @examples
+#' \dontrun{
+#' # examples require internet connection
+#' stn.df <- psmsl.stations()
+#' stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")
+#' }
 
 psmsl.stations <- function(type = "RLR", country = "all", sort.by = "country") {
 #  require(XML)
@@ -21,7 +50,7 @@ psmsl.stations <- function(type = "RLR", country = "all", sort.by = "country") {
     stop("invalid sorting criterion: 'sort.by' must be 'name', 'ID', 'lat', 'long', 'GLOSS_ID', 'country', 'date', 
                   'coastline', or 'number' ")
   }
-  test <- readHTMLTable(url,
+  test <- XML::readHTMLTable(url,
                         colClasses = c("character", "numeric", "numeric", "numeric",
                                        "numeric", "character", "character", "numeric", "numeric"), 
                         as.data.frame = TRUE, stringsAsFactors = FALSE)

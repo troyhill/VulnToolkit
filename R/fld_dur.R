@@ -1,18 +1,18 @@
 #' @title Flooding duration
 #'
-#' @description
-#' Calculates the percent of time an elevation is submerged
+#' @description Calculates the percent of time an elevation is submerged
 #'
-#' @details
-#' @usage /code{fld.frq(z, level)}
+#' @details Calculates the percent of time an elevation is submerged
+#' 
+#' @usage fld.dur(z, level)
+#' 
 #' @param z elevation of interest
-#' levels a numeric vector of water levels. Time interval between measurements must be uniform.
+#' @param level a numeric vector of water levels. Time interval between measurements must be uniform.
+#' 
 #' @return value the decimal fraction of measurements in \code{level} that fall above \code{z}
-#' @seealso 
-#' @references none
-#' @aliases 
-#' @keywords 
-#' @export
+#' 
+#' @seealso \code{\link{fld.frq}}
+#' 
 #' @examples
 #' data(NL_6min_2013)
 #' a <- fld.dur(0.9117, NL_6min_2013[,2]); a # flooding duration at MHW
@@ -24,8 +24,9 @@
 #' elev.dur <- data.frame(elev = seq(from = -0.5, to = 1.25, by = 0.005))
 #' elev.dur$dur <- fld.dur(elev.dur$elev, NL_6min_2013[,2]) * length(NL_6min_2013[,2]) / 10 
 #' 
-#' plot(elev.dur$dur ~ elev.dur$elev, pch = 19, ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
-
+#' plot(elev.dur$dur ~ elev.dur$elev, pch = 19, 
+#' ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
+#' @export
 
 fld.dur <- function(z, level = z) {  
   if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")

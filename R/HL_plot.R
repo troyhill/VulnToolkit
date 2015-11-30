@@ -1,6 +1,37 @@
-### function to visually examine high and low tides found by function HL()
+#' @title Plots water level data and high/low tides extracted by \code{HL()}
+#' 
+#' @description  Plots water level data and high/low tides extracted 
+#' by \code{HL()}. Purpose is for quick and easy visual assessment 
+#' of \code{HL()} output.
+#' 
+#' @usage HL.plot(level, time, period = 13, phantom = TRUE, tides = "all")
+#' 
+#' @param level a numeric vector of water levels
+#' @param time a vector (numeric or POSIX*) indicating the time of water 
+#' level measurements. Units must be minutes.
+#' @param period a single numeric or integer estimate of tidal period 
+#' (full tidal cycle). Units must be hours.
+#' @param phantom a protective measure taken to prevent the inclusion of an 
+#' artificial high or low tide at the end of the dataset. If the water level 
+#' measurements end precisely at a low or high tide, this can be changed to FALSE.
+#' @param tides is used to optionally subset the output to include 
+#' only high or low tides. This argument can be 'all' (default), 'H', or 'L'
+#' 
+#' @return a plot of water levels, with red and blue dots superimposed on high and low tides.
+#' 
+#' @seealso \code{\link{HL}}
+#' 
+#' @references \url{http://wetlandsandr.wordpress.com/}
+#' 
+#' @examples 
+#' data(NL_6min_2013)
+#' HL.plot(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
+#' HL.plot(level = NL_6min_2013[1:1000,2], time = NL_6min_2013[1:1000,1]) 
+#' @export
+
+
 HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all") {
-  hl <- HL(level, time, period, phantom, tides)
+  hl <- VulnToolkit::HL(level, time, period, phantom, tides)
   wll.2 <- data.frame(1:length(level), level, time)
   
   plot(wll.2$level ~ wll.2$time, type = "l", ylab = "water level", 

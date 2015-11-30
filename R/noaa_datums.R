@@ -1,11 +1,31 @@
-### Input argument is a single NOAA station number. See http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels
-### Output is a dataframe with a row for each elevation datum listed for the station.
-### Results are in meters and calculated over the 1983-2001 epoch.
-###
-### Code dependencies: RCurl and XML packages. To install: install.packages(c("RCurl", "XML"))
-###
-### Have a problem? Find a bug? Email Hill.Troy@gmail.com
-
+#' @title Scrapes elevation datums from NOAA CO-OPS website
+#' @description Scrapes elevation datums from NOAA CO-OPS website
+#' 
+#' @details Scrapes elevation datums from NOAA CO-OPS website. 
+#' Requires an internet connection. 
+#' 
+#' @usage noaa.datums(station = 8467150)
+#' 
+#' @param station station name or ID number, available on the CO-OPS website or by 
+#' using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
+#' corresponding to the station name. Default station is Bridgeport, CT.
+#' 
+#' @return a dataframe of vertical datum names and their elevations in meters 
+#' relative to the station datum for the 1983-2001 epoch. Also contains a column 
+#' of times associated with relevant datums (record maximum and minimums, lowest 
+#' and highest astronomical tides).
+#' 
+#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
+#' 
+#' @import RCurl
+#' @import XML
+#' 
+#' @examples
+#' \dontrun{
+#' # examples require internet connection
+#' bport.datums <- noaa.datums() # Bridgeport, CT
+#' battery.datums <- noaa.datums(station = 8518750) # Battery, NYC
+#' }
 
 noaa.datums <- function(station = 8467150) {
   

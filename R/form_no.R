@@ -1,9 +1,29 @@
-# code calculates tidal form number according to National Ocean Service's Tide and Current Glossary (2000)
-# ratio of the sum of the two largest diurnal amplitudes to the sum of the two largest semidiurnal amplitudes
-# required arguments:
-# station: station number, or a vector of station numbers
-#
-# output: a dataframe with station number(s) and corresponding form number(s)
+#' @title Calculate tidal form number
+#' 
+#' @description Uses harmonic constituent data from the NOAA 
+#' CO-OPS website to calculate tidal form numbers as the ratio 
+#' of the sum of K1 and O1 diurnal harmonic constituent amplitudes 
+#' to the sum of the M2 and S2 semidiurnal amplitudes. Requires 
+#' an internet connection.
+#' 
+#' @usage form.no(station)
+#' 
+#' @param station station ID number or vector of IDs, available on CO-OPS 
+#' website (\url{http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}) or 
+#' from \code{\link{noaa.stations}}.
+#' 
+#' @return a dataframe of station number(s) and corresponding tidal form number(s).
+#' 
+#' @seealso \code{\link{noaa.stations}}
+#' 
+#' @references \url{http://wetlandsandr.wordpress.com/}
+#' 
+#' @examples \dontrun{
+#' a <- form.no()
+#' stn.list <- c("8467150", "8461490", "9454240")
+#' b <- form.no(stn.list)
+#' b
+#' } 
 
 form.no <- function(station = 8467150){
 if(length(station) == 1){ 

@@ -1,3 +1,59 @@
+#' @title Calculates the duration of the median (or other percentile) flooding event
+#'
+#' @description Calculates the duration of the median (or other percentile) flooding event
+#'
+#' @details The duration of individual flooding events is calculated from water level data.
+#'  \code{dur.events()} differs from \code{fld.dur()} in that the former examines 
+#'  individual flooding events, rather than cumulative inundation times.
+#' 
+#' @usage dur.events(level, elevation, percentile = 0.5, units = "1 observation")
+#' 
+#' @param level a numeric vector of water levels or tide data
+#' 
+#' @param elevation elevation(s) of interest (e.g., marsh platform, MHW). A vector 
+#' of elevations is accepted. Elevation should be in the same vertical datum as \code{level}
+#' 
+#' @param percentile the percentile(s) to find (median flooding event is used by default)
+#' 
+#' @param units the time interval between measurements. This argument enables conversion of 
+#' flooding durations to hours. \code{units} must be a string of the form \code{XX units}, 
+#' where \code{XX} is an integer and \code{units} can be \code{second}, \code{minute}, 
+#' \code{hour}, or their plurals. When time units are specified, all time units are 
+#' converted to hours in output. When units are not specified, the output reports the 
+#' number of sequential observations
+#' 
+#' @return the duration of the median (or other percentile) flooding event occurring at a given 
+#' elevation. If \code{percentile} is of length one, the value(s) returned are the 
+#' corresponding flooding duration percentiles for the elevation(s) of interest. To ensure 
+#' clarity when more than one \code{percentile} is sought, in those cases a dataframe is 
+#' output to report elevations and flooding durations
+#' 
+#' @seealso \code{\link{noaa.stations}}
+#' 
+#' @examples
+#' data(NL_6min_2013)
+#' MHW <- 0.9117  # New London MHW in 2013: 0.9117 m relative to MLLW
+#' 
+#' # median flooding duration at three elevations
+#' dur.events(NL_6min_2013[, 2], elevation = c(0.5, MHW, 1.5), units = "6 minutes")
+#' 
+#' # a dataframe is output when results are more complex
+#' dur.events(NL_6min_2013[, 2], elevation = MHW, 
+#'            percentile = c(0.1, 0.5, 0.9), units = "6 minutes")
+#' dur.events(NL_6min_2013[, 2], elevation = c(0.5, MHW, 1.5), 
+#'   percentile = c(0.1, 0.5, 0.9), units = "6 minutes")
+#' 
+#' # dur.events() differs from fld.dur() in that it examines individual
+#' # flooding events, rather than cumulative inundation
+#' 
+#' # The median flooding event at MHW lasts 2.9 hrs
+#' dur.events(NL_6min_2013[, 2], elevation = MHW, units = "6 minutes")
+#' 
+#' # And over an entire year, MHW was flooded 13% of the time
+#' fld.dur(z = MHW, NL_6min_2013[, 2])
+#' @export 
+
+
 dur.events <- function(level, elevation, percentile = 0.5,
                        units = "1 observation") {
 

@@ -1,35 +1,65 @@
 #' @title Downloads NOAA CO-OPS tide data
 #'
 #' @description
-#' Scrapes water level data from NOAA CO-OPS website. Requires internet connection.
+#' Scrapes water level data (and other measurements) from NOAA CO-OPS website. Requires 
+#' internet connection.
 #'
-#' @details
-#' @usage /code{noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
-#' met = "FALSE", units = "meters", datum = "MHW", interval = "HL", time = "GMT", continuous = "FALSE")}
-#' @param begindate first day of data to download. Format must be YYYYMMDD. If left unspecified, the first complete day of data will be used.
-#' enddate final day of data to download. Format must be YYYYMMDD. If left unspecified, the last complete day of data will be used.
-#' station station name or ID number, available on the CO-OPS website or by using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string corresponding to the station name. Default station is Bridgeport, CT.
-#' met whether meteorological data should be returned. This value can be 'TRUE' or 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only works with 6-minute and hourly data
-#' units can be 'feet' or 'meters'. Default is 'meters'
-#' datum vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available at some sites)
-#' interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. For data on monthly and annual time scales from Permanent Service for Mean Sea Level, see \code{\link{psmsl}}
-#' time can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. GMT appears to have wider availability than LST, so it is the default.
-#' continuous determines whether a continuous time series is produced, with lengthy gaps in data filled in with NAs. By default, this is \code{FALSE}. This option only applies to data at evenly spaced intervals (i.e., \code{6 minute} or \code{hourly})
-#' @return dataset a dataframe with water levels, associated time stamps, a station ID column, and tide type (if interval is set to \code{HL})
+#' @details 
+#' Download water level and other data from NOAA CO-OPS website.
+#' 
+#' @usage noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
+#' met = "FALSE", units = "meters", datum = "MHW", interval = "HL", time = "GMT", 
+#' continuous = "TRUE")
+#' 
+#' @param begindate first day of data to download. Format must be YYYYMMDD. If 
+#' left unspecified, the first complete day of data will be used.
+#' 
+#' @param enddate final day of data to download. Format must be YYYYMMDD. If left 
+#' unspecified, the last complete day of data will be used.
+#' 
+#' @param station station name or ID number, available on the CO-OPS website or by 
+#' using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
+#' corresponding to the station name. Default station is Bridgeport, CT.
+#' 
+#' @param met whether meteorological data should be returned. This value can be 'TRUE' or 
+#' 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only 
+#' works with 6-minute and hourly data
+#' 
+#' @param units can be 'feet' or 'meters'. Default is 'meters'
+#' 
+#' @param datum vertical reference datum, set to 'MHW' by default. Can be 'station', 'NAVD', 
+#' 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available 
+#' at some sites)
+#' 
+#' @param interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. 
+#' For data on monthly and annual time scales from Permanent Service for Mean Sea Level, 
+#' see \code{\link{psmsl}}
+#' 
+#' @param time can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. 
+#' GMT appears to have wider availability than LST, so it is the default.
+#' 
+#' @param continuous determines whether a continuous time series is produced, with lengthy gaps 
+#' in data filled in with NAs. By default, this is \code{FALSE}. This option only applies 
+#' to data at evenly spaced intervals (i.e., \code{6 minute} or \code{hourly})
+#' 
+#' @return dataset a dataframe with water levels, associated time stamps, a station ID column, 
+#' and tide type (if interval is set to \code{HL}). The NOAA CO-OPS website has many odd data 
+#' availabilty problems. Some data are not available in all time intervals or time zones.
+#' 
 #' @seealso \code{\link{noaa.stations}}
-#' @references none
-#' @aliases 
-#' @keywords 
-#' @export
-#' @examples
-#'# Example requires an internet connection
-#'# bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
-#'#     station = "Bridgeport, CT", interval = "6 minute")
+#' 
+#' 
+#' @examples \dontrun{
+# Example requires an internet connection
+#'bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
+#'   station = "Bridgeport, CT", interval = "6 minute")
 #'
-#'# test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
-#'# test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
-#'# nrow(test2.1) # includes data on NOAA site (incomplete record)
-#'# nrow(test2.2) # fills gaps with NAs
+#'test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
+#'test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
+#'nrow(test2.1) # includes data on NOAA site (incomplete record)
+#'nrow(test2.2) # fills gaps with NAs 
+#' }
+#' @export
 
 
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
@@ -180,10 +210,10 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   
   ### use data from siteParameters
-  doc          <- htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
+  doc          <- XML::htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
                             useInternalNodes = TRUE)
-  nodes        <- getNodeSet(doc, "//tr")
-  date.list    <- sapply(nodes, function(x)  xmlValue(getSibling(x)))
+  nodes        <- XML::getNodeSet(doc, "//tr")
+  date.list    <- sapply(nodes, function(x)  XML::xmlValue(XML::getSibling(x)))
   data.line    <- grep(ti.name, date.list)          
   first.record <- regexpr("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}[:punct:][0-9]{2}", 
                           date.list[data.line])
@@ -257,7 +287,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   
   # RCurl dependency
-  lapply.csv <- lapply(url.list, function(x) getURL(x, timeout = 20))
+  lapply.csv <- lapply(url.list, function(x) RCurl::getURL(x, timeout = 20))
   
   for (i in 1:length(lapply.csv)) {
     txtCSV <- textConnection(lapply.csv[[i]])
@@ -305,20 +335,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*60))
     names(time.df)[1] <- t.label
-    data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
+    data.csv <- plyr::join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
   } else if(interval == "6 minute" & (continuous == "TRUE" | continuous == "T")) {
     data.csv <- data.csv[!duplicated(data.csv[, 1]), ]
     time.df <- data.frame(seq(from = data.csv[1, 1], to = data.csv[nrow(data.csv), 1], by = 60*6))
     names(time.df)[1] <- t.label
-    data.csv <- join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
+    data.csv <- plyr::join_all(list(time.df, data.csv[!duplicated(data.csv[, 1]), ]))
     
   } else if(interval == "monthly" & (continuous == "TRUE" | continuous == "T" )) {
     time.df <- data.frame(seq(from = data.csv$datetime[1], to = data.csv$datetime[nrow(data.csv)], by = 1 / 12))
     names(time.df) <- "datetime"
     time.df$datetime <- round(time.df$datetime, 2)
     data.csv$datetime <- round(data.csv$datetime, 2)
-    data.csv <- join_all(list(time.df, data.csv))
+    data.csv <- plyr::join_all(list(time.df, data.csv))
     data.csv$Year <- as.numeric(data.csv$Year)
     data.csv$Year[is.na(data.csv$station)] <- as.numeric(substr(data.csv$datetime[is.na(data.csv$station)], 1, 4))
     data.csv$Month[is.na(data.csv$station)] <- round((data.csv$datetime[is.na(data.csv$station)] - data.csv$Year[is.na(data.csv$station)]) * 12)
@@ -416,7 +446,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
         }
         
         # RCurl dependency
-        met.lapply.csv   <- lapply(met.url.list, function(x) getURL(x, timeout = 20))
+        met.lapply.csv   <- lapply(met.url.list, function(x) RCurl::getURL(x, timeout = 20))
         
         for (k in 1:length(met.lapply.csv)) {
           if (!exists("met.data.csv")) {
@@ -447,7 +477,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
         met.data.csv$datetime <- as.integer(as.POSIXct(t.temp, format = "%Y%m%d %H:%M", tz = posix.tz))
         data.csv$datetime     <- as.integer(data.csv[, 1])
         
-        data.csv              <- join_all(list(data.csv, met.data.csv[, -1]), by = "datetime")
+        data.csv              <- plyr::join_all(list(data.csv, met.data.csv[, -1]), by = "datetime")
         
         # now, remove datetime integer column
         datetime.col          <- grep("datetime", names(data.csv))

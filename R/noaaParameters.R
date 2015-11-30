@@ -1,4 +1,32 @@
-noaa.parameters <- function(stn = 8518750) {
+#' @title Reports data available for a NOAA station
+#' @description Reports data available for a NOAA station
+#' 
+#' @details \code{noaa.parameters} reports the parameters (meteorological 
+#' and tidal) available for a specified NOAA station. 
+#' 
+#' 
+#' @param stn NOAA station number (note that station names are not 
+#' yet acceptable inputs). Default station is Bridgeport, CT.
+#' 
+#' @return a dataframe with parameters and associated start and end 
+#' dates. Where a parameter's availability is not continuous, multiple
+#'  rows are reported. This function can be used to, for example, select 
+#'  meteorological parameters to include in calls to \code{\link{noaa}}
+#' 
+#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
+#' 
+#' @import RCurl
+#' @import XML
+#' 
+#' @examples
+#' \dontrun{
+#' # examples require internet connection
+#' noaa.parameters()
+#' LA.stns <- noaa.stations(state = "LA")
+#' noaa.parameters(LA.stns$number[1])
+#' }
+
+noaa.parameters <- function(stn = 8467150) {
   # stn = NOAA station of interest
   # this function returns a cleaned up version of the parameter list page for a site
   # it's needed for the meteorological data in noaa() because the parameter on 

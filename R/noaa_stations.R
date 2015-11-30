@@ -1,30 +1,33 @@
 #' @title Print active NOAA stations
-#' @description
-#' \code{noaa.stations} returns active NOAA CO-OPS tide stations.
-#' @details
-#' This code returns a dataframe showing all active stations in the NOAA CO-OPS network.
-#' This can be used to identify stations for use in \code{noaa()}. 
-#' @usage \code{noaa.stations(state = "all")} 
+#' @description \code{noaa.stations} returns active NOAA CO-OPS tide stations.
+#' 
+#' @details This function returns a dataframe showing all active stations in 
+#' the NOAA CO-OPS network. This can be used to identify stations for use 
+#' in \code{noaa}. 
+#' 
+#' @usage noaa.stations(state = "all")
+#' 
 #' @param state limits printed records to a state or states of interest. Default is to
 #' show 'all' stations.
-#' @return A \code{data.frame} with station names, states/territories, and station numbers. If a 'state'
-#' argument is provided that is not found on the NOAA site, an error message is displayed. If a
-#' vector of states is provided, some of which are invalid, a dataframe will be produced for the
-#' valid criteria and invalid criteria will be noted.
-#' @seealso NOAA CO-OPS site: http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels 
-#' Historic stations which can also be accessed by \code{noaa()}: 
-#' http://co-ops.nos.noaa.gov/stations.html
-#' @references none
-#' @aliases noaa()
-#' @keywords IO
-#' @export
+#' @return A \code{data.frame} with station names, states/territories, and station 
+#' numbers. If a 'state' argument is provided that is not found on the NOAA site, an 
+#' error message is displayed. If a vector of states is provided, some of which are 
+#' invalid, a dataframe will be produced for the valid criteria and invalid criteria 
+#' will be noted.
+#' 
+#' @seealso NOAA CO-OPS site: \url{http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}
+#' Historic stations which can also be accessed by \code{noaa}: 
+#' \url{http://co-ops.nos.noaa.gov/stations.html}
+#' 
 #' @examples
+#' \dontrun{
 #' # examples require internet connection
-#' # a <- noaa.stations() # all active stations
-#' # b <- noaa.stations(state = "MA") 
-#' # c <- noaa.stations(state = c("RI", "CT"))
-#' # d <- noaa.stations(state = c("OR", "RI", "MA", "Germany", "Pluto")) # two erroneous entries 
-#' # highlow <- noaa(station = d[1,1], begindate = 20130101)
+#' a <- noaa.stations() # all active stations
+#' b <- noaa.stations(state = "MA") 
+#' c <- noaa.stations(state = c("RI", "CT"))
+#' d <- noaa.stations(state = c("OR", "RI", "MA", "Germany", "Pluto")) # two erroneous entries 
+#' highlow <- noaa(station = d[1,1], begindate = 20130101)
+#' }
 
 
 noaa.stations <- function(state = "all") {

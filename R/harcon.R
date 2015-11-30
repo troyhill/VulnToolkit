@@ -1,11 +1,29 @@
-### Input argument is a single NOAA station number. See http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels
-### Output is a dataframe with a row for each harmonic constituent, and columns for 
-###   each station's amplitude, phase, and speed.
-### Output amplitudes are in meters, phases are in degrees, referenced to GMT
-###
-### Code dependencies: RCurl and XML packages. To install: install.packages(c("RCurl", "XML"))
-###
-### Have a problem? Find a bug? Email Hill.Troy@gmail.com
+#' @title Scrapes harmonic constituent data from NOAA CO-OPS website
+#' 
+#' @description Scrapes harmonic constituent data from NOAA CO-OPS 
+#' website. Requires an internet connection.
+#' 
+#' @usage harcon(station)
+#' 
+#' @param station station ID number or vector of IDs, available on CO-OPS 
+#' website (\url{http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}) or 
+#' from \code{\link{noaa.stations}}.
+#' 
+#' @return a dataframe of harmonic constituents and their associated phases, 
+#' amplitudes, and speeds.
+#' 
+#' @seealso \code{\link{noaa.stations}}
+#' 
+#' @references \url{http://wetlandsandr.wordpress.com/}
+#' 
+#' @import RCurl
+#' @import XML
+#' 
+#' @examples \dontrun{
+#' bport.cons <- harcon(8467150) # Bridgeport, CT
+#' bport.cons
+#' } 
+
 
 harcon <- function(station) {
   

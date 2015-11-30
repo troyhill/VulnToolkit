@@ -1,19 +1,30 @@
-### Function to pick out high and low tides from a dataset of tidal water levels
-
-### Arguments: 
-### - "level" is a numeric vector of water levels.
-### - "time" is a vector (numeric or POSIX*) indicating the time of water level measurements. Units must be minutes.
-### - "period" is a single numeric or integer estimate of tidal period (full tidal cycle). Units must be hours.
-### - "phantom" (TRUE by default) is a protective measure taken to prevent the inclusion of an artificial
-###     high or low tide at the end of the dataset. If the water level measurements 
-###     end precisely at a low or high tide, this can be changed to FALSE.
-### - "tides" is used to optionally subset the output to include only high or low tides.
-###     This argument can be "all" (default), "H", or "L"
-
-### Function returns a 3-column dataframe with date/time, water level, and a H/L indicator.
-### code does not handle data gaps very well.
-
-
+#' @title Extracts high and low tides from a record of water levels
+#' 
+#' @description Extracts high and low tides from a record of water levels
+#' 
+#' @param level a numeric vector of water levels
+#' @param time a vector (numeric or POSIX*) indicating the time of water 
+#' level measurements. Units must be minutes.
+#' @param period a single numeric or integer estimate of tidal period 
+#' (full tidal cycle). Units must be hours.
+#' @param phantom a protective measure taken to prevent the inclusion of an 
+#' artificial high or low tide at the end of the dataset. If the water level 
+#' measurements end precisely at a low or high tide, this can be changed to FALSE.
+#' @param tides is used to optionally subset the output to include 
+#' only high or low tides. This argument can be 'all' (default), 'H', or 'L'
+#' 
+#' @return a dataframe of tide levels, associated time stamps, and tide 
+#' type ('H' or 'L').
+#' 
+#' @seealso \code{\link{HL.plot}}
+#' 
+#' 
+#' @references \url{http://wetlandsandr.wordpress.com/}
+#' 
+#' @examples data(NL_6min_2013)
+#' HL.NL <- VulnToolkit::HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
+#' head(HL.NL)
+#' @export
 
 HL <- function(level, time, period = 13, phantom = TRUE, tides = "all") {
 

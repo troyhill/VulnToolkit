@@ -1,10 +1,28 @@
-### function to number tides and insert tide numbers (for whole tidal cycles, flood, and ebb tides)
-### in high-frequency dataset.
-### Requires HL() function output, and initial dataset
-### input arguments:
-### "data": full water level dataframe
-### "datetime": date/time column from full dataset (used as "time" argument in HL())
-### "hl": HL() output
+#' @title Numbers tidal cycles, flood tides, and ebb tides
+#' @description Numbers tidal cycles, flood tides, and ebb tides in a set of 
+#' water level data.
+#' 
+#' @details Numbers tidal cycles, flood tides, and ebb tides in a set of 
+#' water level data.
+#' 
+#' @param data dataframe to modify (containing water levels, time stamps)
+#' @param datetime date/time column from full dataset (used as 'time' argument 
+#' in call to \code{HL})
+#' @param hl output from \code{HL}
+#' 
+#' @return the dataframe noted in \code{data}, with additional columns 
+#' assigning a number to each tidal cycle, ebb tide, and flood tide.
+#' 
+#' @seealso \code{\link{HL}}
+#' 
+#' @examples
+#' # build high-low dataset
+#' data(NL_6min_2013)
+#' HL.NL <- HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
+#' # number tides in original
+#' nos <- number.tides(data = NL_6min_2013, datetime = NL_6min_2013[,1], HL.NL)
+#' head(nos)
+#' @export
 
 number.tides <- function(data, datetime, hl) {
   
