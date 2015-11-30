@@ -27,6 +27,7 @@
 #' battery  <- psmsl()
 #' stations <- psmsl(station = c(1372, 12), interval = "monthly")
 #' }
+#' @export
 
 psmsl <- function(station = 12, type = "RLR", interval = "annual"){  
   if(type == "RLR"){

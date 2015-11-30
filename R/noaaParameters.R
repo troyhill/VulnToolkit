@@ -25,6 +25,7 @@
 #' LA.stns <- noaa.stations(state = "LA")
 #' noaa.parameters(LA.stns$number[1])
 #' }
+#' @export
 
 noaa.parameters <- function(stn = 8467150) {
   # stn = NOAA station of interest

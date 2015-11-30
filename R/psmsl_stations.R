@@ -34,6 +34,7 @@
 #' stn.df <- psmsl.stations()
 #' stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")
 #' }
+#' @export
 
 psmsl.stations <- function(type = "RLR", country = "all", sort.by = "country") {
 #  require(XML)

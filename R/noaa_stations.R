@@ -28,6 +28,7 @@
 #' d <- noaa.stations(state = c("OR", "RI", "MA", "Germany", "Pluto")) # two erroneous entries 
 #' highlow <- noaa(station = d[1,1], begindate = 20130101)
 #' }
+#' @export
 
 
 noaa.stations <- function(state = "all") {

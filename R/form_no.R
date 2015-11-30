@@ -24,6 +24,7 @@
 #' b <- form.no(stn.list)
 #' b
 #' } 
+#' @export
 
 form.no <- function(station = 8467150){
 if(length(station) == 1){ 

@@ -26,6 +26,7 @@
 #' bport.datums <- noaa.datums() # Bridgeport, CT
 #' battery.datums <- noaa.datums(station = 8518750) # Battery, NYC
 #' }
+#' @export
 
 noaa.datums <- function(station = 8467150) {
   

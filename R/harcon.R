@@ -23,6 +23,7 @@
 #' bport.cons <- harcon(8467150) # Bridgeport, CT
 #' bport.cons
 #' } 
+#' @export
 
 
 harcon <- function(station) {
