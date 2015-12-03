@@ -48,6 +48,9 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
+#' @import RCurl
+#' @import XML
+#' @import plyr
 #' 
 #' @examples \dontrun{
 # Example requires an internet connection
