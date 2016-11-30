@@ -34,11 +34,11 @@ noaa.parameters <- function(stn = 8467150) {
   # the first line is consistently missed during an XML conversion.
   if (!regexpr("[0-9]{7}", stn)[1] == 1) {
      stop("Invalid station entry: must use station number. Check active stations 
-   at: http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+   at: https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
   }
   
   allParams <- data.frame(params = as.character(NA), startDate = NA, endDate = NA, station = stn)
-  tempDoc      <- htmlParse(getURL(paste0("http://co-ops.nos.noaa.gov/inventory.html?id=", stn)),
+  tempDoc      <- htmlParse(getURL(paste0("https://co-ops.nos.noaa.gov/inventory.html?id=", stn)),
                             useInternalNodes = TRUE)
   TempNodes    <- getNodeSet(tempDoc, "//tr")
   for (i in 2:length(TempNodes)) {
