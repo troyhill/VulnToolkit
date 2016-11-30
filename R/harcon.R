@@ -6,7 +6,7 @@
 #' @usage harcon(station)
 #' 
 #' @param station station ID number or vector of IDs, available on CO-OPS 
-#' website (\url{https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}) or 
+#' website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
 #' from \code{\link{noaa.stations}}.
 #' 
 #' @return a dataframe of harmonic constituents and their associated phases, 
@@ -31,7 +31,7 @@ harcon <- function(station) {
 #  require(RCurl)
 #  require(XML)
   
-  page <- htmlParse(getURL(paste("https://co-ops.nos.noaa.gov/harcon.html?unit=0&timezone=0&id=", station, sep = "")),
+  page <- htmlParse(getURL(paste("https://tidesandcurrents.noaa.gov/harcon.html?id=", station, sep = "")),
                     useInternalNodes = TRUE)
   
   nodes <- getNodeSet(page, "//td")
