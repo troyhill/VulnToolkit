@@ -32,7 +32,7 @@
 
 
 noaa.stations <- function(state = "all") {
-  suppressWarnings(stns <- readLines("http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) 
+  suppressWarnings(stns <- readLines("https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) 
   stn2 <- regexpr("[0-9]{7} .*</a>$", stns[grep("[0-9]{7} ", stns)])
   stn3 <- regmatches(stns[grep("[0-9]{7} ", stns)], stn2)
   site.no <- gsub(" .*</a>", "", stn3)
