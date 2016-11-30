@@ -33,7 +33,7 @@ noaa.datums <- function(station = 8467150) {
 #  require(RCurl)
 #  require(XML)
   
-  page <- htmlParse(getURL(paste("https://co-ops.nos.noaa.gov/datums.html?units=1&epoch=0&id=", station, sep = "")),
+  page <- htmlParse(getURL(paste("https://tidesandcurrents.noaa.gov/datums.html?id=", station, sep = "")),
                     useInternalNodes = TRUE)
   
   nodes <- getNodeSet(page, "//td")
