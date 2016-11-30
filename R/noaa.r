@@ -172,20 +172,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     site.name <- station
     site.ind  <- c(0)
   } else stop("Invalid station entry: must use station name or number. Check active stations 
-   at: https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+   at: https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
   
   
   
-  suppressWarnings(stns <- readLines("https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
+  suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
   
   if (site.ind == 1) {                                                            # Use station number to identify station
     stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
     if (length(stn1) == 0)        {
       stop ("Station number appears to be invalid. No match found at
-            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(stn1) > 1)  {
       stop ("Station number appears to be duplicated. Try using site name:
-            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(stn1) == 1) {
       stn2      <- regexpr("[0-9] .*</a>$", stns[stn1])
       stn3      <- regmatches(stns[stn1],   stn2)                                 # extract matches
@@ -199,10 +199,10 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
       station <- site.no <- gsub("[A-Za-z]| |,|</a>", "", no3)                           
     } else if (length(no1) > 1) {
       stop ("Site name found for multiple active NOAA stations. Look up site number at 
-            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(no1) < 1) {
       stop ("Site name not found on list of active NOAA stations. Look up sites at 
-            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels. 
+            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels. 
             Be attentive to spelling or consider using the station number.")
     }
     }
@@ -213,7 +213,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   
   ### use data from siteParameters
-  doc          <- XML::htmlParse(getURL(paste("https://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
+  doc          <- XML::htmlParse(getURL(paste("https://www.tidesandcurrents.noaa.gov/inventory.html?id=", station, sep="")),
                             useInternalNodes = TRUE)
   nodes        <- XML::getNodeSet(doc, "//tr")
   date.list    <- sapply(nodes, function(x)  XML::xmlValue(XML::getSibling(x)))
