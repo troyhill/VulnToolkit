@@ -15,7 +15,7 @@
 #' invalid, a dataframe will be produced for the valid criteria and invalid criteria 
 #' will be noted.
 #' 
-#' @seealso NOAA CO-OPS site: \url{http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}
+#' @seealso NOAA CO-OPS site: \url{https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}
 #' Historic stations which can also be accessed by \code{noaa}: 
 #' \url{http://co-ops.nos.noaa.gov/stations.html}
 #' 
