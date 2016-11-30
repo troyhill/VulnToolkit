@@ -172,20 +172,20 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     site.name <- station
     site.ind  <- c(0)
   } else stop("Invalid station entry: must use station name or number. Check active stations 
-   at: http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+   at: https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
   
   
   
-  suppressWarnings(stns <- readLines("http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
+  suppressWarnings(stns <- readLines("https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
   
   if (site.ind == 1) {                                                            # Use station number to identify station
     stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
     if (length(stn1) == 0)        {
       stop ("Station number appears to be invalid. No match found at
-            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(stn1) > 1)  {
       stop ("Station number appears to be duplicated. Try using site name:
-            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(stn1) == 1) {
       stn2      <- regexpr("[0-9] .*</a>$", stns[stn1])
       stn3      <- regmatches(stns[stn1],   stn2)                                 # extract matches
@@ -199,10 +199,10 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
       station <- site.no <- gsub("[A-Za-z]| |,|</a>", "", no3)                           
     } else if (length(no1) > 1) {
       stop ("Site name found for multiple active NOAA stations. Look up site number at 
-            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
+            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels")
     } else if (length(no1) < 1) {
       stop ("Site name not found on list of active NOAA stations. Look up sites at 
-            http://co-ops.nos.noaa.gov/stations.html?type=Water+Levels. 
+            https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels. 
             Be attentive to spelling or consider using the station number.")
     }
     }
@@ -213,7 +213,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   
   ### use data from siteParameters
-  doc          <- XML::htmlParse(getURL(paste("http://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
+  doc          <- XML::htmlParse(getURL(paste("https://co-ops.nos.noaa.gov/inventory.html?id=", station, sep="")),
                             useInternalNodes = TRUE)
   nodes        <- XML::getNodeSet(doc, "//tr")
   date.list    <- sapply(nodes, function(x)  XML::xmlValue(XML::getSibling(x)))
@@ -268,7 +268,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   #####
   # create list of csv files for water level data
   for(i in 1:(length(dates2) - 1)) {
-    url.temp <- c(paste0("http://tidesandcurrents.noaa.gov/api/datagetter?", 
+    url.temp <- c(paste0("https://tidesandcurrents.noaa.gov/api/datagetter?", 
                          "product=", ti.csv, 
                          "&application=NOS.COOPS.TAC.WL",
                          "&begin_date=", dates2[i], 
@@ -426,7 +426,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
         dateRange <- getDates(startDate = availableParams$actualStart[i], endDate = availableParams$actualEnd[i], dataType = interval)
         
         for(j in 1:(length(dateRange) - 1)) {
-          met.url.temp <- c(paste0("http://tidesandcurrents.noaa.gov/api/datagetter?", 
+          met.url.temp <- c(paste0("https://tidesandcurrents.noaa.gov/api/datagetter?", 
                                    "product=", param_list$codes[match(availableParams$param[i], param_list$names)],
                                    "&application=NOS.COOPS.TAC.PHYSOCEAN",
                                    "&begin_date=", dateRange[j], 
