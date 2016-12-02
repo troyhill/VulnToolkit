@@ -38,7 +38,7 @@ noaa.parameters <- function(stn = 8467150) {
   }
   
   allParams <- data.frame(params = as.character(NA), startDate = NA, endDate = NA, station = stn)
-  tempDoc      <- htmlParse(getURL(paste0("https://www.tidesandcurrents.noaa.gov/inventory.html?id=", stn)),
+  tempDoc      <- htmlParse(getURL(paste0("https://tidesandcurrents.noaa.gov/inventory.html?id=", stn)),
                             useInternalNodes = TRUE)
   TempNodes    <- getNodeSet(tempDoc, "//tr")
   for (i in 2:length(TempNodes)) {
