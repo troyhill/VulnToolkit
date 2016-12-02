@@ -21,3 +21,9 @@ export(wave.dur)
 import(RCurl)
 import(XML)
 import(plyr)
+importFrom("grDevices", "dev.off", "png")
+importFrom("graphics", "abline", "axTicks", "axis", "mtext", "par",
+             "plot", "points", "text")
+importFrom("stats", "complete.cases", "ecdf", "median", "na.omit",
+             "quantile")
+importFrom("utils", "read.csv", "read.table")
