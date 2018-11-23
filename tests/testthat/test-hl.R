@@ -10,14 +10,21 @@ test_that("fld.frq gives correct output", {
 })
 
 test_that("fld.dur gives correct output", {
-  expect_equal(fld.dur(2, 1:10), 0.8)
-  expect_error(fld.dur("string", 1:10)) 
-  expect_error(fld.dur(2, "string")) 
+  expect_equal(fld.dur(z = 2, level = 1:10), 0.8)
+  expect_error(fld.dur(z = "string", level = 1:10)) 
+  expect_error(fld.dur(z = 2, level = "string")) 
 })
-
 
 test_that("HL gives correct output", {
   expect_error(HL("hello world"))
   expect_error(HL(1:10, "hello world")) 
   expect_equal(nrow(HL(rep(c(c(1:100), c(100:1)), times = 400)[1:8761], seq.POSIXt(from = ISOdate(1910,1,1), to = ISOdate(1911,1,1), by = "hours"))), 1868)
+})
+
+
+test_that("wave.dur gives correct output", {
+  expect_error(wave.dur(elevation = 1:10)) 
+  expect_equal(sum(wave.dur(level = 2, elevation = 1:10)), 1)
+  expect_equal(sum(wave.dur(level = 2:10, elevation = 1:10)), 1)
+  expect_equal(sum(wave.dur(level = c(NA, 2:10), elevation = 1:10)), 1)
 })
