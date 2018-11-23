@@ -23,8 +23,14 @@ test_that("HL gives correct output", {
 
 
 test_that("wave.dur gives correct output", {
-  expect_error(wave.dur(elevation = 1:10)) 
+  expect_error(wave.dur(elevation = c(), level = 1:10)) 
   expect_equal(sum(wave.dur(level = 2, elevation = 1:10)), 1)
   expect_equal(sum(wave.dur(level = 2:10, elevation = 1:10)), 1)
   expect_equal(sum(wave.dur(level = c(NA, 2:10), elevation = 1:10)), 1)
+})
+
+
+test_that("psmsl error checking", {
+  expect_error(psmsl(type = "string")) 
+  expect_error(psmsl(interval = "string")) 
 })
