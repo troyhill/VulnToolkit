@@ -3,3 +3,4 @@
 ^LICENSE$
 ^CRAN-RELEASE$
 ^docs$
+^appveyor\.yml$
