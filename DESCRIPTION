@@ -16,3 +16,5 @@ Imports:
     plyr
 Depends:
     R (>= 3.0)
+Suggests:
+    covr
