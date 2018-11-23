@@ -1,5 +1,9 @@
 # VulnToolkit 
 
+
+[![Build Status](https://travis-ci.org/troyhill/VulnToolkit.svg?branch=master)](https://travis-ci.org/troyhill/VulnToolkit)
+
+
 VulnToolkit is an R package for users working with coastal datasets. Its primary goal is to advance analysis of coastal wetlands and their vulnerability to sea level rise. The package has two emphases: 
 
 * web scrapers, built to make it easy to bring coastal and estuarine data from on-line databases into R
