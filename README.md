@@ -1,7 +1,7 @@
 # VulnToolkit 
 
 
-[![Build Status](https://travis-ci.org/troyhill/VulnToolkit.svg?branch=master)](https://travis-ci.org/troyhill/VulnToolkit) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/corVulnToolkiteCT)](https://cran.r-project.org/package=VulnToolkit) 
+[![Build Status](https://travis-ci.org/troyhill/VulnToolkit.svg?branch=master)](https://travis-ci.org/troyhill/VulnToolkit) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/VulnToolkit)](https://cran.r-project.org/package=VulnToolkit) [![codecov.io](https://codecov.io/github/r-lib/VulnToolkit/coverage.svg?branch=master)](https://codecov.io/github/r-lib/VulnToolkit?branch=master)
 
 
 VulnToolkit is an R package for users working with coastal datasets. Its primary goal is to advance analysis of coastal wetlands and their vulnerability to sea level rise. The package has two emphases: 
