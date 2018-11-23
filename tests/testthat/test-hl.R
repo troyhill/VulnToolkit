@@ -34,3 +34,10 @@ test_that("psmsl error checking", {
   expect_error(psmsl(type = "string")) 
   expect_error(psmsl(interval = "string")) 
 })
+
+
+test_that("psmsl.stations error checking", {
+  expect_error(psmsl.stations(type = "string")) 
+  expect_error(psmsl.stations(sort.by = "string")) 
+  # expect_error(psmsl.stations(country = "string")) # move check to top of function
+})
