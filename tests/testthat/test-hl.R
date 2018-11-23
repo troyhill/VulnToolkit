@@ -39,5 +39,21 @@ test_that("psmsl error checking", {
 test_that("psmsl.stations error checking", {
   expect_error(psmsl.stations(type = "string")) 
   expect_error(psmsl.stations(sort.by = "string")) 
-  # expect_error(psmsl.stations(country = "string")) # move check to top of function
+})
+
+
+test_that("noaa.parameters error checking", {
+  expect_error(noaa.parameters(stn = "abcd"))
+})
+
+
+test_that("noaa error checking", {
+  expect_error(noaa(continuous = "string"))
+  expect_error(noaa(units = "string"))
+  expect_error(noaa(datum = "string"))
+  expect_error(noaa(interval = "string"))
+  expect_error(noaa(units = "feet", interval = "string"))
+  expect_error(noaa(units = "meters", interval = "string"))
+  expect_error(noaa(time = "string"))
+  
 })
