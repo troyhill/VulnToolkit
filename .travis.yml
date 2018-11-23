@@ -6,3 +6,7 @@
 
  after_success:
   - Rscript -e 'library(covr); codecov()'
+  
+ environment:
+  global:
+    WARNINGS_ARE_ERORRS: 1
