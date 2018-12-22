@@ -72,7 +72,6 @@
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
                  met = "FALSE", units = "meters", datum = "MHW", interval = "HL", 
                  time = "GMT", continuous = "TRUE") {
-  # nocov start
   getDates <- function(startDate, endDate, dataType, 
                        first.record = startDate, last.record = endDate) {
     # function produces a vector of dates used to download data
@@ -112,8 +111,8 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   
   # set acceptable true/flase values
-  T.vals  <- c("TRUE", "T", "True")
-  F.vals  <- c("FALSE", "F", "False")
+  T.vals  <- c("TRUE", "T", "True", TRUE, T)
+  F.vals  <- c("FALSE", "F", "False", FALSE, F)
   TF.vals <- c(T.vals, F.vals)
   
   if (!continuous %in% TF.vals) 
@@ -178,6 +177,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   } else stop("Invalid station entry: must use station name or number. Check active stations 
    at: https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
   
+  # nocov start
   
   
   suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
