@@ -20,6 +20,8 @@
 #' 
 #' @seealso \code{\link{psmsl.stations}} can be used to find stations
 #' 
+#' @importFrom utils read.table
+#' 
 #' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
 #' @examples
@@ -52,7 +54,7 @@ psmsl <- function(station = 12, type = "RLR", interval = "annual"){
     }
     
     url <- paste0("http://www.psmsl.org/data/obtaining/", type, ".", interval, ".data/", stn.no, ".", type, "data")
-    output <- read.table(file = url, sep = ";", col.names = c("year", "msl_mm", "days_missing", "flag"))  
+    output <- utils::read.table(file = url, sep = ";", col.names = c("year", "msl_mm", "days_missing", "flag"))  
     output$msl_mm[output$msl_mm == -99999] <- NA
     output$site <- stn.list$name[stn.list$ID == stn.no]
     

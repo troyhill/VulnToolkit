@@ -34,4 +34,3 @@ battery.datums <- noaa.datums(station = 8518750) # Battery, NYC
 \seealso{
 \code{\link{noaa}}, \code{\link{noaa.stations}}
 }
-

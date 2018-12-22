@@ -51,6 +51,9 @@
 #' @import RCurl
 #' @import XML
 #' @import plyr
+#' @importFrom stats complete.cases
+#' @importFrom utils read.csv
+#' 
 #' 
 #' @examples \dontrun{
 # Example requires an internet connection
@@ -278,9 +281,9 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     txtCSV <- textConnection(lapply.csv[[i]])
     
     if (!exists("data.csv")){
-      data.csv <- read.csv(txtCSV)
+      data.csv <- utils::read.csv(txtCSV)
     } else if (exists("data.csv")){
-      data.csv <- rbind(data.csv, read.csv(txtCSV))
+      data.csv <- rbind(data.csv, utils::read.csv(txtCSV))
       rm(txtCSV)
     }
   }
@@ -407,7 +410,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
       }
       
       ### parameters relevant to our time period of interest
-      availableParams <- availableParams[complete.cases(availableParams), ]
+      availableParams <- availableParams[stats::complete.cases(availableParams), ]
       # availableParams has each available ancillary parameter, and their associated start and end dates
       
       
@@ -442,12 +445,12 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
         
         for (k in 1:length(met.lapply.csv)) {
           if (!exists("met.data.csv")) {
-            met.data.csv <- read.csv(textConnection(met.lapply.csv[[k]]))
+            met.data.csv <- utils::read.csv(textConnection(met.lapply.csv[[k]]))
           }
           # if the dataset exists, add to it
           if (exists("met.data.csv")) {
             txtCSV       <- textConnection(met.lapply.csv[[k]])
-            met.data.csv <- rbind(met.data.csv, read.csv(txtCSV))
+            met.data.csv <- rbind(met.data.csv, utils::read.csv(txtCSV))
             rm(txtCSV)
           } 
         } 

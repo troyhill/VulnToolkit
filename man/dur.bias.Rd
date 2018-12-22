@@ -59,4 +59,3 @@ dur.bias(data = NL_extract, station = 8518750, ref.period = c("20130101", "20131
 \seealso{
 \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
 }
-

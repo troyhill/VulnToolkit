@@ -4,7 +4,7 @@
 \alias{HL.plot}
 \title{Plots water level data and high/low tides extracted by \code{HL()}}
 \usage{
-HL.plot(level, time, period = 13, phantom = TRUE, tides = "all")
+HL.plot(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE)
 }
 \arguments{
 \item{level}{a numeric vector of water levels}
@@ -21,6 +21,8 @@ measurements end precisely at a low or high tide, this can be changed to FALSE.}
 
 \item{tides}{is used to optionally subset the output to include 
 only high or low tides. This argument can be 'all' (default), 'H', or 'L'}
+
+\item{semidiurnal}{logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'}
 }
 \value{
 a plot of water levels, with red and blue dots superimposed on high and low tides.
@@ -41,4 +43,3 @@ HL.plot(level = NL_6min_2013[1:1000,2], time = NL_6min_2013[1:1000,1])
 \seealso{
 \code{\link{HL}}
 }
-

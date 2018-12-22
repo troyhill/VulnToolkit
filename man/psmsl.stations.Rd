@@ -44,4 +44,3 @@ stn.df2 <- psmsl.stations(country = "USA", sort.by = "date")
 \seealso{
 \code{\link{psmsl}}
 }
-

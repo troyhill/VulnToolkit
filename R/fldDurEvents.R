@@ -30,6 +30,10 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
+#' 
+#' @importFrom stats median
+#' @importFrom stats quantile
+#' 
 #' @examples
 #' data(NL_6min_2013)
 #' MHW <- 0.9117  # New London MHW in 2013: 0.9117 m relative to MLLW
@@ -76,8 +80,8 @@ dur.events <- function(level, elevation, percentile = 0.5,
       
       ifelse(percentile == 0.5, 
              # return depths relative to elevation of interest
-             percentileDur <- median(floodEvents), # median() is faster than quantile
-             percentileDur <- quantile(floodEvents, percentile)
+             percentileDur <- stats::median(floodEvents), # median() is faster than quantile
+             percentileDur <- stats::quantile(floodEvents, percentile)
       )
       durs[i] <- percentileDur
     }

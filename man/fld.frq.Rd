@@ -51,4 +51,3 @@ ylab = "flooding frequency (tides per year)", xlab = "elevation (m; MLLW)")
 \seealso{
 \code{\link{fld.dur}}
 }
-

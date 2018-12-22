@@ -59,4 +59,3 @@ fld.depth(level = NL_6min_2013[, 2], elevation = c(0, MHW, 1.5),
 \seealso{
 \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
 }
-

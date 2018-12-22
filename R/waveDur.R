@@ -14,6 +14,8 @@
 #' @return a vector of values representing the fraction of time in the entire dataset 
 #' where the water surface is near the elevation of interest. Numerical range is from 0-1
 #' 
+#' @importFrom stats na.omit
+#'  
 #' @examples data(NL_6min_2013)
 #' MHW <- 0.9117  # New London MHW in 2013: 0.9117 m relative to MLLW
 #' 
@@ -33,7 +35,7 @@ wave.dur <- function(level, elevation, buffer = 0.050){
   denom <- length(na.omit(level))
   } else if (length(elevation) > 1){
     zone <- as.numeric(NA)
-    denom <- length(na.omit(level))
+    denom <- length(stats::na.omit(level))
     
     for (i in 1:length(elevation)){
     zone[i] <- length(level[level >= (elevation[i] - buffer) & level <= (elevation[i] + buffer)  & !is.na(level)])

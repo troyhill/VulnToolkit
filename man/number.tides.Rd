@@ -37,4 +37,3 @@ head(nos)
 \seealso{
 \code{\link{HL}}
 }
-

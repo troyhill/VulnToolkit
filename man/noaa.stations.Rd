@@ -40,4 +40,3 @@ NOAA station listing: \url{https://www.tidesandcurrents.noaa.gov/stations.html?t
 Historic stations which can also be accessed by \code{noaa}: 
 \url{http://co-ops.nos.noaa.gov/stations.html}
 }
-

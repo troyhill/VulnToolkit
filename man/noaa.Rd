@@ -66,4 +66,3 @@ nrow(test2.2) # fills gaps with NAs
 \seealso{
 \code{\link{noaa.stations}}
 }
-

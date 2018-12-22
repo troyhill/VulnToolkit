@@ -13,6 +13,8 @@
 #' 
 #' @seealso \code{\link{fld.frq}}
 #' 
+#' @importFrom stats ecdf
+#' 
 #' @examples
 #' data(NL_6min_2013)
 #' a <- fld.dur(0.9117, NL_6min_2013[,2]); a # flooding duration at MHW
@@ -32,6 +34,6 @@ fld.dur <- function(z, level = z) {
   if(is.numeric(z) == FALSE) stop("'z' must be a numeric value")
   if(is.numeric(level) == FALSE) stop("water level dataset ('level') must be numeric")
 
-  a <- ecdf(level)
+  a <- stats::ecdf(level)
   1 - a(z)
 }

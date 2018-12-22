@@ -38,4 +38,3 @@ stations <- psmsl(station = c(1372, 12), interval = "monthly")
 \seealso{
 \code{\link{psmsl.stations}} can be used to find stations
 }
-

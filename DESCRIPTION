@@ -1,8 +1,8 @@
 Package: VulnToolkit
 Type: Package
 Title: Tools for analysis of coastal wetlands
-Version: 1.0.4
-Date: 2014-04-10
+Version: 1.0.5
+Date: 2018-12-22
 Author: Troy D. Hill <Hill.Troy@gmail.com>, Shimon C. Anisfeld
     <Shimon.Anisfeld@Yale.edu>
 Maintainer: Troy D. Hill <Hill.Troy@gmail.com>
@@ -19,3 +19,4 @@ Depends:
 Suggests:
     covr,
     testthat
+RoxygenNote: 6.1.0

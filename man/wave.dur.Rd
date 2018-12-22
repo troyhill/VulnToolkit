@@ -34,4 +34,3 @@ wave.dur(NL_6min_2013[, 2], MHW)
 # elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
 # plot(elevs)
 }
-

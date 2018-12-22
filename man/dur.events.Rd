@@ -61,4 +61,3 @@ fld.dur(z = MHW, NL_6min_2013[, 2])
 \seealso{
 \code{\link{noaa.stations}}
 }
-

@@ -4,7 +4,8 @@
 \alias{HL}
 \title{Extracts high and low tides from a record of water levels}
 \usage{
-HL(level, time, period = 13, phantom = TRUE, tides = "all")
+HL(level, time, period = 13, phantom = TRUE, tides = "all",
+  semidiurnal = TRUE)
 }
 \arguments{
 \item{level}{a numeric vector of water levels}
@@ -21,6 +22,8 @@ measurements end precisely at a low or high tide, this can be changed to FALSE.}
 
 \item{tides}{is used to optionally subset the output to include 
 only high or low tides. This argument can be 'all' (default), 'H', or 'L'}
+
+\item{semidiurnal}{logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'}
 }
 \value{
 a dataframe of tide levels, associated time stamps, and tide 
@@ -40,4 +43,3 @@ head(HL.NL)
 \seealso{
 \code{\link{HL.plot}}
 }
-

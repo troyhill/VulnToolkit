@@ -37,4 +37,3 @@ ylab = "flooding duration (hours per year)", xlab = "elevation (m; MLLW)")
 \seealso{
 \code{\link{fld.frq}}
 }
-

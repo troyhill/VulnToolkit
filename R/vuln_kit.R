@@ -33,6 +33,14 @@
 #' depth, duration vulnerability, and D90 vulnerability, calculated at the vertical 
 #' elevation set by \code{platform} argument
 #' 
+#' @importFrom stats quantile
+#' @importFrom grDevices png
+#' @importFrom graphics par
+#' @importFrom graphics plot
+#' @importFrom graphics axis
+#' @importFrom graphics mtext
+#' @importFrom grDevices dev.off
+#' 
 #' @examples # data(NL_6min_2013)
 #' # NL2013 <- vuln.kit(level = NL_6min_2013[,2], datetime = NL_6min_2013[,1],
 #' #                   platform = 0.9117) # MHW in 2013: 0.9117 m relative to MLLW
@@ -104,7 +112,7 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
     ###
     
     frq.dur.df$duration[i] <- max(cumsum(wl$ind) ) * t.int / 60
-    frq.dur.df$D90[i]      <- as.numeric(quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60 
+    frq.dur.df$D90[i]      <- as.numeric(stats::quantile(wl.rle$lengths[wl.rle$values == 1], 0.9)) * t.int / 60 
     frq.dur.df$A[i]        <- mean(wl$zeroed[wl$ind == 1], na.rm = T) - elevation[i]  # average of all flooded time points, not average of flooding high tide heights
     frq.dur.df$A.ht[i]     <- mean(high.low$level[high.low$level >= elevation[i]], na.rm = T) - elevation[i]  # mean depth of flooding high tides. inclusive of target elevation
   }
@@ -120,34 +128,34 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
                  frq.dur.df$D90[frq.dur.df$elevation == 0]) * 100
   rownames(df) <- NULL
   
-  png(filename, height = 200, width = 200, units = "mm", res = 300)
-  par(mfrow = c(2,2))
-  par(mar   = c(4,4.5,0.2,0.2), oma = c(1,0.2,0.2,0.2))
+  grDevices::png(filename, height = 200, width = 200, units = "mm", res = 300)
+  graphics::par(mfrow = c(2,2))
+  graphics::par(mar   = c(4,4.5,0.2,0.2), oma = c(1,0.2,0.2,0.2))
   
-  plot(frq.dur.df$frequency ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
+  graphics::plot(frq.dur.df$frequency ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
        xlim = c(-1, 0.6), yaxt = "n", ylim = c(0, max(frq.dur.df$frequency)),
        ylab = expression(F~"(yr"^-1~")"), xlab = "", bty="n", xaxs = "i", yaxs = "i") 
-  axis(2, las = 1)
+  graphics::axis(2, las = 1)
   
-  plot(frq.dur.df$D90 ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
+  graphics::plot(frq.dur.df$D90 ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
        xlim = c(-1, 0.6), ylim = c(1, max(frq.dur.df$D90)), bty = "n",
        ylab = expression(D90~"(hr "~yr^-1~")"), yaxt = "n", log = "y", xlab = "",
        xaxs = "i", yaxs = "i") 
-  axis(2, 10^c(-2:10), labels = 10^c(-2:10), las = 1)  
+  graphics::axis(2, 10^c(-2:10), labels = 10^c(-2:10), las = 1)  
   
-  plot(frq.dur.df$duration ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
+  graphics::plot(frq.dur.df$duration ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
        xlim = c(-1, 0.6), ylim = c(1, max(frq.dur.df$duration)),
        ylab = expression(D~"(hr "~yr^-1~")"), yaxt = "n", log = "y", xlab = "", 
        bty = "n", xaxs = "i", yaxs = "i") 
-  axis(2, 10^c(-2:10), labels = 10^c(-2:10), las = 1)  
+  graphics::axis(2, 10^c(-2:10), labels = 10^c(-2:10), las = 1)  
   
-  plot(frq.dur.df$A ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
+  graphics::plot(frq.dur.df$A ~ frq.dur.df$elevation, cex = 0.1, col = "black", type = "l",
        xlim = c(-1, 0.6), ylim = c(0, max(frq.dur.df$A)), yaxt = "n",
        ylab ="A (m)", xlab = "", bty = "n", xaxs = "i", yaxs = "i") 
-  axis(2, las = 1)
+  graphics::axis(2, las = 1)
 
-  mtext("Elevation (m)", side = 1, outer = TRUE, cex = 1, line = 0)
-  dev.off()
+  graphics::mtext("Elevation (m)", side = 1, outer = TRUE, cex = 1, line = 0)
+  grDevices::dev.off()
 
 print(paste0(filename, " saved to ", getwd()))
 value <- list(dataset = frq.dur.df,

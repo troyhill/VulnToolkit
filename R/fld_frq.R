@@ -16,6 +16,8 @@
 #' 
 #' @seealso \code{\link{fld.dur}}
 #' 
+#' @importFrom stats ecdf
+#' 
 #' @examples
 #' # get a dataset of high/low tides
 #' data(NL_6min_2013)
@@ -49,7 +51,7 @@ fld.frq <- function(z, ht = z, units = "percent") {
   if(units == "tides"){
     length(ht[ht >= z])
   } else {
-    a <- ecdf(ht)
+    a <- stats::ecdf(ht)
     1 - a(z)
   }
 

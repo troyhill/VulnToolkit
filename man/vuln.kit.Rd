@@ -53,4 +53,3 @@ calculates a set of flooding parameters.
 #                   platform = 0.9117) # MHW in 2013: 0.9117 m relative to MLLW
 # NL2013$metrics
 }
-

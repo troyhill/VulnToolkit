@@ -34,4 +34,3 @@ noaa.parameters(LA.stns$number[1])
 \seealso{
 \code{\link{noaa}}, \code{\link{noaa.stations}}
 }
-
