@@ -36,7 +36,7 @@
 #' @export
 
 
-HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE) {
+HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE) { # nocov start
   hl <- VulnToolkit::HL(level = level, time = time, period = period, phantom = phantom, tides = tides, semidiurnal = semidiurnal)
   wll.2 <- data.frame(1:length(level), level, time)
   
@@ -44,4 +44,4 @@ HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", sem
        xlab = "", xaxt = "n", col = "darkgray")
   graphics::points(hl$level[hl$tide == "H"]  ~ hl$time[hl$tide == "H"], pch = 19, cex = 0.75, col="red")
   graphics::points(hl$level[hl$tide == "L"] ~ hl$time[hl$tide == "L"], pch = 19, cex = 0.75, col="cornflowerblue")
-}
+} # nocov end

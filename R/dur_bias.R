@@ -62,7 +62,7 @@
 #' @export
 
 
-dur.bias <- function(data, station = 8518750, ref.period = c("20120101", "20121231"), time = "GMT") {
+dur.bias <- function(data, station = 8518750, ref.period = c("20120101", "20121231"), time = "GMT") { # nocov start
   # download 6-min data for period of logger deployment, and reference period
   start <- paste0(substr(data[1, "datetime"], 1, 4),  substr(data[1, "datetime"], 6, 7), 
                   substr(data[1, "datetime"], 9, 10))
@@ -124,4 +124,4 @@ dur.bias <- function(data, station = 8518750, ref.period = c("20120101", "201212
   print(summary(dur.data$disparity))
   invisible(dur.data)
   
-}
+} # nocov end

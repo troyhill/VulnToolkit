@@ -72,7 +72,7 @@
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
                  met = "FALSE", units = "meters", datum = "MHW", interval = "HL", 
                  time = "GMT", continuous = "TRUE") {
-  
+  # nocov start
   getDates <- function(startDate, endDate, dataType, 
                        first.record = startDate, last.record = endDate) {
     # function produces a vector of dates used to download data
@@ -486,4 +486,4 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     invisible(data.csv)
   }
   invisible(data.csv)
-    }
+  } # nocov end

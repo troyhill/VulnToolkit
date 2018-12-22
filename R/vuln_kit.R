@@ -50,7 +50,7 @@
 
 vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 0.005, 
                     TV.inc = 0.1, period = 13, filename = "VTK_output.png") {
- 
+  # nocov start
   if (is.numeric(level) == FALSE)
     stop("invalid entry: 'level' must be numeric")
   
@@ -160,4 +160,4 @@ vuln.kit <- function(level, datetime, platform, units = "meters", frq.dur.inc = 
 print(paste0(filename, " saved to ", getwd()))
 value <- list(dataset = frq.dur.df,
                 metrics = df)
-}
+} # nocov end
