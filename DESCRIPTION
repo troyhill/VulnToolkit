@@ -9,7 +9,6 @@ Authors@R: c(
     person()
     )
 BugReports: https://github.com/troyhill/VulnToolKit/issues
-Maintainer: Troy D. Hill <Hill.Troy@gmail.com>
 Description: A set of web scrapers and analytical tools to aid analysis of
     coastal wetlands and their vulnerability to sea level rise.
 License: GPL-3
