@@ -3,7 +3,7 @@ VulnToolkit version 1.0.6 (release date: 2020-09-03)
 ==================
   
   Changes:
-  * NOAA web scrapers fixed to accommodate new website design. Also removed RCurl usage. 
+  * NOAA web scrapers fixed to accommodate new website design. Removed RCurl usage in noaa(), with future goal of complete RCurl elimination. 
   
 VulnToolkit version 1.0.5 (release date: 2018-12-22)
 ==================
