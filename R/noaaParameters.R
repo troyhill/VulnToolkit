@@ -18,6 +18,7 @@
 #' @importFrom XML htmlParse
 #' @importFrom XML getNodeSet
 #' @importFrom XML xpathSApply
+#' @importFrom XML saveXML
 #' 
 #' @examples
 #' \dontrun{
@@ -44,7 +45,7 @@ noaa.parameters <- function(stn = 8467150) {
                             useInternalNodes = TRUE)
   TempNodes    <- XML::getNodeSet(tempDoc, "//tr")
   for (i in 2:length(TempNodes)) {
-    out2   <- XML::xpathSApply(tempDoc, "//tr", saveXML)[i] # converts to char vector
+    out2   <- XML::xpathSApply(tempDoc, "//tr", XML::saveXML)[i] # converts to char vector
     # get parameter name
     line   <- strsplit(out2, "/div>")[[1]][2]
     
