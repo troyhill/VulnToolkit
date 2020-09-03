@@ -33,12 +33,12 @@
 
 noaa.stations <- function(state = "all") {
   suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")) 
-  stn2 <- regexpr("[0-9]{7} .*</a>$", stns[grep("[0-9]{7} ", stns)])
-  stn3 <- regmatches(stns[grep("[0-9]{7} ", stns)], stn2)
-  site.no <- gsub(" .*</a>", "", stn3)
-  site.name <- gsub("[0-9]{7} |</a>", "", stn3)
+  stn2           <- regexpr("[0-9]{7} .*</a>$", stns[grep("[0-9]{7} ", stns)])
+  stn3           <- regmatches(stns[grep("[0-9]{7} ", stns)], stn2)
+  site.no        <- gsub(" .*</a>", "", stn3)
+  site.name      <- gsub("[0-9]{7} |</a>", "", stn3)
   site.name.only <- gsub(", .*|", "", site.name)
-  site.state <- gsub(".*, ", "", site.name)
+  site.state     <- gsub(".*, ", "", site.name)
   
   output <- data.frame(name = site.name.only, state = site.state, number = site.no, stringsAsFactors = FALSE)
   
@@ -54,10 +54,10 @@ noaa.stations <- function(state = "all") {
     }
   } else if(length(state) > 1){
     if(length(state[state %in% c(output$state, "all")]) == length(state)){
-      output <- output[output$state %in% state, ]
+      output    <- output[output$state %in% state, ]
     } else if(length(state[state %in% c(output$state, "all")]) < length(state)) {
       not.found <- state[!state %in% c(output$state, "all")]
-      output <- output[output$state %in% state[state %in% c(output$state, "all")], ]
+      output    <- output[output$state %in% state[state %in% c(output$state, "all")], ]
       print("stations not found for requested location(s):")
       print(not.found)
     }

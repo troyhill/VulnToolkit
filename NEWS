@@ -1,12 +1,17 @@
 
+VulnToolkit version 1.0.7 (release date: 2020-09-04)
+==================
+  Changes:
+  * RCurl use is completely eliminated
+  
+  
 VulnToolkit version 1.0.6 (release date: 2020-09-03)
 ==================
-  
   Changes:
   * NOAA web scrapers fixed to accommodate new website design. Removed RCurl usage in noaa(), with future goal of complete RCurl elimination. 
   
+  
 VulnToolkit version 1.0.5 (release date: 2018-12-22)
 ==================
-  
   Changes:
   * HL() now has an option to identify higher- and lower- high/low tides in semidiurnal systems

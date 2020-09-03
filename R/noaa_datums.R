@@ -17,8 +17,10 @@
 #' 
 #' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
 #' 
-#' @import RCurl
-#' @import XML
+#' @importFrom XML getNodeSet
+#' @importFrom XML xmlSApply
+#' @importFrom XML xmlValue
+#' @importFrom XML htmlParse
 #' 
 #' @examples
 #' \dontrun{
@@ -33,12 +35,12 @@ noaa.datums <- function(station = 8467150) {
 #  require(RCurl)
 #  require(XML)
   
-  page <- htmlParse(getURL(paste("https://tidesandcurrents.noaa.gov/datums.html?id=", station, sep = "")),
+  page <- XML::htmlParse(readLines(paste("https://tidesandcurrents.noaa.gov/datums.html?id=", station, sep = ""), warn=FALSE),
                     useInternalNodes = TRUE)
   
-  nodes <- getNodeSet(page, "//td")
+  nodes <- XML::getNodeSet(page, "//td")
   
-  nodes.text <- xmlSApply(nodes, xmlValue)
+  nodes.text <- XML::xmlSApply(nodes, XML::xmlValue)
   
   datum           <- as.factor(nodes.text[c(seq(from = 1, to = 46, by = 3), 52, 58, 64)])
   description     <- as.character(nodes.text[c(seq(from = 3, to = 48, by = 3), 54, 60, 66)])

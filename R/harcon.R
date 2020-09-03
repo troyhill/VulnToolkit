@@ -16,8 +16,10 @@
 #' 
 #' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
-#' @import RCurl
-#' @import XML
+#' @importFrom XML getNodeSet
+#' @importFrom XML xmlSApply
+#' @importFrom XML xmlValue
+#' @importFrom XML htmlParse
 #' 
 #' @examples \dontrun{
 #' bport.cons <- harcon(8467150) # Bridgeport, CT
@@ -31,12 +33,12 @@ harcon <- function(station) {
 #  require(RCurl)
 #  require(XML)
   
-  page <- htmlParse(getURL(paste("https://tidesandcurrents.noaa.gov/harcon.html?id=", station, sep = "")),
+  page <- XML::htmlParse(readLines(paste("https://tidesandcurrents.noaa.gov/harcon.html?id=", station, sep = ""), warn=FALSE),
                     useInternalNodes = TRUE)
   
-  nodes <- getNodeSet(page, "//td")
+  nodes <- XML::getNodeSet(page, "//td")
   
-  nodes.text <- xmlSApply(nodes, xmlValue)
+  nodes.text <- XML::xmlSApply(nodes, XML::xmlValue)
   
   if (length(nodes.text) == 0) { # list length will be zero if no harmonic constituent page exists (e.g., Great Lake stations)
          

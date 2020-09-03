@@ -42,7 +42,6 @@
 #' 
 #' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
-#' @import RCurl
 #' @import XML
 #' @importFrom graphics plot
 #' @importFrom graphics points
@@ -68,9 +67,9 @@ dur.bias <- function(data, station = 8518750, ref.period = c("20120101", "201212
                   substr(data[1, "datetime"], 9, 10))
   end <- paste0(substr(data[nrow(data), "datetime"], 1, 4),  substr(data[nrow(data), "datetime"], 6, 7), 
                 substr(data[nrow(data), "datetime"], 9, 10))
-  deploy <- noaa(station = station, begindate = start, enddate = end, interval = "6 minute", 
+  deploy <- VulnToolkit::noaa(station = station, begindate = start, enddate = end, interval = "6 minute", 
                  time = time, continuous = "T")
-  ref <- noaa(station = station, begindate = ref.period[1], enddate = ref.period[2], interval = "6 minute", 
+  ref <- VulnToolkit::noaa(station = station, begindate = ref.period[1], enddate = ref.period[2], interval = "6 minute", 
               time = time, continuous = "T")
   
   dur.data              <- data.frame(elevs = seq(-3, 3.5, by = 0.001))
