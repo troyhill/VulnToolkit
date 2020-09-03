@@ -15,8 +15,9 @@
 #' 
 #' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
 #' 
-#' @import RCurl
-#' @import XML
+#' @importFrom XML htmlParse
+#' @importFrom XML getNodeSet
+#' @importFrom XML xpathSApply
 #' 
 #' @examples
 #' \dontrun{
@@ -38,11 +39,12 @@ noaa.parameters <- function(stn = 8467150) {
   }
   
   allParams <- data.frame(params = as.character(NA), startDate = NA, endDate = NA, station = stn)
-  tempDoc      <- htmlParse(getURL(paste0("https://tidesandcurrents.noaa.gov/inventory.html?id=", stn)),
+  targetURL <- paste0("https://tidesandcurrents.noaa.gov/inventory.html?id=", stn)
+  tempDoc      <- XML::htmlParse(readLines(targetURL),
                             useInternalNodes = TRUE)
-  TempNodes    <- getNodeSet(tempDoc, "//tr")
+  TempNodes    <- XML::getNodeSet(tempDoc, "//tr")
   for (i in 2:length(TempNodes)) {
-    out2   <- xpathSApply(tempDoc, "//tr", saveXML)[i] # converts to char vector
+    out2   <- XML::xpathSApply(tempDoc, "//tr", saveXML)[i] # converts to char vector
     # get parameter name
     line   <- strsplit(out2, "/div>")[[1]][2]
     

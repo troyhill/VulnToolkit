@@ -48,7 +48,6 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
-#' @import RCurl
 #' @import XML
 #' @import plyr
 #' @importFrom stats complete.cases
@@ -180,7 +179,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   # nocov start
   
   
-  suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")) # list of active stations
+  suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html")) # list of active stations
   
   if (site.ind == 1) {                                                            # Use station number to identify station
     stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
@@ -274,8 +273,10 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   }
   
   
-  # RCurl dependency
-  lapply.csv <- lapply(url.list, function(x) RCurl::getURL(x, timeout = 20))
+  # RCurl dependency eliminated 20200903
+  oldTimeout <- options()$timeout
+  options(timeout = 20) # set readLines timeout to 20 secs
+  lapply.csv <- lapply(url.list, function(x) readLines(x))
   
   for (i in 1:length(lapply.csv)) {
     txtCSV <- textConnection(lapply.csv[[i]])
@@ -440,8 +441,8 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
           }
         }
         
-        # RCurl dependency
-        met.lapply.csv   <- lapply(met.url.list, function(x) RCurl::getURL(x, timeout = 20))
+        # RCurl dependency removed 20200903
+        met.lapply.csv   <- lapply(met.url.list, function(x) readLines(x))
         
         for (k in 1:length(met.lapply.csv)) {
           if (!exists("met.data.csv")) {
@@ -485,5 +486,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     } # closes section contingent on availableParams haveing >0 rows
     invisible(data.csv)
   }
+  options(timeout = oldTimeout)
+  
   invisible(data.csv)
   } # nocov end

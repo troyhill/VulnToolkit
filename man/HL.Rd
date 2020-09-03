@@ -4,8 +4,7 @@
 \alias{HL}
 \title{Extracts high and low tides from a record of water levels}
 \usage{
-HL(level, time, period = 13, phantom = TRUE, tides = "all",
-  semidiurnal = TRUE)
+HL(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE)
 }
 \arguments{
 \item{level}{a numeric vector of water levels}
