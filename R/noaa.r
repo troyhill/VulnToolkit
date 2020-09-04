@@ -179,7 +179,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   # nocov start
   
   
-  suppressWarnings(stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html")) # list of active stations
+  stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html", warn = FALSE) # list of active stations
   
   if (site.ind == 1) {                                                            # Use station number to identify station
     stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
