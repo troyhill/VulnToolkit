@@ -1,4 +1,12 @@
 
+VulnToolkit version 1.1.0 (release date: 2020-10-17)
+==================
+  Changes:
+  * Changes to noaa() to accommodate NOAA website changes
+      * `stn` argument must now be the station number.
+  * noaa.stations() is deprecated, because the url listing NOAA stations now relies on javascript
+
+
 VulnToolkit version 1.0.7 (release date: 2020-09-04)
 ==================
   Changes:

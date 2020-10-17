@@ -1,5 +1,5 @@
-#' @title Print active NOAA stations
-#' @description \code{noaa.stations} returns active NOAA CO-OPS tide stations.
+#' @title Print active NOAA stations - function is deprecated
+#' @description \code{noaa.stations} returns active NOAA CO-OPS tide stations. This function is deprecated as of 17 Oct 2020, due to a heavy reliance on Javascript in the main NOAA website.
 #' 
 #' @details This function returns a dataframe showing all active stations in 
 #' the NOAA CO-OPS network. This can be used to identify stations for use 

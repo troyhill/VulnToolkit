@@ -1,15 +1,15 @@
 #' @title Downloads NOAA CO-OPS tide data
 #'
 #' @description
-#' Scrapes water level data (and other measurements) from NOAA CO-OPS website. Requires 
-#' internet connection.
+#' Scrapes water level data (and other measurements) from NOAA CO-OPS website. NOAA's site limits the time period for data downloads, but these constraints are avoided by `noaa()`. Requires 
+#' internet connection and curl (check availablility using `Sys.which("curl")`). 
 #'
 #' @details 
 #' Download water level and other data from NOAA CO-OPS website.
 #' 
 #' @usage noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
-#' met = "FALSE", units = "meters", datum = "MHW", interval = "HL", time = "GMT", 
-#' continuous = "TRUE")
+#' met = FALSE, units = "meters", datum = "MHW", interval = "HL", time = "GMT", 
+#' continuous = TRUE)
 #' 
 #' @param begindate first day of data to download. Format must be YYYYMMDD. If 
 #' left unspecified, the first complete day of data will be used.
@@ -17,9 +17,10 @@
 #' @param enddate final day of data to download. Format must be YYYYMMDD. If left 
 #' unspecified, the last complete day of data will be used.
 #' 
-#' @param station station name or ID number, available on the CO-OPS website or by 
-#' using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
-#' corresponding to the station name. Default station is Bridgeport, CT.
+#' @param station station number, found on the NOAA Tides and Currents website 
+#' (https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels).
+#' Station numbers can be numeric or a character string (necessary if first 
+#' character is a zero). Default station is for Bridgeport, CT.
 #' 
 #' @param met whether meteorological data should be returned. This value can be 'TRUE' or 
 #' 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only 
@@ -52,25 +53,27 @@
 #' @import plyr
 #' @importFrom stats complete.cases
 #' @importFrom utils read.csv
+#' @importFrom utils download.file
 #' 
 #' 
 #' @examples \dontrun{
-# Example requires an internet connection
+#' # Example requires an internet connection
 #'bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
-#'   station = "Bridgeport, CT", interval = "6 minute")
+#'   station = "8467150", interval = "6 minute")
 #'
 #'test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
-#'test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
+#'test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = TRUE) 
 #'nrow(test2.1) # includes data on NOAA site (incomplete record)
 #'nrow(test2.2) # fills gaps with NAs 
+#'test2.3 <- noaa("20100101", "20120101", interval = "hourly", met = TRUE) 
 #' }
 #' @export
 
 
 
 noaa <- function(begindate = "begindate", enddate = "enddate", station = "8467150",
-                 met = "FALSE", units = "meters", datum = "MHW", interval = "HL", 
-                 time = "GMT", continuous = "TRUE") {
+                 met = FALSE, units = "meters", datum = "MHW", interval = "HL", 
+                 time = "GMT", continuous = TRUE) {
   getDates <- function(startDate, endDate, dataType, 
                        first.record = startDate, last.record = endDate) {
     # function produces a vector of dates used to download data
@@ -114,8 +117,9 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   F.vals  <- c("FALSE", "F", "False", FALSE, F)
   TF.vals <- c(T.vals, F.vals)
   
-  if (!continuous %in% TF.vals) 
+  if (!continuous %in% TF.vals) {
     stop ("'continuous' must be set to 'TRUE' or 'FALSE'")
+  }
   
   if ((interval %in% c("HL", "monthly")) & (!met %in% F.vals)) {
     met <- "FALSE"
@@ -171,44 +175,27 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   if (regexpr("[0-9]{7}", station)[1] == 1)         {
     site.ind  <- c(1)
   } else if (regexpr("[a-zA-Z]+", station)[1] == 1) {
-    site.name <- station
-    site.ind  <- c(0)
-  } else stop("Invalid station entry: must use station name or number. Check active stations 
+    stop("Invalid station entry: must use station number. Check active stations 
+   at: https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
+  } else stop("Invalid station entry: must use station number. Check active stations 
    at: https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
   
   # nocov start
   
   
-  stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html", warn = FALSE) # list of active stations
+  # stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html", warn = FALSE) # list of active stations
   
-  if (site.ind == 1) {                                                            # Use station number to identify station
-    stn1 <- grep(paste(station, " " , sep = ""), stns)                            # station number is followed by a space, then the station name
-    if (length(stn1) == 0)        {
-      stop ("Station number appears to be invalid. No match found at
-            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
-    } else if (length(stn1) > 1)  {
-      stop ("Station number appears to be duplicated. Try using site name:
-            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
-    } else if (length(stn1) == 1) {
-      stn2      <- regexpr("[0-9] .*</a>$", stns[stn1])
-      stn3      <- regmatches(stns[stn1],   stn2)                                 # extract matches
-      site.name <- gsub("[0-9] |</a>", "",  stn3)                                 # clean up site name
-    }
-  } else if (site.ind == 0) {                                                     # Use station name to identify site number
-    no1     <- grep(site.name, stns)                                                    
-    if (length(no1) == 1) { 
-      no2     <- regexpr("[0-9]{7} .*</a>$", stns[no1])
-      no3     <- regmatches(stns[no1], no2)                                       
-      station <- site.no <- gsub("[A-Za-z]| |,|</a>", "", no3)                           
-    } else if (length(no1) > 1) {
-      stop ("Site name found for multiple active NOAA stations. Look up site number at 
-            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels")
-    } else if (length(no1) < 1) {
-      stop ("Site name not found on list of active NOAA stations. Look up sites at 
-            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels. 
-            Be attentive to spelling or consider using the station number.")
-    }
-    }
+  ### get station name from station home page
+  url <- paste0("https://tidesandcurrents.noaa.gov/stationhome.html?id=", station)
+  stns <- readLines(url, warn = FALSE)
+  stn.query <- paste0(" - Station ID: ", station)
+  nameSection <- grep(stn.query, stns, value = TRUE)
+  if (length(nameSection) == 0) { # 
+    stop ("Station number appears to be invalid. No match found at
+            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels. Debug note: retrieving station name")
+  }
+  site.name <- strsplit(x = nameSection, split = stn.query)[[1]]
+  site.name <- gsub(x = site.name, pattern = "\\t", replacement = "")
   
   
   siteParameters <- noaa.parameters(stn = station)
@@ -272,27 +259,39 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     }
   }
   
+  tempFileNames <- tempfile(pattern = as.character(c(1:length(url.list))), fileext = ".csv")
+  
+  # download.file(url.list[i], destfile = "test.csv")
   
   # RCurl dependency eliminated 20200903
-  oldTimeout <- options()$timeout
-  options(timeout = 20) # set readLines timeout to 20 secs
-  lapply.csv <- lapply(url.list, function(x) readLines(x))
+  ### check for curl: 
+  curl.msg <- Sys.which("curl")
+  if (!grepl(x = curl.msg, pattern = "curl.exe")) {
+    stop("curl (https://curl.haxx.se/) is needed for downloading data. please install curl and ensure it is visible via the R console command: Sys.which('curl'). This may help: https://stackoverflow.com/a/16216825 ")
+  }
   
-  for (i in 1:length(lapply.csv)) {
-    txtCSV <- textConnection(lapply.csv[[i]])
-    
-    if (!exists("data.csv")){
-      data.csv <- utils::read.csv(txtCSV)
-    } else if (exists("data.csv")){
-      data.csv <- rbind(data.csv, utils::read.csv(txtCSV))
-      rm(txtCSV)
+  for (i in 1:length(url.list)) {
+    download.file(url.list[i], destfile = tempFileNames[i], 
+                  quiet = TRUE,
+                  method="curl",
+                  extra='-L') # requires curl. might be an issue for some users. also, unlink to delete files
+  }
+
+  
+  
+  for (i in 1:length(tempFileNames)) {
+    if (i == 1){
+      data.csv <- utils::read.csv(tempFileNames[[i]])
+    } else {
+      data.csv <- rbind(data.csv, utils::read.csv(tempFileNames[[i]]))
+      unlink(tempFileNames[[i]])
     }
   }
   
   data.csv$station <- rep(site.name, times = nrow(data.csv))
   
-  label <- paste("verified water level at ", site.name, " (", units, " rel. to ", datum, ")", sep="")
-  t.label <- paste("time (", time, ")", sep = "")
+  label   <- paste("verified water level at ", site.name, " (", units, " rel. to ", datum, ")", sep="")
+  t.label <- paste("time_", time, sep = "")
   
   
   # clean up the data
@@ -431,30 +430,35 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
                                    "&format=csv"))
           
           
-          if (!exists("met.url.list")) {
+          if (j == 1) {
             met.url.list    <- met.url.temp
-          }
-          # if the dataset exists, add to it
-          if (exists("met.url.list")) {
+          } else  {
             met.url.list[j] <- met.url.temp
-            rm(met.url.temp)
           }
+          rm(met.url.temp)
         }
         
-        # RCurl dependency removed 20200903
-        met.lapply.csv   <- lapply(met.url.list, function(x) readLines(x))
+        tempFileNames <- tempfile(pattern = as.character(c(1:length(met.url.list))), fileext = "_met.csv")
+        # RCurl dependency eliminated 20200903
+        ### check for curl: 
+        for (h in 1:length(met.url.list)) {
+          download.file(met.url.list[h], destfile = tempFileNames[h], 
+                        quiet = TRUE,
+                        method="curl",
+                        extra='-L') # requires curl. might be an issue for some users. also, unlink to delete files
+        }
         
-        for (k in 1:length(met.lapply.csv)) {
-          if (!exists("met.data.csv")) {
-            met.data.csv <- utils::read.csv(textConnection(met.lapply.csv[[k]]))
+        
+        
+        for (h in 1:length(tempFileNames)) {
+          if (h == 1){
+            met.data.csv <- utils::read.csv(tempFileNames[[h]])
+          } else {
+            met.data.csv <- rbind(met.data.csv, utils::read.csv(tempFileNames[[h]]))
+            unlink(tempFileNames[[h]])
           }
-          # if the dataset exists, add to it
-          if (exists("met.data.csv")) {
-            txtCSV       <- textConnection(met.lapply.csv[[k]])
-            met.data.csv <- rbind(met.data.csv, utils::read.csv(txtCSV))
-            rm(txtCSV)
-          } 
-        } 
+        }
+        #######
         
         # now, all data is compiled for availableParams$param[i] 
         # so, merge it in.
@@ -486,7 +490,6 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
     } # closes section contingent on availableParams haveing >0 rows
     invisible(data.csv)
   }
-  options(timeout = oldTimeout)
-  
+
   invisible(data.csv)
   } # nocov end
