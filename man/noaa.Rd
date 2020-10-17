@@ -5,8 +5,8 @@
 \title{Downloads NOAA CO-OPS tide data}
 \usage{
 noaa(begindate = "begindate", enddate = "enddate", station = "8467150",
-met = "FALSE", units = "meters", datum = "MHW", interval = "HL", time = "GMT", 
-continuous = "TRUE")
+met = FALSE, units = "meters", datum = "MHW", interval = "HL", time = "GMT", 
+continuous = TRUE)
 }
 \arguments{
 \item{begindate}{first day of data to download. Format must be YYYYMMDD. If 
@@ -15,9 +15,10 @@ left unspecified, the first complete day of data will be used.}
 \item{enddate}{final day of data to download. Format must be YYYYMMDD. If left 
 unspecified, the last complete day of data will be used.}
 
-\item{station}{station name or ID number, available on the CO-OPS website or by 
-using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
-corresponding to the station name. Default station is Bridgeport, CT.}
+\item{station}{station number, found on the NOAA Tides and Currents website 
+(https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels).
+Station numbers can be numeric or a character string (necessary if first 
+character is a zero). Default station is for Bridgeport, CT.}
 
 \item{met}{whether meteorological data should be returned. This value can be 'TRUE' or 
 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only 
@@ -46,21 +47,23 @@ and tide type (if interval is set to \code{HL}). The NOAA CO-OPS website has man
 availabilty problems. Some data are not available in all time intervals or time zones.
 }
 \description{
-Scrapes water level data (and other measurements) from NOAA CO-OPS website. Requires 
-internet connection.
+Scrapes water level data (and other measurements) from NOAA CO-OPS website. NOAA's site limits the time period for data downloads, but these constraints are avoided by `noaa()`. Requires 
+internet connection and curl (check availablility using `Sys.which("curl")`).
 }
 \details{
 Download water level and other data from NOAA CO-OPS website.
 }
 \examples{
 \dontrun{
+# Example requires an internet connection
 bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
-  station = "Bridgeport, CT", interval = "6 minute")
+  station = "8467150", interval = "6 minute")
 
 test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
-test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = "TRUE") 
+test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = TRUE) 
 nrow(test2.1) # includes data on NOAA site (incomplete record)
 nrow(test2.2) # fills gaps with NAs 
+test2.3 <- noaa("20100101", "20120101", interval = "hourly", met = TRUE) 
 }
 }
 \seealso{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/noaa_stations.R
 \name{noaa.stations}
 \alias{noaa.stations}
-\title{Print active NOAA stations}
+\title{Print active NOAA stations - function is deprecated}
 \usage{
 noaa.stations(state = "all")
 }
@@ -18,7 +18,7 @@ invalid, a dataframe will be produced for the valid criteria and invalid criteri
 will be noted.
 }
 \description{
-\code{noaa.stations} returns active NOAA CO-OPS tide stations.
+\code{noaa.stations} returns active NOAA CO-OPS tide stations. This function is deprecated as of 17 Oct 2020, due to a heavy reliance on Javascript in the main NOAA website.
 }
 \details{
 This function returns a dataframe showing all active stations in 

@@ -1,8 +1,8 @@
 Package: VulnToolkit
 Type: Package
 Title: Tools for analysis of coastal wetlands
-Version: 1.0.7
-Date: 2020-09-04
+Version: 1.1.0
+Date: 2020-10-17
 Authors@R: c(
     person("Troy", "Hill", role = c("aut", "cre"), email = "Hill.Troy@gmail.com", comment = c(ORCID = "0000-0003-2980-4099")),
     person("Shimon", "Anisfeld", role = "ctb"),
