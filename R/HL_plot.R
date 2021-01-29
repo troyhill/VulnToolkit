@@ -23,11 +23,11 @@
 #' 
 #' @seealso \code{\link{HL}}
 #' 
-#' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
 #' 
 #' @importFrom graphics plot
 #' @importFrom graphics points
+#' @importFrom graphics axis
 #' 
 #' @examples 
 #' data(NL_6min_2013)
@@ -44,4 +44,15 @@ HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", sem
        xlab = "", xaxt = "n", col = "darkgray")
   graphics::points(hl$level[hl$tide == "H"]  ~ hl$time[hl$tide == "H"], pch = 19, cex = 0.75, col="red")
   graphics::points(hl$level[hl$tide == "L"] ~ hl$time[hl$tide == "L"], pch = 19, cex = 0.75, col="cornflowerblue")
-} # nocov end
+  ### include high tide times on x axis. not accommodating to long time series...
+  if (grepl(x = tides, pattern = "all|H")) {
+    tick_times <- hl$time[hl$tide == "H"]
+  } else {
+    tick_times <- hl$time[hl$tide == "L"]
+  }
+  if (is.numeric(time)) {
+    graphics::axis(side = 1, at=tick_times, labels=tick_times)
+  } else if(inherits(time, "POSIXt") | inherits(time, "Date")) { # assume it's date/posix otherwise
+    graphics::axis(side = 1, at=tick_times, labels=format(tick_times,"%d %b %H:%M"))
+  }
+} 
