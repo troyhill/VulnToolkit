@@ -8,7 +8,7 @@ form.no(station)
 }
 \arguments{
 \item{station}{station ID number or vector of IDs, available on CO-OPS 
-website (\url{https://co-ops.nos.noaa.gov/stations.html?type=Water+Levels}) or 
+website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
 from \code{\link{noaa.stations}}.}
 }
 \value{

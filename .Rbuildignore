@@ -7,9 +7,9 @@
 ^docs$
 ^appveyor\\.yml$
 ^.*\.Rproj$
-*.csv
-*.png
+.*.csv
+.*.png
 VulnToolkit.Rproj
-*.dur_bias
-*.psmsl
-*.vuln_kit
+.*.dur_bias
+.*.psmsl
+.*.vuln_kit
