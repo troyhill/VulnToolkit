@@ -14,7 +14,6 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
-#' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
 #' @importFrom XML getNodeSet
 #' @importFrom XML xmlSApply
@@ -29,9 +28,6 @@
 
 
 harcon <- function(station) {
-  
-#  require(RCurl)
-#  require(XML)
   
   page <- XML::htmlParse(readLines(paste("https://tidesandcurrents.noaa.gov/harcon.html?id=", station, sep = ""), warn=FALSE),
                     useInternalNodes = TRUE)

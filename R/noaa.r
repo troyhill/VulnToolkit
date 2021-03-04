@@ -32,9 +32,7 @@
 #' 'MLLW', 'MLW', 'MSL', 'MTL', 'MHW', 'MHHW', or 'IGLD' (some datums are not available 
 #' at some sites)
 #' 
-#' @param interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'. 
-#' For data on monthly and annual time scales from Permanent Service for Mean Sea Level, 
-#' see \code{\link{psmsl}}
+#' @param interval sets measurement interval; can be 'HL' (default), '6 minute', 'hourly', or 'monthly'.
 #' 
 #' @param time can be 'LST', 'GMT', or 'LST/LDT'. Not all time zones are available for all data. 
 #' GMT appears to have wider availability than LST, so it is the default.

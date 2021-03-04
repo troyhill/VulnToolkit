@@ -37,6 +37,4 @@ highlow <- noaa(station = d[1,1], begindate = 20130101)
 }
 \seealso{
 NOAA station listing: \url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}
-Historic stations which can also be accessed by \code{noaa}: 
-\url{http://co-ops.nos.noaa.gov/stations.html}
 }

@@ -18,7 +18,7 @@ is 0.050 meters (5 cm)}
 }
 \value{
 a vector of values representing the fraction of time in the entire dataset 
-where the water surface is near the elevation of interest. Numerical range is from 0-1
+where the water surface is near the elevation of interest. Numerical range is from 0-1. NAs are omitted.
 }
 \description{
 Find the proportion of time when water surface is near a selected elevation

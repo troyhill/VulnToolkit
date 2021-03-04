@@ -25,9 +25,6 @@ bport.cons <- harcon(8467150) # Bridgeport, CT
 bport.cons
 } 
 }
-\references{
-\url{http://wetlandsandr.wordpress.com/}
-}
 \seealso{
 \code{\link{noaa.stations}}
 }

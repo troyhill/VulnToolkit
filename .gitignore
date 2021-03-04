@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+csv$
+png$
+dur_bias.*\.
+psmsl.*
+vuln_kit.*

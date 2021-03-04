@@ -31,7 +31,6 @@
 #' 
 #' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
 #' 
-#' @references \url{http://wetlandsandr.wordpress.com/}
 #' 
 #' @importFrom stats median
 #' @importFrom stats quantile

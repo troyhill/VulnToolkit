@@ -36,9 +36,6 @@ data(NL_6min_2013)
 HL.NL <- VulnToolkit::HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 head(HL.NL)
 }
-\references{
-\url{http://wetlandsandr.wordpress.com/}
-}
 \seealso{
 \code{\link{HL.plot}}
 }

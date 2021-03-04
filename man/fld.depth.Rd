@@ -53,9 +53,6 @@ fld.depth(level = NL_6min_2013[, 2], elevation = c(0, MHW, 1.5),
 fld.depth(level = NL_6min_2013[, 2], elevation = c(0, MHW, 1.5), 
          percentile = c(0.25, 0.5, 0.75))
 }
-\references{
-\url{http://wetlandsandr.wordpress.com/}
-}
 \seealso{
 \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
 }

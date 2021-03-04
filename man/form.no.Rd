@@ -29,9 +29,6 @@ b <- form.no(stn.list)
 b
 } 
 }
-\references{
-\url{http://wetlandsandr.wordpress.com/}
-}
 \seealso{
 \code{\link{noaa.stations}}
 }

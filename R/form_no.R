@@ -16,8 +16,6 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
-#' @references \url{http://wetlandsandr.wordpress.com/}
-#' 
 #' @examples \dontrun{
 #' a <- form.no()
 #' stn.list <- c("8467150", "8461490", "9454240")
