@@ -26,7 +26,7 @@ only high or low tides. This argument can be 'all' (default), 'H', or 'L'}
 }
 \value{
 a dataframe of tide levels, associated time stamps, and tide 
-type ('H' or 'L').
+type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon.
 }
 \description{
 Extracts high and low tides from a record of water levels

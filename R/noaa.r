@@ -183,18 +183,19 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   
   # stns <- readLines("https://www.tidesandcurrents.noaa.gov/stations.html", warn = FALSE) # list of active stations
   
-  ### get station name from station home page
-  url <- paste0("https://tidesandcurrents.noaa.gov/stationhome.html?id=", station)
-  stns <- readLines(url, warn = FALSE)
-  stn.query <- paste0(" - Station ID: ", station)
-  nameSection <- grep(stn.query, stns, value = TRUE)
-  if (length(nameSection) == 0) { # 
-    stop ("Station number appears to be invalid. No match found at
-            https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels. Debug note: retrieving station name")
-  }
-  site.name <- strsplit(x = nameSection, split = stn.query)[[1]]
-  site.name <- gsub(x = site.name, pattern = "\\t", replacement = "")
-  
+  ### commented out 20210305: NOAA web page now dynamically produced; can't scrape station names :(
+  # ### get station name from station home page
+  # url <- paste0("https://tidesandcurrents.noaa.gov/stationhome.html?id=", station)
+  # stns <- readLines(url, warn = FALSE)
+  # stn.query <- paste0(" - Station ID: ", station)
+  # nameSection <- grep(stn.query, stns, value = TRUE)
+  # if (length(nameSection) == 0) { # 
+  #   stop ("Station number appears to be invalid. No match found at
+  #           https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels. Debug note: retrieving station name")
+  # }
+  # site.name <- strsplit(x = nameSection, split = stn.query)[[1]]
+  # site.name <- gsub(x = site.name, pattern = "\\t", replacement = "")
+  site.name <- station
   
   siteParameters <- noaa.parameters(stn = station)
   

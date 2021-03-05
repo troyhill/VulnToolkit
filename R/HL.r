@@ -15,7 +15,7 @@
 #' @param semidiurnal logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'
 #' 
 #' @return a dataframe of tide levels, associated time stamps, and tide 
-#' type ('H' or 'L').
+#' type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon.
 #' 
 #' @seealso \code{\link{HL.plot}}
 #' 
@@ -45,9 +45,17 @@ if(!is.logical(semidiurnal)) {
   stop("'semidiurnal' argument should be TRUE/FALSE - indicates whether higher- and lower- high/low tides should be identified. /n")
 }
 
+  ### send a message about NAs, if any are present
+  if (sum(is.na(time)) > 0) {
+    message(sum(is.na(time)), " NAs appear in time data. These have not been removed or modified.\n")
+  }
+  if (sum(is.na(level)) > 0) {
+    message(sum(is.na(level)), " NAs appear in water level data. These have not been removed or modified.\n")
+  }
+  
 # Set locals
 partial.tide <- period * 60 * 60            # seconds
-t.int <- as.numeric( time[2] ) - as.numeric( time[1] )      # seconds
+t.int <- as.numeric( time[!is.na(time)][2] ) - as.numeric( time[!is.na(time)][1] )      # seconds
 wll.2 <- data.frame(1:length(level), level, time)
 width <- partial.tide / t.int
 

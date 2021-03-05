@@ -25,12 +25,16 @@ Find the proportion of time when water surface is near a selected elevation
 }
 \examples{
 data(NL_6min_2013)
-MHW <- 0.9117  # New London MHW in 2013: 0.9117 m relative to MLLW
+
+### an elevation of interest: 0.9117 m
+MHW <- 0.9117
 
 wave.dur(NL_6min_2013[, 2], MHW)
 
-# function accepts and returns vectors
-# elevs           <- data.frame(elevs = c(-1000:1500) / 10^3)
-# elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
-# plot(elevs)
+\dontrun{
+### function also accepts and returns vectors
+elevs           <- data.frame(elevs = c(-1000:1500) / 10^3)
+elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
+plot(elevs ~ wave.dur, data = elevs)
+}
 }

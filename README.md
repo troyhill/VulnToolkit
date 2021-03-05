@@ -21,4 +21,4 @@ To install and load VulnToolkit, run the following commands in R:
     library(VulnToolkit)
 
 
-To see examples of VulnToolkit usage, check out the [VulnToolkit wiki](https://github.com/troyhill/VulnToolkit/wiki) or the package vignette. Email questions, comments, and suggestions to Hill.Troy@gmail.com.
+To see examples of VulnToolkit usage, check out the [VulnToolkit wiki](https://github.com/troyhill/VulnToolkit/wiki), the package vignette, and a [poster describing VulnToolkit applications] (https://doi.org/10.6084/m9.figshare.14161202.v1). Email questions, comments, and suggestions to Hill.Troy@gmail.com.

@@ -16,25 +16,30 @@
 #' 
 #' @importFrom stats na.omit
 #'  
-#' @examples data(NL_6min_2013)
-#' MHW <- 0.9117  # New London MHW in 2013: 0.9117 m relative to MLLW
+#' @examples 
+#' data(NL_6min_2013)
+#' 
+#' ### an elevation of interest: 0.9117 m
+#' MHW <- 0.9117
 #' 
 #' wave.dur(NL_6min_2013[, 2], MHW)
 #' 
-#' # function accepts and returns vectors
-#' # elevs           <- data.frame(elevs = c(-1000:1500) / 10^3)
-#' # elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
-#' # plot(elevs)
+#' \dontrun{
+#' ### function also accepts and returns vectors
+#' elevs           <- data.frame(elevs = c(-1000:1500) / 10^3)
+#' elevs$wave.dur  <- wave.dur(NL_6min_2013[, 2], elevs$elevs)
+#' plot(elevs ~ wave.dur, data = elevs)
+#' }
 #' @export
 
 
 wave.dur <- function(level, elevation, buffer = 0.050){
   # observations within buffer
   if (length(elevation) == 1) {
-  zone <- length(level[level >= (elevation - buffer) & level <= (elevation + buffer)  & !is.na(level)])
+  zone  <- length(level[level >= (elevation - buffer) & level <= (elevation + buffer)  & !is.na(level)])
   denom <- length(na.omit(level))
   } else if (length(elevation) > 1){
-    zone <- as.numeric(NA)
+    zone  <- as.numeric(NA)
     denom <- length(stats::na.omit(level))
     
     for (i in 1:length(elevation)){

@@ -2,15 +2,16 @@ Package: VulnToolkit
 Type: Package
 Title: Analysis of Tidal Datasets
 Version: 1.1.1
-Date: 2021-03-03
+Date: 2021-03-05
 Authors@R: c(
     person("Troy", "Hill", role = c("aut", "cre"), email = "Hill.Troy@gmail.com", comment = c(ORCID = "0000-0003-2980-4099")),
     person("Shimon", "Anisfeld", role = "ctb")
     )
 BugReports: https://github.com/troyhill/VulnToolKit/issues
-Description: Contains functions for analysis and summary of tidal datasets. Also provides access to tidal data collected by the National Oceanic and Atmospheric Administration's Center for Operational Oceanographic Products and Services.
+Description: Contains functions for analysis and summary of tidal datasets. Also provides access to tidal data collected by the National Oceanic and Atmospheric Administration's Center for Operational Oceanographic Products and Services. For detailed description and application examples, see Hill, T.D. and S.C. Anisfeld (2021) <doi: 10.6084/m9.figshare.14161202.v1> and Hill, T.D. and S.C. Anisfeld (2015) <doi: 10.1016/j.ecss.2015.06.004>.
 License: GPL-3
 URL: https://github.com/troyhill/VulnToolkit
+LazyData: true
 Imports:
     XML,
     plyr
