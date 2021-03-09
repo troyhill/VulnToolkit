@@ -26,14 +26,13 @@ One of the basic functions we might want to perform on a tidal dataset is identi
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, results = "hide", fig.width=7, fig.height=4}
 library(VulnToolkit)
-data(NL_6min_2013)
 
 HL.NL <- HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 head(HL.NL)
 
 ### plot the data to visually assess the high/low tides
 ### this is a long time series, so we'll narrow the time window
-NL.sub  <- NL_6min_2013[NL_6min_2013$`time (GMT)` < "2013-03-15", ]
+NL.sub  <- NL_6min_2013[NL_6min_2013$`time_GMT` < "2013-03-15", ]
 HL.plot(level = NL.sub[,2], time = NL.sub[,1])
 
 
