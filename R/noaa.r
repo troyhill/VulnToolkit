@@ -47,8 +47,7 @@
 #' 
 #' @seealso \code{\link{noaa.stations}}
 #' 
-#' @import XML
-#' @import plyr
+#' @importFrom plyr join_all
 #' @importFrom stats complete.cases
 #' @importFrom utils read.csv
 #' @importFrom utils download.file

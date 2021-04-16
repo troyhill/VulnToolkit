@@ -1,4 +1,17 @@
 
+VulnToolkit version 1.1.2 (release date: 2021-04-16)
+==================
+  Changes:
+  * Added functions for pulling data from Permanent Service for Mean Sea Level
+  * Zenodo DOI [![DOI](https://zenodo.org/badge/18603030.svg)](https://zenodo.org/badge/latestdoi/18603030)
+
+
+VulnToolkit version 1.1.1 (release date: 2021-03-09)
+==================
+  Changes:
+  * Code updates for consistency with CRAN package guidelines
+
+
 VulnToolkit version 1.1.0 (release date: 2020-10-17)
 ==================
   Changes:
