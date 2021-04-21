@@ -38,7 +38,7 @@
 #' estimates is saved as output, and (3) two plots are made, graphically showing the 
 #' relationship between predicted and reference flooding duration curves. 
 #' 
-#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
+#' @seealso \code{\link{noaa}},\code{\link{fld.dur}}
 #' 
 #' 
 #' @importFrom graphics plot

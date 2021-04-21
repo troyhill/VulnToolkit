@@ -28,7 +28,6 @@ water level data.
 }
 \examples{
 # build high-low dataset
-data(NL_6min_2013)
 HL.NL <- HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 # number tides in original
 nos <- number.tides(data = NL_6min_2013, datetime = NL_6min_2013[,1], HL.NL)

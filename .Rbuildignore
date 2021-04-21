@@ -11,3 +11,5 @@
 .*.png
 VulnToolkit.Rproj
 .*.vuln_kit
+.*.noaa_stations
+.*.noaa.stations

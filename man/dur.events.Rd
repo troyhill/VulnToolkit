@@ -58,6 +58,3 @@ dur.events(NL_6min_2013[, 2], elevation = MHW, units = "6 minutes")
 # And over an entire year, MHW was flooded 13\% of the time
 fld.dur(z = MHW, NL_6min_2013[, 2])
 }
-\seealso{
-\code{\link{noaa.stations}}
-}

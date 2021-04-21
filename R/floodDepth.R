@@ -29,7 +29,7 @@
 #' 'percentiles' are sought, in those cases a dataframe is output 
 #' to report elevations and flooding depths.
 #' 
-#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}, \code{\link{fld.dur}}
+#' @seealso \code{\link{noaa}}, \code{\link{fld.dur}}
 #' 
 #' 
 #' @importFrom stats median

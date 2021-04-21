@@ -28,9 +28,6 @@
 #' clarity when more than one \code{percentile} is sought, in those cases a dataframe is 
 #' output to report elevations and flooding durations
 #' 
-#' @seealso \code{\link{noaa.stations}}
-#' 
-#' 
 #' @importFrom stats median
 #' @importFrom stats quantile
 #' 

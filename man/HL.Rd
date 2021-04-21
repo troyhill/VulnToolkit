@@ -16,7 +16,7 @@ level measurements. Units must be minutes.}
 (full tidal cycle). Units must be hours.}
 
 \item{phantom}{a protective measure taken to prevent the inclusion of an 
-artificial high or low tide at the end of the dataset. If the water level 
+artificial ('phantom') high or low tide at the end of the dataset, which occurs because the final observation is always a local maxima/minima for the period following the previous low/high tide. If the water level 
 measurements end precisely at a low or high tide, this can be changed to FALSE.}
 
 \item{tides}{is used to optionally subset the output to include 
@@ -26,7 +26,7 @@ only high or low tides. This argument can be 'all' (default), 'H', or 'L'}
 }
 \value{
 a dataframe of tide levels, associated time stamps, and tide 
-type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon.
+type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon. The column indicating semidiurnal tides (`tide2`) may be NA if tides are identical or in cases where there is a single tide in the first day of the dataset.
 }
 \description{
 Extracts high and low tides from a record of water levels. For reliable results, the time interval between samples must be constant throughout the dataset (e.g., 1 sample per hour, 1 sample per 6 minutes). Datasets with irregularly-spaced observations

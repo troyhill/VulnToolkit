@@ -8,14 +8,14 @@
 #' @param period a single numeric or integer estimate of tidal period 
 #' (full tidal cycle). Units must be hours.
 #' @param phantom a protective measure taken to prevent the inclusion of an 
-#' artificial high or low tide at the end of the dataset. If the water level 
+#' artificial ('phantom') high or low tide at the end of the dataset, which occurs because the final observation is always a local maxima/minima for the period following the previous low/high tide. If the water level 
 #' measurements end precisely at a low or high tide, this can be changed to FALSE.
 #' @param tides is used to optionally subset the output to include 
 #' only high or low tides. This argument can be 'all' (default), 'H', or 'L'
 #' @param semidiurnal logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'
 #' 
 #' @return a dataframe of tide levels, associated time stamps, and tide 
-#' type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon.
+#' type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon. The column indicating semidiurnal tides (`tide2`) may be NA if tides are identical or in cases where there is a single tide in the first day of the dataset.
 #' 
 #' @seealso \code{\link{HL.plot}}
 #' 
@@ -117,8 +117,8 @@ t.y <- which.min(level[1:(1 + width)])
   lt$tide <- rep("L", nrow(lt))
   
   hl <- rbind(ht, lt)
-  hl <- hl[order(hl[,1]),]    
-  hl <- hl[,-1]               
+  hl <- hl[order(hl[,1]),]
+  hl <- hl[,-1]
   
   if(semidiurnal) {
     ### identify higher- and lower- high/low tides
@@ -126,6 +126,8 @@ t.y <- which.min(level[1:(1 + width)])
     hl[, "tide2"] <- NA
     
     for (i in 1:length(unique(days))) {
+      ### how many high/low tides are in day i
+      ### better approach: do this by tidal cycle (using number.tides, but pairing sequential tides), not by day
       numLowTides  <- sum(!is.na(hl$level[(days == unique(days)[i]) & (hl$tide %in% "L")]))
       numHighTides <- sum(!is.na(hl$level[(days == unique(days)[i]) & (hl$tide %in% "H")]))
       if (numHighTides == 2) {
@@ -133,23 +135,55 @@ t.y <- which.min(level[1:(1 + width)])
         hh.tide <- which.max(hl$level[(days == unique(days)[i]) & (hl$tide %in% "H")])
         lh.tide <- which.min(hl$level[(days == unique(days)[i]) & (hl$tide %in% "H")])
         
+        ### if tides are exactly equal, the first observation registers as the max and the min
+        if (hh.tide == lh.tide) {
+          lh.tide <- c(2, 1)[hh.tide] # select the opposite value
+        }
+        
         # define new tides
         hl[, "tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")][hh.tide] <- "HH"
         hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")][lh.tide] <- "LH"
       } else if (numHighTides == 1) {
         ### define value based on previous or subsequent values
+        ### this will result in an NA if the first day in the dataset has 1 high/low tide (nothing to base an assessment on)
         hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")] <- rev(hl[,"tide2"][(hl$tide %in% "H") & (!is.na(hl[,"tide2"]))])[2] # copy the second most recent HH/LH value (may bewrong if there's a gap in the hl)
+        ### if the value is still an NA (can happen on the first day of a dataset), look forward more explicitly
+        if(is.na(hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")])) {
+          if (!is.na(unique(days)[c(i+1)])) { # if there's a 'next day' in the dataset,
+            nextDaysHH <- which.max(hl[,"level"][(days %in% unique(days)[c(i+1)]) & (hl$tide %in% "H")]) # look at the next day's high tides: is highest high first or second?
+            if (nextDaysHH == 2) {
+              hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")] <- "HH" 
+            } else if (nextDaysHH == 1) {
+              hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "H")] <- "LH"
+            }
+          }
+        }
       }
       
       if (numLowTides == 2) {
         hl.tide <- which.max(hl$level[(days == unique(days)[i]) & (hl$tide %in% "L")])
         ll.tide <- which.min(hl$level[(days == unique(days)[i]) & (hl$tide %in% "L")])
         
+        ### if tides are exactly equal, the first observation registers as the max and the min
+        if (hl.tide == ll.tide) {
+          ll.tide <- c(2, 1)[hl.tide] # select the opposite value
+        }
+        
         hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")][hl.tide] <- "HL"
         hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")][ll.tide] <- "LL"
       } else if (numLowTides == 1) {
         ### define value based on previous or subsequent values
         hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")] <- rev(hl[,"tide2"][(hl$tide %in% "L") & (!is.na(hl[,"tide2"]))])[2]
+        if(is.na(hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")])) {
+          if (!is.na(unique(days)[c(i+1)])) { # if there's a 'next day' in the dataset,
+            nextDaysHL <- which.max(hl[,"level"][(days %in% unique(days)[c(i+1)]) & (hl$tide %in% "L")]) # look at the next day's high tides: is highest high first or second?
+            if (nextDaysHL == 2) {
+              hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")] <- "HL" 
+            } else if (nextDaysHL == 1) {
+              hl[,"tide2"][(days == unique(days)[i]) & (hl$tide %in% "L")] <- "LL"
+            }
+          }
+        }
       }
     }
   }
