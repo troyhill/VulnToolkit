@@ -13,6 +13,7 @@
 #' @param tides is used to optionally subset the output to include 
 #' only high or low tides. This argument can be 'all' (default), 'H', or 'L'
 #' @param semidiurnal logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'
+#' @param verbose logical. If TRUE, messages are returned to console identifying the presence of NAs in the input data
 #' 
 #' @return a dataframe of tide levels, associated time stamps, and tide 
 #' type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon. The column indicating semidiurnal tides (`tide2`) may be NA if tides are identical or in cases where there is a single tide in the first day of the dataset.
@@ -55,7 +56,7 @@
 #' @export
 
 HL <- function(level, time, period = 13, phantom = TRUE, tides = "all",
-               semidiurnal = TRUE) {
+               semidiurnal = TRUE, verbose = FALSE) {
 
 # Check arguments
 if(is.numeric(level) == FALSE) 
@@ -73,12 +74,14 @@ if(!is.logical(semidiurnal)) {
   stop("'semidiurnal' argument should be TRUE/FALSE - indicates whether higher- and lower- high/low tides should be identified. /n")
 }
 
-  ### send a message about NAs, if any are present
-  if (sum(is.na(time)) > 0) {
-    message(sum(is.na(time)), " NAs appear in time data. These have not been removed or modified.\n")
-  }
-  if (sum(is.na(level)) > 0) {
-    message(sum(is.na(level)), " NAs appear in water level data. These have not been removed or modified.\n")
+  if (verbose){
+    ### send a message about NAs, if any are present
+    if (sum(is.na(time)) > 0) {
+      message(sum(is.na(time)), " NAs appear in time data. These have not been removed or modified.\n")
+    }
+    if (sum(is.na(level)) > 0) {
+      message(sum(is.na(level)), " NAs appear in water level data. These have not been removed or modified.\n")
+    }
   }
   
 # Set locals

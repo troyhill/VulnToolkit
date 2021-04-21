@@ -4,8 +4,6 @@
 #' by \code{HL()}. Purpose is for quick and easy visual assessment 
 #' of \code{HL()} output.
 #' 
-#' @usage HL.plot(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE)
-#' 
 #' @param level a numeric vector of water levels
 #' @param time a vector (numeric or POSIX*) indicating the time of water 
 #' level measurements. Units must be minutes.
@@ -17,7 +15,7 @@
 #' @param tides is used to optionally subset the output to include 
 #' only high or low tides. This argument can be 'all' (default), 'H', or 'L'
 #' @param semidiurnal logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'
-#' 
+#' @param verbose logical. If TRUE, messages are returned to console identifying the presence of NAs in the input data
 #' 
 #' @return a plot of water levels, with red and blue dots superimposed on high and low tides.
 #' 
@@ -42,8 +40,8 @@
 #' @export
 
 
-HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE) { # nocov start
-  hl <- VulnToolkit::HL(level = level, time = time, period = period, phantom = phantom, tides = tides, semidiurnal = semidiurnal)
+HL.plot <- function(level, time, period = 13, phantom = TRUE, tides = "all", semidiurnal = TRUE, verbose = FALSE) { # nocov start
+  hl <- VulnToolkit::HL(level = level, time = time, period = period, phantom = phantom, tides = tides, semidiurnal = semidiurnal, verbose = verbose)
   wll.2 <- data.frame(1:length(level), level, time)
   
   graphics::plot(wll.2$level[!is.na(wll.2$level)] ~ wll.2$time[!is.na(wll.2$level)], type = "l",# type = "p", pch = 19, cex = 0.5, 
