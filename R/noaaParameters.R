@@ -13,7 +13,7 @@
 #'  rows are reported. This function can be used to, for example, select 
 #'  meteorological parameters to include in calls to \code{\link{noaa}}
 #' 
-#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
+#' @seealso \code{\link{noaa}}
 #' 
 #' @importFrom XML htmlParse
 #' @importFrom XML getNodeSet

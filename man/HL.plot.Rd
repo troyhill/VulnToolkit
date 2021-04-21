@@ -33,9 +33,15 @@ by \code{HL()}. Purpose is for quick and easy visual assessment
 of \code{HL()} output.
 }
 \examples{
-data(NL_6min_2013)
 HL.plot(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 HL.plot(level = NL_6min_2013[1:1000,2], time = NL_6min_2013[1:1000,1]) 
+
+### plot can be annotated using base graphics
+abline(h = -0.3, lty = 2) 
+text(x = as.POSIXct("2013-01-01 00:00", format = "\%F \%R"), y = -0.25, 
+     "elevation of interest", pos = 4)
+mtext("plot title", side = 3)
+
 }
 \seealso{
 \code{\link{HL}}

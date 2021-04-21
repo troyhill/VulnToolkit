@@ -6,16 +6,14 @@
 #' 
 #' @usage noaa.datums(station = 8467150)
 #' 
-#' @param station station name or ID number, available on the CO-OPS website or by 
-#' using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
-#' corresponding to the station name. Default station is Bridgeport, CT.
+#' @param station station ID number, available on the CO-OPS website.
 #' 
 #' @return a dataframe of vertical datum names and their elevations in meters 
 #' relative to the station datum for the 1983-2001 epoch. Also contains a column 
 #' of times associated with relevant datums (record maximum and minimums, lowest 
 #' and highest astronomical tides).
 #' 
-#' @seealso \code{\link{noaa}}, \code{\link{noaa.stations}}
+#' @seealso \code{\link{noaa}}
 #' 
 #' @importFrom XML getNodeSet
 #' @importFrom XML xmlSApply

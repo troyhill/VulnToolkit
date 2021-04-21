@@ -13,8 +13,6 @@
 #' built from short-term water level data. \code{dur.bias} calculates and presents 
 #' these biases in visual and tabular form.
 #' 
-#' @usage dur.bias(data, station = 8518750, ref.period = c("20120101", "20121231"), time = "GMT")
-#' 
 #' @param data water level dataset. must have a time stamp column named 'datetime' with the first ten 
 #' digits following the format \code{YYYY-MM-DD}.Different separators are fine, but the 
 #' placement and number of digits for year, month, and day are critical. Date range 

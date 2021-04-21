@@ -29,12 +29,39 @@ a dataframe of tide levels, associated time stamps, and tide
 type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon.
 }
 \description{
-Extracts high and low tides from a record of water levels
+Extracts high and low tides from a record of water levels. For reliable results, the time interval between samples must be constant throughout the dataset (e.g., 1 sample per hour, 1 sample per 6 minutes). Datasets with irregularly-spaced observations
 }
 \examples{
-data(NL_6min_2013)
 HL.NL <- VulnToolkit::HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 head(HL.NL)
+
+\dontrun{
+### Important note: Problems arise when using irregularly-spaced data.
+### The best solution is for the user to ensure their data are evenly-spaced.
+### An example:
+### 
+### pull data at 6-minute intervals
+dat.hr   <- noaa(begindate = "20200101", enddate = "20200630", station = "8467150",
+                 interval = "hourly")
+
+### pull data at 1-hr intervals
+dat.6min <- noaa(begindate = "20200701", enddate = "20201231", station = "8467150",
+                 interval = "6 minute")
+
+dat.combined <- rbind(dat.hr, dat.6min)
+### if time interval is inconsistent the HL output can be unreliable
+HL.plot(level = dat.combined[, 2], time = dat.combined[, 1]) 
+
+### expand 1-hr dataset using the 6-minute time interval
+timeSeq <- data.frame(time_GMT = seq.POSIXt(from = min(dat.hr$time_GMT), 
+                                            to = max(dat.hr$time_GMT), 
+                                            by = "6 min"))
+### create consistently-spaced dataset
+dat.hr2       <- plyr::join_all(list(timeSeq, dat.hr))
+dat.combined2 <- rbind(dat.hr2, dat.6min)
+HL.plot(level = dat.combined2[, 2], time = dat.combined2[, 1]) 
+}
+
 }
 \seealso{
 \code{\link{HL.plot}}

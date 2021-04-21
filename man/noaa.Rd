@@ -18,7 +18,7 @@ unspecified, the last complete day of data will be used.}
 \item{station}{station number, found on the NOAA Tides and Currents website 
 (https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels).
 Station numbers can be numeric or a character string (necessary if first 
-character is a zero). Default station is for Bridgeport, CT.}
+character is a zero). Default station is Bridgeport, CT.}
 
 \item{met}{whether meteorological data should be returned. This value can be 'TRUE' or 
 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only 
@@ -63,7 +63,4 @@ nrow(test2.1) # includes data on NOAA site (incomplete record)
 nrow(test2.2) # fills gaps with NAs 
 test2.3 <- noaa("20100101", "20120101", interval = "hourly", met = TRUE) 
 }
-}
-\seealso{
-\code{\link{noaa.stations}}
 }

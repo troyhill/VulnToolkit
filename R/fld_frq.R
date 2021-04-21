@@ -20,9 +20,8 @@
 #' 
 #' @examples
 #' # get a dataset of high/low tides
-#' data(NL_6min_2013)
 #' HT.NL <- HL(level = NL_6min_2013[, 2], time = NL_6min_2013[, 1], tides = "H")
-#' a <- fld.frq(0.9117, HT.NL[, 1], units = "tides") # number of flooding tides at MHW
+#' a <- fld.frq(z = 0.9117, ht = HT.NL[, 1], units = "tides") # number of flooding tides at MHW
 #' a / length(HT.NL[, 1]) # flooding tides as a percentage of all tides in time period
 #' 
 #' fld.frq(0.9117, HT.NL[,1], units = "percent") # check 

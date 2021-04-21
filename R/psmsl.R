@@ -48,9 +48,9 @@ psmsl <- function(station = 12, type = "RLR", interval = "annual"){
     if(suppressWarnings(is.na(as.numeric(station[i]))) == FALSE) {
       stn.no <- station[i]
     } else {
-      if (grepl(x = toupper(station[i]), pattern = stn.list$name)) {
+      if (any(grepl(x = stn.list$name, pattern = toupper(station[i])))) {
         stn.no <- stn.list$id[stn.list$name == toupper(station[i])]
-      } else stop("station name not found - to verify the name or find the station number, run psmsl.list() or check www.psmsl.org")
+      } else stop("station name not found - to verify the name or find the station number, run psmsl.stations() or check www.psmsl.org")
     }
     
     url_page <- paste0("https://www.psmsl.org/data/obtaining/", type, ".", interval, ".data/", stn.no, ".", type, "data")

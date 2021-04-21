@@ -20,7 +20,7 @@
 #' @param station station number, found on the NOAA Tides and Currents website 
 #' (https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels).
 #' Station numbers can be numeric or a character string (necessary if first 
-#' character is a zero). Default station is for Bridgeport, CT.
+#' character is a zero). Default station is Bridgeport, CT.
 #' 
 #' @param met whether meteorological data should be returned. This value can be 'TRUE' or 
 #' 'FALSE'; if 'TRUE', all ancillary parameters are returned. At present, this only 
@@ -44,8 +44,7 @@
 #' @return dataset a dataframe with water levels, associated time stamps, a station ID column, 
 #' and tide type (if interval is set to \code{HL}). The NOAA CO-OPS website has many odd data 
 #' availabilty problems. Some data are not available in all time intervals or time zones.
-#' 
-#' @seealso \code{\link{noaa.stations}}
+
 #' 
 #' @importFrom plyr join_all
 #' @importFrom stats complete.cases

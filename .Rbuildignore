@@ -10,6 +10,4 @@
 .*.csv
 .*.png
 VulnToolkit.Rproj
-.*.dur_bias
-.*.psmsl
 .*.vuln_kit

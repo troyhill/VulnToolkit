@@ -8,8 +8,7 @@ form.no(station)
 }
 \arguments{
 \item{station}{station ID number or vector of IDs, available on CO-OPS 
-website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
-from \code{\link{noaa.stations}}.}
+website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}).}
 }
 \value{
 a dataframe of station number(s) and corresponding tidal form number(s).
@@ -28,7 +27,4 @@ stn.list <- c("8467150", "8461490", "9454240")
 b <- form.no(stn.list)
 b
 } 
-}
-\seealso{
-\code{\link{noaa.stations}}
 }

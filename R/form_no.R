@@ -9,12 +9,10 @@
 #' @usage form.no(station)
 #' 
 #' @param station station ID number or vector of IDs, available on CO-OPS 
-#' website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
-#' from \code{\link{noaa.stations}}.
+#' website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}).
 #' 
 #' @return a dataframe of station number(s) and corresponding tidal form number(s).
-#' 
-#' @seealso \code{\link{noaa.stations}}
+
 #' 
 #' @examples \dontrun{
 #' a <- form.no()

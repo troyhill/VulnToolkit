@@ -8,8 +8,7 @@ harcon(station)
 }
 \arguments{
 \item{station}{station ID number or vector of IDs, available on CO-OPS 
-website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
-from \code{\link{noaa.stations}}.}
+website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}).}
 }
 \value{
 a dataframe of harmonic constituents and their associated phases, 
@@ -24,7 +23,4 @@ website. Requires an internet connection.
 bport.cons <- harcon(8467150) # Bridgeport, CT
 bport.cons
 } 
-}
-\seealso{
-\code{\link{noaa.stations}}
 }

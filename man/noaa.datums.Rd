@@ -7,9 +7,7 @@
 noaa.datums(station = 8467150)
 }
 \arguments{
-\item{station}{station name or ID number, available on the CO-OPS website or by 
-using \code{\link{noaa.stations}}. Entry can be numeric (station ID) or a string 
-corresponding to the station name. Default station is Bridgeport, CT.}
+\item{station}{station ID number, available on the CO-OPS website.}
 }
 \value{
 a dataframe of vertical datum names and their elevations in meters 
@@ -32,5 +30,5 @@ battery.datums <- noaa.datums(station = 8518750) # Battery, NYC
 }
 }
 \seealso{
-\code{\link{noaa}}, \code{\link{noaa.stations}}
+\code{\link{noaa}}
 }

@@ -6,13 +6,11 @@
 #' @usage harcon(station)
 #' 
 #' @param station station ID number or vector of IDs, available on CO-OPS 
-#' website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}) or 
-#' from \code{\link{noaa.stations}}.
+#' website (\url{https://www.tidesandcurrents.noaa.gov/stations.html?type=Water+Levels}).
 #' 
 #' @return a dataframe of harmonic constituents and their associated phases, 
 #' amplitudes, and speeds.
 #' 
-#' @seealso \code{\link{noaa.stations}}
 #' 
 #' 
 #' @importFrom XML getNodeSet
