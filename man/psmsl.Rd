@@ -2,7 +2,7 @@
 % Please edit documentation in R/psmsl.R
 \name{psmsl}
 \alias{psmsl}
-\title{Download sea level data from \url{http://www.psmsl.org}}
+\title{Download sea level data from Permanent Service for Mean Sea Level}
 \usage{
 psmsl(station = 12, type = "RLR", interval = "annual")
 }
@@ -10,12 +10,12 @@ psmsl(station = 12, type = "RLR", interval = "annual")
 \item{station}{name or ID, or a vector of station names/IDs. Elements can be 
 a character string (must match actual station name identically), or numeric 
 station ID (no quotes: i.e., 12 rather than "12"). Use \code{\link{psmsl.stations}} 
-to find stations, or check www.psmsl.org. If multiple stations are included, their 
+to find stations, or check \url{http://www.psmsl.org}. If multiple stations are included, their 
 data is combined using rbind, making a long (rather than wide) dataset. Default 
 station is the Battery, in New York City.}
 
 \item{type}{data quality class; can be 'metric' (default; data has been rigorously 
-standardized) or 'RLR'. See www.psmsl.org for documentation.}
+standardized) or 'RLR'. See \url{http://www.psmsl.org} for documentation.}
 
 \item{interval}{time interval over which mean sea level is calculated. Can be 
 'monthly' or 'annual'.}
@@ -24,7 +24,7 @@ standardized) or 'RLR'. See www.psmsl.org for documentation.}
 A data frame \code{data.frame} containing the requested Permanent Service for Mean Sea Level data.
 }
 \description{
-\code{psmsl} imports data stewarded by the Permanent Service for Mean Sea Level.
+\code{psmsl} imports monthly/annual tide data from stations around the world. Dataset compiled and stewarded by the Permanent Service for Mean Sea Level (\url{http://www.psmsl.org}).
 }
 \examples{
 \dontrun{

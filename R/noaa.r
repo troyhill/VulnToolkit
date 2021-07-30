@@ -57,11 +57,13 @@
 #'bport2013 <- noaa(begindate = 20130101, enddate = 20131231, 
 #'   station = "8467150", interval = "6 minute")
 #'
-#'test2.1 <- noaa("20100101", "20120101", interval = "hourly") 
-#'test2.2 <- noaa("20100101", "20120101", interval = "hourly", continuous = TRUE) 
+#'test2.1 <- noaa(begindate = "20100101", enddate = "20120101", interval = "hourly") 
+#'test2.2 <- noaa(begindate = "20100101", enddate = "20120101", interval = "hourly", 
+#'                continuous = TRUE) 
 #'nrow(test2.1) # includes data on NOAA site (incomplete record)
 #'nrow(test2.2) # fills gaps with NAs 
-#'test2.3 <- noaa("20100101", "20120101", interval = "hourly", met = TRUE) 
+#'test2.3 <- noaa(begindate = "20100101", enddate = "20120101", interval = "hourly", 
+#'                met = TRUE) 
 #' }
 #' @export
 
@@ -263,7 +265,7 @@ noaa <- function(begindate = "begindate", enddate = "enddate", station = "846715
   # RCurl dependency eliminated 20200903
   ### check for curl: 
   curl.msg <- Sys.which("curl")
-  if (!grepl(x = curl.msg, pattern = "curl.exe")) {
+  if (!grepl(x = curl.msg, pattern = "curl")) {
     stop("curl (https://curl.haxx.se/) is needed for downloading data. please install curl and ensure it is visible via the R console command: Sys.which('curl'). This may help: https://stackoverflow.com/a/16216825 ")
   }
   

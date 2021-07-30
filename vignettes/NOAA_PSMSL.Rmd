@@ -15,7 +15,7 @@ The VulnToolkit R package provides tools for summarizing and analyzing tidal dat
 
 ## An important note
 
-Functions that interact with web sites are challenging to work with and troubleshoot. This is largely because this is a complex action and  problems are difficult to isolate. Workplaces may block R from interacting with web sites. A user's internet or the target web site may be down or be slow to respond. A recent change to the website may have been incompatible with the code.
+Functions that interact with web sites are challenging to work with and troubleshoot. There are many more potential sources of trouble, which makes problems difficult to isolate. Workplaces may block R from interacting with web sites. A user's internet or the web site may be down or be slow to respond. A recent change to the website may have been incompatible with the code.
 
 One small step that can be taken to minimize these frustrating issues is to verify that your computer has curl installed and accessible. `VulnToolkit` uses curl to interact with web sites. The availability of curl can be checked by running the command `Sys.which("curl")` and verifying that the curl executable is listed.
 
@@ -59,10 +59,10 @@ NL2013 <- NL_6min_2013
 A benefit of `VulnToolkit` is that it accommodates NOAA download limits by breaking up large data requests into multiple smaller requests, and merging the result. By doing this, a user can quickly download multiple years of 6-minute data.
 
 
-Some NOAA stations also collect meteorological data. If available (check with `noaa.parameters(stn = "8461490")`), these data can be downloaded in the `noaa()` call by setting `met = TRUE`.
+Some NOAA stations also collect meteorological data. If available (check with `noaa.parameters(stn = "8461490")`), meteorological data can be downloaded in the `noaa()` call by setting `met = TRUE`.
 
 
-## NOAA station information
+### NOAA station information
 
 `VulnToolkit` provides access to station-level data such as tidal datums and harmonic constituents. 
 

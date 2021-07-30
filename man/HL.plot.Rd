@@ -46,11 +46,30 @@ of \code{HL()} output.
 HL.plot(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
 HL.plot(level = NL_6min_2013[1:1000,2], time = NL_6min_2013[1:1000,1]) 
 
-### plot can be annotated using base graphics
+### HL.plot can be annotated using base graphics
 abline(h = -0.3, lty = 2) 
 text(x = as.POSIXct("2013-01-01 00:00", format = "\%F \%R"), y = -0.25, 
      "elevation of interest", pos = 4)
 mtext("plot title", side = 3)
+
+### or extended with ggplot in various ways. 
+\dontrun{
+library(ggplot2) # install with install.packages("ggplot2")
+ggHL <- function(level, time, plotVariable = "tide2", period = 13, 
+        phantom = TRUE, tides = "all", semidiurnal = TRUE) {
+  hl <- VulnToolkit::HL(level = level, time = time, period = period,
+                        phantom = phantom, tides = tides, semidiurnal = semidiurnal)
+  wll.2 <- data.frame(1:length(level), level, time)
+  plot_return <- ggplot(data = wll.2, aes(x = time, y = level)) + 
+    geom_line(col = "darkgray") + xlab("") +
+    geom_point(data = hl, aes(x = time, y = level, col = get(plotVariable))) +
+    theme_classic() + theme(legend.title = element_blank())
+  plot_return
+}
+newPlot <- ggHL(level = NL_6min_2013[1:1000,2], time = NL_6min_2013[1:1000,1])
+newPlot
+}
+
 
 }
 \seealso{

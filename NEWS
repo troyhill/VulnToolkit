@@ -1,8 +1,14 @@
-VulnToolkit version 1.1.3 (release date: TBD)
+VulnToolkit version 1.1.4 (release date: TBD)
+==================
+  Changes:
+  * Updated curl check in `noaa()` to work on Mac operating systems
+  
+
+VulnToolkit version 1.1.3 (release date: 2021-05-03)
 ==================
   Changes:
   * Added vignette for NOAA/PSMSL functions
-  * `HL.plot` robust to NAs
+  * `HL.plot` robust to NAs, includes more examples
   * `HL` assignment of mixed semidiurnal tides is robust to identical tide heights and partial tidal cycles
   
   

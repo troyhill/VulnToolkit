@@ -30,7 +30,7 @@ measurements end precisely at a low or high tide, this can be changed to FALSE.}
 \item{tides}{is used to optionally subset the output to include 
 only high or low tides. This argument can be 'all' (default), 'H', or 'L'}
 
-\item{semidiurnal}{logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'}
+\item{semidiurnal}{logical. If TRUE, higher- and lower- high/low tides are reported in a separate column called 'tide2'. Tides are grouped by day and assigned higher- or lower- status. When a single high or low tide exists in a day, tides on adjacent days are used to make an assignment.}
 
 \item{verbose}{logical. If TRUE, messages are returned to console identifying the presence of NAs in the input data}
 }
@@ -39,7 +39,7 @@ a dataframe of tide levels, associated time stamps, and tide
 type ('H' or 'L'). If there are NAs present in the water level or time datasets, a message reports this information in the console but the NAs are not removed or otherwise acted upon. The column indicating semidiurnal tides (`tide2`) may be NA if tides are identical or in cases where there is a single tide in the first day of the dataset.
 }
 \description{
-Extracts high and low tides from a record of water levels. For reliable results, the time interval between samples must be constant throughout the dataset (e.g., 1 sample per hour, 1 sample per 6 minutes). Datasets with irregularly-spaced observations
+Extracts high and low tides from a record of water levels. For reliable results, the time interval between samples must be constant throughout the dataset (e.g., 1 sample per hour, 1 sample per 6 minutes). Datasets with irregularly-spaced observations should be expanded to the smallest time interval to avoid issues.
 }
 \examples{
 HL.NL <- VulnToolkit::HL(level = NL_6min_2013[,2], time = NL_6min_2013[,1])
