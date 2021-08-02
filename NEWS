@@ -1,4 +1,4 @@
-VulnToolkit version 1.1.4 (release date: TBD)
+VulnToolkit version 1.1.4 (release date: 2021-07-30)
 ==================
   Changes:
   * Updated curl check in `noaa()` to work on Mac operating systems
